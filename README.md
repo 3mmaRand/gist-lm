@@ -1,7 +1,7 @@
 
 <img src="images/hex-s.png" height="250"/>
 
-# Simple introduction to GLM for analysing Poisson and Binomal responses
+# Get Introductory Statistical Tests as Linear models: A guide for R users
 
 ## Emma Rand
-A book in development: https://3mmarand.github.io/singlm/
+A book in development: https://3mmarand.github.io/gist-lm/

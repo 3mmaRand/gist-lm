@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Revision of your Introductory class | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</title>
+  <title>Chapter 4 Revision of your Introductory class | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users</title>
   <meta name="description" content="The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Revision of your Introductory class | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  <meta property="og:title" content="Chapter 4 Revision of your Introductory class | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://3mmarand.github.io/singlm/" />
-  <meta property="og:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+  <meta property="og:url" content="https://3mmarand.github.io/gist-lm/" />
+  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
   <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="3mmaRand/singlm" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Revision of your Introductory class | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  <meta name="twitter:title" content="Chapter 4 Revision of your Introductory class | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   
   <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
-  <meta name="twitter:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
 
 <meta name="author" content="Emma Rand" />
 
 
-<meta name="date" content="2020-08-28" />
+<meta name="date" content="2020-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,7 @@
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <script src="assets/book.js"></script>
 
 
@@ -211,40 +212,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>10.9</b> Creating a figure</a></li>
 <li class="chapter" data-level="10.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>10.10</b> Reporting the results</a></li>
 </ul></li>
-<li class="part"><span><b>III GENERALISED LINEAR MODELS</b></span></li>
-<li class="chapter" data-level="11" data-path="glm-overview.html"><a href="glm-overview.html"><i class="fa fa-check"></i><b>11</b> Overview</a><ul>
-<li class="chapter" data-level="11.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>11.1</b> Model fitting</a></li>
-<li class="chapter" data-level="11.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>11.2</b> More than one explanatory variable</a></li>
-<li class="chapter" data-level="11.3" data-path="glm-overview.html"><a href="glm-overview.html#generalised-linear-models-in-r"><i class="fa fa-check"></i><b>11.3</b> Generalised linear models in R</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>11.3.1</b> Building and viewing</a></li>
-<li class="chapter" data-level="11.3.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>11.3.2</b> Getting predictions</a></li>
-<li class="chapter" data-level="11.3.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>11.3.3</b> Checking assumptions</a></li>
-</ul></li>
-<li class="chapter" data-level="11.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>11.4</b> Reporting</a></li>
-</ul></li>
-<li class="part"><span><b>IV POISSON GLMs</b></span></li>
-<li class="chapter" data-level="12" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html"><i class="fa fa-check"></i><b>12</b> Poisson GLM overview</a><ul>
-<li class="chapter" data-level="12.1" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#when-explanatory-is-categorical"><i class="fa fa-check"></i><b>12.1</b> When explanatory is categorical</a></li>
-<li class="chapter" data-level="12.2" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#more-than-one-explanatory"><i class="fa fa-check"></i><b>12.2</b> More than one explanatory</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html"><i class="fa fa-check"></i><b>13</b> Single continuous explanatory</a><ul>
-<li class="chapter" data-level="13.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>13.1</b> Introduction to the example</a></li>
-<li class="chapter" data-level="13.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>13.2</b> Applying and interpreting <code>glm()</code></a></li>
-<li class="chapter" data-level="13.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>13.3</b> Getting predictions from the model</a></li>
-<li class="chapter" data-level="13.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>13.4</b> Checking assumptions</a></li>
-<li class="chapter" data-level="13.5" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>13.5</b> Creating a figure</a></li>
-<li class="chapter" data-level="13.6" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>13.6</b> Reporting the results.</a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="pois-glm-two-cont.html"><a href="pois-glm-two-cont.html"><i class="fa fa-check"></i><b>14</b> Two explanatory variables</a><ul>
-<li class="chapter" data-level="14.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>14.1</b> Introduction to the example</a></li>
-<li class="chapter" data-level="14.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>14.2</b> Applying and interpreting <code>glm()</code></a></li>
-<li class="chapter" data-level="14.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>14.3</b> Getting predictions from the model</a></li>
-<li class="chapter" data-level="14.4" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>14.4</b> Creating a figure</a></li>
-<li class="chapter" data-level="14.5" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>14.5</b> Reporting the results.</a></li>
-</ul></li>
-<li class="part"><span><b>V BINOMIAL GLMs</b></span></li>
-<li class="chapter" data-level="15" data-path="bino-glm-overview.html"><a href="bino-glm-overview.html"><i class="fa fa-check"></i><b>15</b> Binomial GLM overview</a></li>
-<li class="chapter" data-level="16" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>16</b> Summary</a></li>
+<li class="chapter" data-level="11" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11</b> Summary</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -258,7 +226,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users</a>
           </h1>
         </div>
 

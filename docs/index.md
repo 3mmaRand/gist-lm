@@ -1,7 +1,7 @@
 --- 
-title: "singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R"
+title: "gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users"
 author: "Emma Rand"
-date: "2020-08-28"
+date: "2020-09-07"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [refs/book.bib, refs/packages.bib]
@@ -11,7 +11,7 @@ description: "The output format for this example is bookdown::gitbook."
 favicon: images/favicon.ico
 cover-image: images/android-chrome-512x512.png
 github-repo: 3mmaRand/singlm
-url: 'https\://3mmarand.github.io/singlm/'
+url: 'https://3mmarand.github.io/gist-lm/'
 ---
 
 # Preface {-#preface}
@@ -21,11 +21,11 @@ url: 'https\://3mmarand.github.io/singlm/'
 
 ## Who is this book for?
 
-This book is for R users who have done an introductory class in data analysis which covered classical univariate tests such as single linear regression, *t*-tests, one-way ANOVA and two-way ANOVA. It is aimed at people who have a general, but not expert, understanding of summarising and graphically representing data and choosing and applying statistical tests. A revision chapter is included to set the scene and clarify terminology used in the rest of the book.
-I assume you have some familiarity with R and RStudio and could import data, apply `t.test()`, `aov()` and `TukeyHSD()` functions appropriately, interpret the results and create figures using `ggplot()`. I do not assume your fluency allows you to do these things with looking anything up, just that you would understand what you were doing and how to interpret the results.
+This book is for R users who have done an introductory class in data analysis which covered classical univariate tests such as single linear regression, *t*-tests, one-way ANOVA and two-way ANOVA. It is aimed at people who understand these as separate tests. A short revision chapter is included to set the scene and clarify terminology used in the rest of the book.
 
-The book has two aims. First, to to introduce Generalised Linear Models for analysing counts and binary responses using `glm()`, and secondly, to introduce the terminology of statistical modelling to make your transition to more advanced texts easier.
+I assume you have some familiarity with R and RStudio and have a general, but not expert, understanding of summarising, analysing and visualising data with functions such as `t.test()`, `aov()`, `TukeyHSD()` and `ggplot()`. I do not assume your fluency allows you to do these things with looking anything up, just that you would understand what you were doing and how to interpret the results.
 
+The book has two aims. First to explain how the *t*-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the `lm()` function. 
 
 ## Formatting options 
 
@@ -87,9 +87,9 @@ All other packages will be loaded explicitly where needed with `library()` state
 
 ## Approach of this book
 
-Regression, *t*-tests and one-way ANOVA are fundamentally the same test and can all be carried out with the `lm()` function in R. However, it is common for *t*-tests and ANOVA to be taught using the `t.test()` and `aov()` functions respectively. One reason for this is because their outputs are easier for beginners to understand and interpret. 
+Regression, *t*-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the "general linear model". Since they are fundamentally the same test, all can be carried out with the `lm()` function in R. However, it is common for *t*-tests and ANOVA to be taught using the `t.test()` and `aov()` functions respectively. One reason for this is because their outputs are easier for beginners to understand and interpret. 
 
-However, the output of `lm()` is more typical of statistical modelling functions in general and not using `lm()` for the relatively simple cases makes it more difficult for people to extend their the statistical repertoire. The approach taken in this book is to exploit preexisting knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. This will make it easier to understand the output of `glm()`. 
+However, the output of `lm()` is more typical of statistical modelling functions in general and not using `lm()` for the relatively simple cases makes it more difficult for people to extend their the statistical repertoire. The approach taken in this book is to exploit preexisting knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. This will make it easier to extend your statistical knowledge.
 
 ## Outline
 This book introduces the the Generalised Linear Model for two types of discrete response:
@@ -159,19 +159,19 @@ sessionInfo()
 # [1] stats     graphics  grDevices utils     datasets  methods   base     
 # 
 # other attached packages:
-#  [1] patchwork_1.0.1  kableExtra_1.1.0 forcats_0.5.0    stringr_1.4.0   
-#  [5] dplyr_1.0.2      purrr_0.3.4      readr_1.3.1      tidyr_1.1.1     
+#  [1] patchwork_1.0.1  kableExtra_1.2.1 forcats_0.5.0    stringr_1.4.0   
+#  [5] dplyr_1.0.2      purrr_0.3.4      readr_1.3.1      tidyr_1.1.2     
 #  [9] tibble_3.0.3     ggplot2_3.3.2    tidyverse_1.3.0 
 # 
 # loaded via a namespace (and not attached):
 #  [1] tidyselect_1.1.0  xfun_0.16         haven_2.3.1       colorspace_1.4-1 
-#  [5] vctrs_0.3.2       generics_0.0.2    htmltools_0.5.0   viridisLite_0.3.0
+#  [5] vctrs_0.3.4       generics_0.0.2    htmltools_0.5.0   viridisLite_0.3.0
 #  [9] yaml_2.2.1        utf8_1.1.4        blob_1.2.1        rlang_0.4.7      
 # [13] pillar_1.4.6      glue_1.4.1        withr_2.2.0       DBI_1.1.0        
 # [17] dbplyr_1.4.4      modelr_0.1.8      readxl_1.3.1      lifecycle_0.2.0  
 # [21] munsell_0.5.0     gtable_0.3.0      cellranger_1.1.0  rvest_0.3.6      
 # [25] evaluate_0.14     knitr_1.29        fansi_0.4.1       broom_0.7.0      
-# [29] Rcpp_1.0.5        scales_1.1.1      backports_1.1.7   webshot_0.5.2    
+# [29] Rcpp_1.0.5        scales_1.1.1      backports_1.1.9   webshot_0.5.2    
 # [33] jsonlite_1.7.0    fs_1.5.0          hms_0.5.3         digest_0.6.25    
 # [37] stringi_1.4.6     bookdown_0.20     grid_4.0.2        cli_2.0.2        
 # [41] tools_4.0.2       magrittr_1.5      crayon_1.3.4      pkgconfig_2.0.3  
