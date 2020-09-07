@@ -1,0 +1,3366 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Two-way ANOVA revisited | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</title>
+  <meta name="description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Two-way ANOVA revisited | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://3mmarand.github.io/singlm/" />
+  <meta property="og:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+  <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="3mmaRand/singlm" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Two-way ANOVA revisited | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  
+  <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+
+<meta name="author" content="Emma Rand" />
+
+
+<meta name="date" content="2020-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="one-way-anova-revisit.html"/>
+<link rel="next" href="glm-overview.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="assets/book.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="assets\style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/hex-s.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#who-is-this-book-for"><i class="fa fa-check"></i><b>0.1</b> Who is this book for?</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#formatting-options"><i class="fa fa-check"></i><b>0.2</b> Formatting options</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#conventions-used-in-the-book"><i class="fa fa-check"></i><b>0.3</b> Conventions used in the book</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#approach-of-this-book"><i class="fa fa-check"></i><b>0.4</b> Approach of this book</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>0.5</b> Outline</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#following-along-with-the-examples"><i class="fa fa-check"></i><b>0.6</b> Following along with the examples</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="blue-pink-green-triadic.html"><a href="blue-pink-green-triadic.html"><i class="fa fa-check"></i><b>1</b> blue, pink, green triadic</a></li>
+<li class="chapter" data-level="2" data-path="blue-pink-green-triadic-1.html"><a href="blue-pink-green-triadic-1.html"><i class="fa fa-check"></i><b>2</b> blue, pink, green triadic</a></li>
+<li class="chapter" data-level="3" data-path="blue-pink-green-triadic-2.html"><a href="blue-pink-green-triadic-2.html"><i class="fa fa-check"></i><b>3</b> blue, pink, green triadic</a><ul>
+<li class="chapter" data-level="3.1" data-path="blue-pink-green-triadic-2.html"><a href="blue-pink-green-triadic-2.html#overview-of-the-chapter-contents"><i class="fa fa-check"></i><b>3.1</b> Overview of the chapter contents</a></li>
+<li class="chapter" data-level="3.2" data-path="blue-pink-green-triadic-2.html"><a href="blue-pink-green-triadic-2.html#software-information"><i class="fa fa-check"></i><b>3.2</b> Software information</a></li>
+</ul></li>
+<li class="part"><span><b>I INTRODUCTION</b></span></li>
+<li class="chapter" data-level="4" data-path="revision.html"><a href="revision.html"><i class="fa fa-check"></i><b>4</b> Revision of your Introductory class</a></li>
+<li class="chapter" data-level="5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html"><i class="fa fa-check"></i><b>5</b> What are General Linear Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#overview"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>5.2</b> Model fitting</a></li>
+<li class="chapter" data-level="5.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>5.3</b> More than one explanatory variable</a></li>
+<li class="chapter" data-level="5.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#general-linear-models-in-r"><i class="fa fa-check"></i><b>5.4</b> General linear models in R</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>5.4.1</b> Building and viewing</a></li>
+<li class="chapter" data-level="5.4.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>5.4.2</b> Getting predictions</a></li>
+<li class="chapter" data-level="5.4.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>5.4.3</b> Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>5.5</b> Reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>6</b> Terminolgy</a><ul>
+<li class="chapter" data-level="6.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>6.1</b> General? Generalised?</a></li>
+<li class="chapter" data-level="6.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>6.2</b> Testing modelling fitting</a></li>
+<li class="chapter" data-level="6.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>6.3</b> paramters, coefficients estimates</a></li>
+</ul></li>
+<li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
+<li class="chapter" data-level="7" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>7</b> Single linear regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>7.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="7.2" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>7.2</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="7.3" data-path="single-regression.html"><a href="single-regression.html#link-to-chapter-2.1"><i class="fa fa-check"></i><b>7.3</b> Link to Chapter 2.1</a></li>
+<li class="chapter" data-level="7.4" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>7.4</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="7.5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>7.5</b> Checking assumptions</a></li>
+<li class="chapter" data-level="7.6" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>7.6</b> Creating a figure</a></li>
+<li class="chapter" data-level="7.7" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>7.7</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html"><i class="fa fa-check"></i><b>8</b> <em>t</em>-tests revisited</a><ul>
+<li class="chapter" data-level="8.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>8.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="8.2" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t.test-output-reminder"><i class="fa fa-check"></i><b>8.2</b> <code>t.test()</code> output reminder</a></li>
+<li class="chapter" data-level="8.3" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t-tests-as-linear-models"><i class="fa fa-check"></i><b>8.3</b> <em>t</em>-tests as linear models</a></li>
+<li class="chapter" data-level="8.4" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>8.4</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="8.5" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>8.5</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="8.6" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>8.6</b> Checking assumptions</a></li>
+<li class="chapter" data-level="8.7" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>8.7</b> Creating a figure</a></li>
+<li class="chapter" data-level="8.8" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>8.8</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html"><i class="fa fa-check"></i><b>9</b> One-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="9.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>9.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="9.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>9.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="9.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>9.3</b> Post-hoc testing for <code>aov()</code></a></li>
+<li class="chapter" data-level="9.4" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#one-way-anovas-as-linear-models"><i class="fa fa-check"></i><b>9.4</b> One-way ANOVAs as linear models</a></li>
+<li class="chapter" data-level="9.5" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>9.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="9.6" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>9.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="9.7" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>9.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="9.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>9.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="9.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>9.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="9.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>9.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html"><i class="fa fa-check"></i><b>10</b> Two-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="10.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>10.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="10.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>10.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="10.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>10.3</b> Post-hoc testing for <code>aov</code></a></li>
+<li class="chapter" data-level="10.4" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html#two-way-anovas-as-linear-models"><i class="fa fa-check"></i><b>10.4</b> Two-way ANOVAs as linear models</a></li>
+<li class="chapter" data-level="10.5" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>10.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="10.6" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>10.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="10.7" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>10.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="10.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>10.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="10.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>10.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="10.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>10.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="part"><span><b>III GENERALISED LINEAR MODELS</b></span></li>
+<li class="chapter" data-level="11" data-path="glm-overview.html"><a href="glm-overview.html"><i class="fa fa-check"></i><b>11</b> Overview</a><ul>
+<li class="chapter" data-level="11.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>11.1</b> Model fitting</a></li>
+<li class="chapter" data-level="11.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>11.2</b> More than one explanatory variable</a></li>
+<li class="chapter" data-level="11.3" data-path="glm-overview.html"><a href="glm-overview.html#generalised-linear-models-in-r"><i class="fa fa-check"></i><b>11.3</b> Generalised linear models in R</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>11.3.1</b> Building and viewing</a></li>
+<li class="chapter" data-level="11.3.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>11.3.2</b> Getting predictions</a></li>
+<li class="chapter" data-level="11.3.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>11.3.3</b> Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>11.4</b> Reporting</a></li>
+</ul></li>
+<li class="part"><span><b>IV POISSON GLMs</b></span></li>
+<li class="chapter" data-level="12" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html"><i class="fa fa-check"></i><b>12</b> Poisson GLM overview</a><ul>
+<li class="chapter" data-level="12.1" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#when-explanatory-is-categorical"><i class="fa fa-check"></i><b>12.1</b> When explanatory is categorical</a></li>
+<li class="chapter" data-level="12.2" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#more-than-one-explanatory"><i class="fa fa-check"></i><b>12.2</b> More than one explanatory</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html"><i class="fa fa-check"></i><b>13</b> Single continuous explanatory</a><ul>
+<li class="chapter" data-level="13.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>13.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="13.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>13.2</b> Applying and interpreting <code>glm()</code></a></li>
+<li class="chapter" data-level="13.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>13.3</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="13.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>13.4</b> Checking assumptions</a></li>
+<li class="chapter" data-level="13.5" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>13.5</b> Creating a figure</a></li>
+<li class="chapter" data-level="13.6" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>13.6</b> Reporting the results.</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="pois-glm-two-cont.html"><a href="pois-glm-two-cont.html"><i class="fa fa-check"></i><b>14</b> Two explanatory variables</a><ul>
+<li class="chapter" data-level="14.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>14.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="14.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>14.2</b> Applying and interpreting <code>glm()</code></a></li>
+<li class="chapter" data-level="14.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>14.3</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="14.4" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>14.4</b> Creating a figure</a></li>
+<li class="chapter" data-level="14.5" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>14.5</b> Reporting the results.</a></li>
+</ul></li>
+<li class="part"><span><b>V BINOMIAL GLMs</b></span></li>
+<li class="chapter" data-level="15" data-path="bino-glm-overview.html"><a href="bino-glm-overview.html"><i class="fa fa-check"></i><b>15</b> Binomial GLM overview</a></li>
+<li class="chapter" data-level="16" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>16</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="two-way-anova-revisit" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Two-way ANOVA revisited</h1>
+<p>In this chapter we turn our attention to designs with two categorical explanatory variables. We first use the familiar <code>aov()</code> function to carry out a two-way ANOVA and then use our understanding to help us interpret the output of <code>lm()</code>. We will also make predictions from the model and report on our results.</p>
+<div id="introduction-to-the-example" class="section level2">
+<h2><span class="header-section-number">10.1</span> Introduction to the example</h2>
+<p>Researchers have collected live specimens of two species of periwinkle (see Figure <a href="two-way-anova-revisit.html#fig:periwinkle-fig">10.1</a>) from sites in northern England in the Spring and Summer. They take a measure of the gut parasite load by examining a slide of gut contents. The data are in <a href="data-raw/periwinkle.txt">periwinkle.txt</a>.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:periwinkle-fig"></span>
+<img src="images/Littorina.jpg" alt="Periwinkles are marine gastropod molluscs (slugs and snails). A) Littorina brevicula (PD files - Public Domain, https://commons.wikimedia.org/w/index.php?curid=30577419) B) Littorina littorea. (photographed by Guttorm Flatabø (user:dittaeva). - Photograph taken with an Olympus Camedia C-70 Zoom digital camera. Metainformation edited with Irfanview, possibly cropped with jpegcrop., CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=324769" width="80%" />
+<p class="caption">
+Figure 10.1: Periwinkles are marine gastropod molluscs (slugs and snails). A) <em>Littorina brevicula</em> (PD files - Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=30577419" class="uri">https://commons.wikimedia.org/w/index.php?curid=30577419</a>) B) <em>Littorina littorea</em>. (photographed by Guttorm Flatabø (user:dittaeva). - Photograph taken with an Olympus Camedia C-70 Zoom digital camera. Metainformation edited with Irfanview, possibly cropped with jpegcrop., CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=324769" class="uri">https://commons.wikimedia.org/w/index.php?curid=324769</a>
+</p>
+</div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+para
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+season
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+species
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The data were collected to determine whether there was an effect of season or species on parasite load and whether these effects were independent.</p>
+<div class="key">
+<p>There are 3 variables: <code>species</code> and <code>season</code>are categorical explanatory variables, each with two levels;
+<code>para</code>, a continuous variable, is the response.</p>
+</div>
+<p>We can use the <code>read_delim()</code> function to import the data.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="two-way-anova-revisit.html#cb51-1"></a>periwinkle &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;data-raw/periwinkle.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
+<p>When visualising this data with <code>ggplot()</code> we need to account for both explanatory variables. We can map one to the <em>x</em>-axis and the other to a different aesthetic. Using the <code>fill</code> aesthetic works well for violin plots.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="two-way-anova-revisit.html#cb52-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> periwinkle, <span class="kw">aes</span>(<span class="dt">x =</span> season, <span class="dt">y =</span> para, <span class="dt">fill =</span> species)) <span class="op">+</span></span>
+<span id="cb52-2"><a href="two-way-anova-revisit.html#cb52-2"></a><span class="st">  </span><span class="kw">geom_violin</span>()</span></code></pre></div>
+<p><img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
+Parasite load seems to be higher for both species in the summer and that effect looks bigger in <em>L.brevicula</em> - it has the lowest spring mean but the highest summer mean.
+Let’s create a summary of the data that will be useful for plotting later:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="two-way-anova-revisit.html#cb53-1"></a>peri_summary &lt;-<span class="st"> </span>periwinkle <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-2"><a href="two-way-anova-revisit.html#cb53-2"></a><span class="st">  </span><span class="kw">group_by</span>(season, species) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-3"><a href="two-way-anova-revisit.html#cb53-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(para),</span>
+<span id="cb53-4"><a href="two-way-anova-revisit.html#cb53-4"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(para),</span>
+<span id="cb53-5"><a href="two-way-anova-revisit.html#cb53-5"></a>            <span class="dt">n =</span> <span class="kw">length</span>(para),</span>
+<span id="cb53-6"><a href="two-way-anova-revisit.html#cb53-6"></a>            <span class="dt">se =</span> sd <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n))</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+season
+</th>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+se
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:right;">
+56.5
+</td>
+<td style="text-align:right;">
+8.88
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+1.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:right;">
+63.8
+</td>
+<td style="text-align:right;">
+11.92
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+2.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:right;">
+72.9
+</td>
+<td style="text-align:right;">
+11.24
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+2.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:right;">
+69.4
+</td>
+<td style="text-align:right;">
+11.44
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+2.29
+</td>
+</tr>
+</tbody>
+</table>
+<p>The summary confirms both species have a higher mean in the summer and that the difference between the species is reversed - <em>L.brevicula</em> <span class="math inline">\(-\)</span> <em>L.littorea</em> is -7.28 in the spring but 3.48 in summer.</p>
+</div>
+<div id="aov-output-reminder" class="section level2">
+<h2><span class="header-section-number">10.2</span> <code>aov()</code> output reminder</h2>
+<p>The <code>aov()</code> function requires a model formula which includes both explanatory variables and the interaction between them in the familiar format: <code>para ~ season * season</code> . We also specify the data argument to indicate where the variables can be found:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="two-way-anova-revisit.html#cb54-1"></a>mod &lt;-<span class="st"> </span><span class="kw">aov</span>(<span class="dt">data =</span> periwinkle, para <span class="op">~</span><span class="st"> </span>season <span class="op">*</span><span class="st"> </span>species)</span></code></pre></div>
+<p>The output of the <code>summary()</code> function gives us an ANOVA test:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="two-way-anova-revisit.html#cb55-1"></a><span class="kw">summary</span>(mod)</span>
+<span id="cb55-2"><a href="two-way-anova-revisit.html#cb55-2"></a><span class="co">#                Df Sum Sq Mean Sq F value Pr(&gt;F)    </span></span>
+<span id="cb55-3"><a href="two-way-anova-revisit.html#cb55-3"></a><span class="co"># season          1   3058    3058   25.58  2e-06 ***</span></span>
+<span id="cb55-4"><a href="two-way-anova-revisit.html#cb55-4"></a><span class="co"># species         1     90      90    0.75  0.387    </span></span>
+<span id="cb55-5"><a href="two-way-anova-revisit.html#cb55-5"></a><span class="co"># season:species  1    724     724    6.05  0.016 *  </span></span>
+<span id="cb55-6"><a href="two-way-anova-revisit.html#cb55-6"></a><span class="co"># Residuals      96  11477     120                   </span></span>
+<span id="cb55-7"><a href="two-way-anova-revisit.html#cb55-7"></a><span class="co"># ---</span></span>
+<span id="cb55-8"><a href="two-way-anova-revisit.html#cb55-8"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>There was a significantly greater number of parasites in the Summer than the Spring (ANOVA: <span class="math inline">\(F\)</span> = 25.58; <span class="math inline">\(d.f.\)</span> = 1, 96; <span class="math inline">\(p\)</span> &lt; 0.001). There was no difference between the species when averaged across the seasons but there was significant interaction (ANOVA: <span class="math inline">\(F\)</span> = 6.053; <span class="math inline">\(d.f.\)</span> = 1, 96; <span class="math inline">\(p\)</span> = 0.016) between season and species with higher numbers infecting <em>L.littorea</em> in the Spring whilst <em>L.brevicula</em> was more heavily parasitized in the Summer.</p>
+<p>We need a post-hoc test to discover which comparisons are significant.</p>
+</div>
+<div id="post-hoc-testing-for-aov" class="section level2">
+<h2><span class="header-section-number">10.3</span> Post-hoc testing for <code>aov</code></h2>
+<p>Tukey Honest Significant Difference test is carried out with:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="two-way-anova-revisit.html#cb56-1"></a><span class="kw">TukeyHSD</span>(mod)</span>
+<span id="cb56-2"><a href="two-way-anova-revisit.html#cb56-2"></a><span class="co">#   Tukey multiple comparisons of means</span></span>
+<span id="cb56-3"><a href="two-way-anova-revisit.html#cb56-3"></a><span class="co">#     95% family-wise confidence level</span></span>
+<span id="cb56-4"><a href="two-way-anova-revisit.html#cb56-4"></a><span class="co"># </span></span>
+<span id="cb56-5"><a href="two-way-anova-revisit.html#cb56-5"></a><span class="co"># Fit: aov(formula = para ~ season * species, data = periwinkle)</span></span>
+<span id="cb56-6"><a href="two-way-anova-revisit.html#cb56-6"></a><span class="co"># </span></span>
+<span id="cb56-7"><a href="two-way-anova-revisit.html#cb56-7"></a><span class="co"># $season</span></span>
+<span id="cb56-8"><a href="two-way-anova-revisit.html#cb56-8"></a><span class="co">#               diff  lwr  upr p adj</span></span>
+<span id="cb56-9"><a href="two-way-anova-revisit.html#cb56-9"></a><span class="co"># Summer-Spring 11.1 6.72 15.4     0</span></span>
+<span id="cb56-10"><a href="two-way-anova-revisit.html#cb56-10"></a><span class="co"># </span></span>
+<span id="cb56-11"><a href="two-way-anova-revisit.html#cb56-11"></a><span class="co"># $species</span></span>
+<span id="cb56-12"><a href="two-way-anova-revisit.html#cb56-12"></a><span class="co">#                                        diff   lwr  upr p adj</span></span>
+<span id="cb56-13"><a href="two-way-anova-revisit.html#cb56-13"></a><span class="co"># Littorina littorea-Littorina brevicula  1.9 -2.44 6.24 0.387</span></span>
+<span id="cb56-14"><a href="two-way-anova-revisit.html#cb56-14"></a><span class="co"># </span></span>
+<span id="cb56-15"><a href="two-way-anova-revisit.html#cb56-15"></a><span class="co"># $`season:species`</span></span>
+<span id="cb56-16"><a href="two-way-anova-revisit.html#cb56-16"></a><span class="co">#                                                        diff     lwr   upr p adj</span></span>
+<span id="cb56-17"><a href="two-way-anova-revisit.html#cb56-17"></a><span class="co"># Summer:Littorina brevicula-Spring:Littorina brevicula 16.44   8.354 24.53 0.000</span></span>
+<span id="cb56-18"><a href="two-way-anova-revisit.html#cb56-18"></a><span class="co"># Spring:Littorina littorea-Spring:Littorina brevicula   7.28  -0.806 15.37 0.093</span></span>
+<span id="cb56-19"><a href="two-way-anova-revisit.html#cb56-19"></a><span class="co"># Summer:Littorina littorea-Spring:Littorina brevicula  12.96   4.874 21.05 0.000</span></span>
+<span id="cb56-20"><a href="two-way-anova-revisit.html#cb56-20"></a><span class="co"># Spring:Littorina littorea-Summer:Littorina brevicula  -9.16 -17.246 -1.07 0.020</span></span>
+<span id="cb56-21"><a href="two-way-anova-revisit.html#cb56-21"></a><span class="co"># Summer:Littorina littorea-Summer:Littorina brevicula  -3.48 -11.566  4.61 0.675</span></span>
+<span id="cb56-22"><a href="two-way-anova-revisit.html#cb56-22"></a><span class="co"># Summer:Littorina littorea-Spring:Littorina littorea    5.68  -2.406 13.77 0.263</span></span></code></pre></div>
+<p>The parasite load for <em>L.brevicula</em> increases significantly between spring and summer (<span class="math inline">\(p\)</span> &lt; 0.001) while that for <em>L.littorea</em> does not. Other significant comparisons are: the spring load of <em>L.brevicula</em> is lower than the summer load of <em>L.littorea</em> (<span class="math inline">\(p\)</span> &lt; 0.001); and summer load of <em>L.brevicula</em> is higher than the spring load of <em>L.littorea</em> (<span class="math inline">\(p\)</span> = 0.02).</p>
+</div>
+<div id="two-way-anovas-as-linear-models" class="section level2">
+<h2><span class="header-section-number">10.4</span> Two-way ANOVAs as linear models</h2>
+<p>The equation for a two-way ANOVA test is an extension of equation <a href="one-way-anova-revisit.html#eq:one-way">(9.1)</a> for a one-way ANOVA test. It has the same form but an additional parameter. If there are two groups in each explanatory variable, the model is:</p>
+<p><span class="math display" id="eq:one-way">\[\begin{equation}
+E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+\beta_{3}X1_{i}X2_{i}
+\tag{9.1}
+\end{equation}\]</span></p>
+<p>The intercept, <span class="math inline">\(\beta_{0}\)</span> is the value of the response when both categorical explanatory variables are at their “lowest” level. <span class="math inline">\(X1_{i}\)</span> is a dummy explanatory variable which indicates the first explanatory variable changing to its second level. It toggles on and off the effects of <span class="math inline">\(\beta_{1}\)</span>. <span class="math inline">\(X2_{i}\)</span> is a dummy explanatory variable which indicates the second explanatory variable changing to its second level and toggles on and off the effects of <span class="math inline">\(\beta_{2}\)</span>. <span class="math inline">\(\beta_{3}\)</span> is the interaction effect. If <span class="math inline">\(X1_{i}\)</span> and <span class="math inline">\(X2_{i}\)</span> are both 1 <span class="math inline">\(\beta_{3}\)</span> is the extra effect of that combination above the sum of
+<span class="math inline">\(\beta_{1}+\beta_{2}\)</span></p>
+<p>The number of parameters in a two-way ANOVA design is: the number of levels in one explanatory <span class="math inline">\(\times\)</span> the number of levels in the other explanatory. If each explanatory have three levels, there would be nine <span class="math inline">\(\beta s\)</span></p>
+<p>A graphical representation of the terms in a linear model when there are two explanatory variables each with two groups (or levels) is given in Figure <a href="two-way-anova-revisit.html#fig:two-way-annotated">10.2</a>.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:two-way-annotated"></span>
+<img src="images/gen_two_way.svg" alt="A linear model with two explanatory variables each with two levels. ‘Variable 1’ has levels ‘A’ and ‘B’ and ‘Variable 2’ has levels ‘a’ and ‘b’. Thus there are 2 \(\times\) 2 = 4 groups: Aa, Ab, Ba and Bb. The measured response values are in pink and the predictions are in green. The residuals are not indicated. The estimated model parameters are indicated: \(\beta_{0}\) is the mean of group Aa; \(\beta_{1}\) is what has to be added to \(\beta_{0}\) to get the mean of group Ab; \(\beta_{2}\) is what has to be added to \(\beta_{0}\) to get the mean of group Ba; and \(\beta_{3}\) is what has to be added to \(\beta_{0}\) in addition to \(\beta_{1}\) and \(\beta_{2}\) to get the mean of group Bb. In this figure, all parameters are positive. Compare to Figure 5.2." width="80%" />
+<p class="caption">
+Figure 10.2: A linear model with two explanatory variables each with two levels. ‘Variable 1’ has levels ‘A’ and ‘B’ and ‘Variable 2’ has levels ‘a’ and ‘b’. Thus there are 2 <span class="math inline">\(\times\)</span> 2 = 4 groups: Aa, Ab, Ba and Bb. The measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span> and the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span>. The residuals are not indicated. The estimated model parameters are indicated: <span class="math inline">\(\beta_{0}\)</span> is the mean of group Aa; <span class="math inline">\(\beta_{1}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> to get the mean of group Ab; <span class="math inline">\(\beta_{2}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> to get the mean of group Ba; and <span class="math inline">\(\beta_{3}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> in addition to <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> to get the mean of group Bb. In this figure, all parameters are positive. Compare to Figure <a href="what-are-linear-models.html#fig:lm-annotated">5.2</a>.
+</p>
+</div>
+<div class="key">
+<p>The intercept, <span class="math inline">\(\beta_{0}\)</span>is the response when both explanatory variable is at their first group and all the other <span class="math inline">\(\beta s\)</span> are given relative to this. The interaction parameters give the effect of the combination in addition to the sum of their independent effects</p>
+</div>
+</div>
+<div id="applying-and-interpreting-lm" class="section level2">
+<h2><span class="header-section-number">10.5</span> Applying and interpreting <code>lm()</code></h2>
+<p>The lm() function is applied to the periwinkle example as follows:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="two-way-anova-revisit.html#cb57-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> periwinkle, para <span class="op">~</span><span class="st"> </span>season <span class="op">*</span><span class="st"> </span>species)</span></code></pre></div>
+<p>Printing <code>mod</code> to the console gives us the estimated model parameters (coefficients):</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="two-way-anova-revisit.html#cb58-1"></a>mod</span>
+<span id="cb58-2"><a href="two-way-anova-revisit.html#cb58-2"></a><span class="co"># </span></span>
+<span id="cb58-3"><a href="two-way-anova-revisit.html#cb58-3"></a><span class="co"># Call:</span></span>
+<span id="cb58-4"><a href="two-way-anova-revisit.html#cb58-4"></a><span class="co"># lm(formula = para ~ season * species, data = periwinkle)</span></span>
+<span id="cb58-5"><a href="two-way-anova-revisit.html#cb58-5"></a><span class="co"># </span></span>
+<span id="cb58-6"><a href="two-way-anova-revisit.html#cb58-6"></a><span class="co"># Coefficients:</span></span>
+<span id="cb58-7"><a href="two-way-anova-revisit.html#cb58-7"></a><span class="co">#                            (Intercept)                            seasonSummer  </span></span>
+<span id="cb58-8"><a href="two-way-anova-revisit.html#cb58-8"></a><span class="co">#                                  56.48                                   16.44  </span></span>
+<span id="cb58-9"><a href="two-way-anova-revisit.html#cb58-9"></a><span class="co">#              speciesLittorina littorea  seasonSummer:speciesLittorina littorea  </span></span>
+<span id="cb58-10"><a href="two-way-anova-revisit.html#cb58-10"></a><span class="co">#                                   7.28                                  -10.76</span></span></code></pre></div>
+The equation for the model is:
+<center>
+<span class="math inline">\(para\)</span> = 56.48 + 16.44<span class="math inline">\(speciesLittorina littorea\)</span> + 7.28<span class="math inline">\(seasonSummer:speciesLittorina littorea\)</span>
+</center>
+<p>The first group of <code>season</code> is <code>Spring</code> and the first group of <code>species</code> is <code>Littorina brevicula</code>so <span class="math inline">\(\beta_{0}\)</span> is the mean of <em>L.brevicula</em> in the spring, 56.48.</p>
+<p><span class="math inline">\(\beta_{1}\)</span> is the coefficient labelled <code>seasonSummer</code> and means when the variable <code>season</code> takes the value <code>Summer</code>, <span class="math inline">\(\beta_{1}\)</span> must be added to <span class="math inline">\(\beta_{0}\)</span> - the mean of <em>L.brevicula</em> in the summer is <span class="math inline">\(\beta_{0}+\beta_{1}\)</span> = 56.48 <span class="math inline">\(+\)</span> 16.44 <span class="math inline">\(=\)</span> 72.92.<br />
+The coefficient labelled <code>speciesLittorina littorea</code> is <span class="math inline">\(\beta_{2}\)</span>. When species becomes <code>Littorina littorea</code>, <span class="math inline">\(\beta_{1}\)</span> must be added to <span class="math inline">\(\beta_{0}\)</span> thus the mean of <em>L.littorea</em> in spring is <span class="math inline">\(\beta_{0}+\beta_{2}\)</span> = 56.48 <span class="math inline">\(+\)</span> 7.28 <span class="math inline">\(=\)</span> 63.76.
+If both <code>season</code> becomes <code>Summer</code> and species becomes <code>Littorina littorea</code> you would expect the effect to be <span class="math inline">\(\beta_{0}+\beta_{1}+\beta_{2}\)</span>. The coefficient labelled <code>seasonSummer:speciesLittorina littorea</code>, <span class="math inline">\(\beta_{3}\)</span> is the effect that is <em>additional</em> to that sum. An interaction is when combined effect of two variables is more than just adding the independent effects. The mean of <em>L.littorea</em> in summer is <span class="math inline">\(\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}\)</span> = 56.48 <span class="math inline">\(+\)</span> <code>rb1</code> <span class="math inline">\(+\)</span> 7.28 <span class="math inline">\(+\)</span> <code>rb3</code> <span class="math inline">\(=\)</span> 69.44.</p>
+<p>More information including statistical tests of the model and its parameters is obtained by using <code>summary()</code>:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="two-way-anova-revisit.html#cb59-1"></a><span class="kw">summary</span>(mod)</span>
+<span id="cb59-2"><a href="two-way-anova-revisit.html#cb59-2"></a><span class="co"># </span></span>
+<span id="cb59-3"><a href="two-way-anova-revisit.html#cb59-3"></a><span class="co"># Call:</span></span>
+<span id="cb59-4"><a href="two-way-anova-revisit.html#cb59-4"></a><span class="co"># lm(formula = para ~ season * species, data = periwinkle)</span></span>
+<span id="cb59-5"><a href="two-way-anova-revisit.html#cb59-5"></a><span class="co"># </span></span>
+<span id="cb59-6"><a href="two-way-anova-revisit.html#cb59-6"></a><span class="co"># Residuals:</span></span>
+<span id="cb59-7"><a href="two-way-anova-revisit.html#cb59-7"></a><span class="co">#    Min     1Q Median     3Q    Max </span></span>
+<span id="cb59-8"><a href="two-way-anova-revisit.html#cb59-8"></a><span class="co"># -20.76  -6.13  -1.10   8.12  28.08 </span></span>
+<span id="cb59-9"><a href="two-way-anova-revisit.html#cb59-9"></a><span class="co"># </span></span>
+<span id="cb59-10"><a href="two-way-anova-revisit.html#cb59-10"></a><span class="co"># Coefficients:</span></span>
+<span id="cb59-11"><a href="two-way-anova-revisit.html#cb59-11"></a><span class="co">#                                        Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb59-12"><a href="two-way-anova-revisit.html#cb59-12"></a><span class="co"># (Intercept)                               56.48       2.19   25.83  &lt; 2e-16 ***</span></span>
+<span id="cb59-13"><a href="two-way-anova-revisit.html#cb59-13"></a><span class="co"># seasonSummer                              16.44       3.09    5.32  6.9e-07 ***</span></span>
+<span id="cb59-14"><a href="two-way-anova-revisit.html#cb59-14"></a><span class="co"># speciesLittorina littorea                  7.28       3.09    2.35    0.021 *  </span></span>
+<span id="cb59-15"><a href="two-way-anova-revisit.html#cb59-15"></a><span class="co"># seasonSummer:speciesLittorina littorea   -10.76       4.37   -2.46    0.016 *  </span></span>
+<span id="cb59-16"><a href="two-way-anova-revisit.html#cb59-16"></a><span class="co"># ---</span></span>
+<span id="cb59-17"><a href="two-way-anova-revisit.html#cb59-17"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb59-18"><a href="two-way-anova-revisit.html#cb59-18"></a><span class="co"># </span></span>
+<span id="cb59-19"><a href="two-way-anova-revisit.html#cb59-19"></a><span class="co"># Residual standard error: 10.9 on 96 degrees of freedom</span></span>
+<span id="cb59-20"><a href="two-way-anova-revisit.html#cb59-20"></a><span class="co"># Multiple R-squared:  0.252,	Adjusted R-squared:  0.229 </span></span>
+<span id="cb59-21"><a href="two-way-anova-revisit.html#cb59-21"></a><span class="co"># F-statistic: 10.8 on 3 and 96 DF,  p-value: 3.55e-06</span></span></code></pre></div>
+<p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span>, <span class="math inline">\(\beta_{1}\)</span>, <span class="math inline">\(\beta_{2}\)</span> and <span class="math inline">\(\beta_{3}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of <em>L.brevicula</em> in the spring is 56.48 <span class="math inline">\(\pm\)</span> 2.187 and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between the <em>L.brevicula</em> in the spring and <em>L.brevicula</em> in the summer 16.44 <span class="math inline">\(\pm\)</span> 3.093 and also differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between <em>L.brevicula</em> in the spring and <em>L.littorea</em> in the spring, 7.28 <span class="math inline">\(\pm\)</span> 3.093 differs significantly from zero (<span class="math inline">\(p\)</span> = 0.021).</p>
+<p>The proportion of the variance in parasite load explained by the model is 0.252 and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> &lt; 0.001).</p>
+<p>As we are fitting three parameters in addition to the intercept our <em>p</em>-value for the model and the <em>p</em>-values for the <span class="math inline">\(\beta\)</span> parameters differ. This was also true for <a href="one-way-anova-revisit.html#one-way-anova-revisit">one-way ANOVA</a>.</p>
+<p>Replacing the terms shown in Figure @ref(fig:gen_two_way) with the values in this example gives us <a href="two-way-anova-revisit.html#fig:periwinkle-annotated">10.3</a>.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:periwinkle-annotated"></span>
+<img src="images/peri_lm_eg.svg" alt="The annotated model with the values from the parasite load of preiwinkle example. The measured response values are in pink and the predictions are in green. The estimated model parameters are indicated: \(\beta_{0}\), the mean of L.brevicula in the spring, is 56.48; \(\beta_{1}\) is 16.44 thus the mean of L.brevicula in the summer 56.48 + 16.44 = 72.92; \(\beta_{2}\) is 7.28 thus the mean of L.littorea in the spring 56.48 + 7.28 = 72.92; and the L.littorea in the summer is \(\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}\) = 56.48 \(+\) 16.44 \(+\) 7.28 \(+\) -10.76 \(=\) 69.44. Compare to Figure 10.2." width="80%" />
+<p class="caption">
+Figure 10.3: The annotated model with the values from the parasite load of preiwinkle example. The measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span> and the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span>. The estimated model parameters are indicated: <span class="math inline">\(\beta_{0}\)</span>, the mean of <em>L.brevicula</em> in the spring, is 56.48; <span class="math inline">\(\beta_{1}\)</span> is 16.44 thus the mean of <em>L.brevicula</em> in the summer 56.48 + 16.44 = 72.92; <span class="math inline">\(\beta_{2}\)</span> is 7.28 thus the mean of <em>L.littorea</em> in the spring 56.48 + 7.28 = 72.92; and the <em>L.littorea</em> in the summer is <span class="math inline">\(\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}\)</span> = 56.48 <span class="math inline">\(+\)</span> 16.44 <span class="math inline">\(+\)</span> 7.28 <span class="math inline">\(+\)</span> -10.76 <span class="math inline">\(=\)</span> 69.44. Compare to Figure <a href="two-way-anova-revisit.html#fig:two-way-annotated">10.2</a>.
+</p>
+</div>
+</div>
+<div id="getting-predictions-from-the-model" class="section level2">
+<h2><span class="header-section-number">10.6</span> Getting predictions from the model</h2>
+<p>We already have the predictions for all possible combinations of values of the explanatory variables because both are categorical.</p>
+<p>However, the code for using predict is included here, as it was in the previous two chapters chapter, because it will make it easier to understand more complex examples later. We need to create a dataframe of values for which we want predictions and pass it as an argument to the <code>predict()</code> function.</p>
+<p>To create a dataframe with one column of Species values:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="two-way-anova-revisit.html#cb60-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Littorina brevicula&quot;</span>, <span class="st">&quot;Littorina littorea&quot;</span>), <span class="dt">each =</span> <span class="dv">2</span>),</span>
+<span id="cb60-2"><a href="two-way-anova-revisit.html#cb60-2"></a>                          <span class="dt">season =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Spring&quot;</span>, <span class="st">&quot;Summer&quot;</span>), <span class="dt">times =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="key">
+<p>Remember! The variable and its values have to exactly match those in the model.</p>
+</div>
+<p>The to get the predicted myoglobin content for the three species:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="two-way-anova-revisit.html#cb61-1"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for)</span></code></pre></div>
+</div>
+<div id="checking-assumptions" class="section level2">
+<h2><span class="header-section-number">10.7</span> Checking assumptions</h2>
+<p>The two assumptions of the model can be checked using diagnostic plots. The Q-Q plot is obtained with:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="two-way-anova-revisit.html#cb62-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
+The residual seem to be normally distributed.</p>
+<p>Let’s look at the Residuals vs Fitted plot:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="two-way-anova-revisit.html#cb63-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
+<p>The residuals are equally spread around a horizontal line; the assumptions seem to be met.</p>
+</div>
+<div id="post-hoc-testing-for-lm" class="section level2">
+<h2><span class="header-section-number">10.8</span> Post-hoc testing for <code>lm()</code></h2>
+<p>Instead of using the <code>TukeyHSD()</code> we will again use the <code>glht()</code> function from the <code>multcomp</code> package <span class="citation">(Hothorn, Bretz, and Westfall <a href="#ref-multcomp" role="doc-biblioref">2008</a>)</span>.</p>
+<p>A relatively simple way to make all the pairwise comparisons is to create a new factor variable that indicates membership of one of the four groups. We can do that with the <code>interaction()</code> function:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="two-way-anova-revisit.html#cb64-1"></a>periwinkle<span class="op">$</span>seasxspp &lt;-<span class="st"> </span><span class="kw">interaction</span>(periwinkle<span class="op">$</span>season, periwinkle<span class="op">$</span>species)</span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+para
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+season
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+species
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+seasxspp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Spring.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:left;">
+Spring
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Spring.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+53
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+56
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+88
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina brevicula
+</td>
+<td style="text-align:left;">
+Summer.Littorina brevicula
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+76
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:left;">
+Littorina littorea
+</td>
+<td style="text-align:left;">
+Summer.Littorina littorea
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We then rebuild the model using this one variable:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="two-way-anova-revisit.html#cb65-1"></a>mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> periwinkle, para <span class="op">~</span><span class="st"> </span>seasxspp)</span></code></pre></div>
+<p>We have done a one-way ANOVA to obtain our post-hoc comparisons. The parameters in this model will be like those in a one-way ANOVA with <span class="math inline">\(\beta_{3}\)</span> giving the amount you add to the intercept to get the fourth group mean.
+Then load the package:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="two-way-anova-revisit.html#cb66-1"></a><span class="kw">library</span>(multcomp)</span></code></pre></div>
+<p>We have to specify our contrasts as a matrix with the <code>linfct</code> (linear functions) argument and there is a multiple comparisons function, <code>mcp()</code>, to help.</p>
+<p>This is the whole command:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="two-way-anova-revisit.html#cb67-1"></a>mod_mc &lt;-<span class="st"> </span><span class="kw">glht</span>(mod2, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">seasxspp =</span> <span class="st">&quot;Tukey&quot;</span>))</span></code></pre></div>
+<p>You can read this as “do all of the pairwise comparisons between each group in <code>seasxspp</code> in the model <code>mod</code> using the Tukey test”.</p>
+<p>We view the results with <code>summary()</code>:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="two-way-anova-revisit.html#cb68-1"></a><span class="kw">summary</span>(mod_mc)</span>
+<span id="cb68-2"><a href="two-way-anova-revisit.html#cb68-2"></a><span class="co"># </span></span>
+<span id="cb68-3"><a href="two-way-anova-revisit.html#cb68-3"></a><span class="co"># 	 Simultaneous Tests for General Linear Hypotheses</span></span>
+<span id="cb68-4"><a href="two-way-anova-revisit.html#cb68-4"></a><span class="co"># </span></span>
+<span id="cb68-5"><a href="two-way-anova-revisit.html#cb68-5"></a><span class="co"># Multiple Comparisons of Means: Tukey Contrasts</span></span>
+<span id="cb68-6"><a href="two-way-anova-revisit.html#cb68-6"></a><span class="co"># </span></span>
+<span id="cb68-7"><a href="two-way-anova-revisit.html#cb68-7"></a><span class="co"># </span></span>
+<span id="cb68-8"><a href="two-way-anova-revisit.html#cb68-8"></a><span class="co"># Fit: lm(formula = para ~ seasxspp, data = periwinkle)</span></span>
+<span id="cb68-9"><a href="two-way-anova-revisit.html#cb68-9"></a><span class="co"># </span></span>
+<span id="cb68-10"><a href="two-way-anova-revisit.html#cb68-10"></a><span class="co"># Linear Hypotheses:</span></span>
+<span id="cb68-11"><a href="two-way-anova-revisit.html#cb68-11"></a><span class="co">#                                                              Estimate</span></span>
+<span id="cb68-12"><a href="two-way-anova-revisit.html#cb68-12"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula == 0    16.44</span></span>
+<span id="cb68-13"><a href="two-way-anova-revisit.html#cb68-13"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula == 0      7.28</span></span>
+<span id="cb68-14"><a href="two-way-anova-revisit.html#cb68-14"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula == 0     12.96</span></span>
+<span id="cb68-15"><a href="two-way-anova-revisit.html#cb68-15"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula == 0     -9.16</span></span>
+<span id="cb68-16"><a href="two-way-anova-revisit.html#cb68-16"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula == 0     -3.48</span></span>
+<span id="cb68-17"><a href="two-way-anova-revisit.html#cb68-17"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea == 0       5.68</span></span>
+<span id="cb68-18"><a href="two-way-anova-revisit.html#cb68-18"></a><span class="co">#                                                              Std. Error t value</span></span>
+<span id="cb68-19"><a href="two-way-anova-revisit.html#cb68-19"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula == 0       3.09    5.32</span></span>
+<span id="cb68-20"><a href="two-way-anova-revisit.html#cb68-20"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula == 0        3.09    2.35</span></span>
+<span id="cb68-21"><a href="two-way-anova-revisit.html#cb68-21"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula == 0        3.09    4.19</span></span>
+<span id="cb68-22"><a href="two-way-anova-revisit.html#cb68-22"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula == 0        3.09   -2.96</span></span>
+<span id="cb68-23"><a href="two-way-anova-revisit.html#cb68-23"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula == 0        3.09   -1.13</span></span>
+<span id="cb68-24"><a href="two-way-anova-revisit.html#cb68-24"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea == 0         3.09    1.84</span></span>
+<span id="cb68-25"><a href="two-way-anova-revisit.html#cb68-25"></a><span class="co">#                                                              Pr(&gt;|t|)    </span></span>
+<span id="cb68-26"><a href="two-way-anova-revisit.html#cb68-26"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula == 0   &lt;0.001 ***</span></span>
+<span id="cb68-27"><a href="two-way-anova-revisit.html#cb68-27"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula == 0     0.093 .  </span></span>
+<span id="cb68-28"><a href="two-way-anova-revisit.html#cb68-28"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula == 0    &lt;0.001 ***</span></span>
+<span id="cb68-29"><a href="two-way-anova-revisit.html#cb68-29"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula == 0     0.020 *  </span></span>
+<span id="cb68-30"><a href="two-way-anova-revisit.html#cb68-30"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula == 0     0.675    </span></span>
+<span id="cb68-31"><a href="two-way-anova-revisit.html#cb68-31"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea == 0      0.263    </span></span>
+<span id="cb68-32"><a href="two-way-anova-revisit.html#cb68-32"></a><span class="co"># ---</span></span>
+<span id="cb68-33"><a href="two-way-anova-revisit.html#cb68-33"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb68-34"><a href="two-way-anova-revisit.html#cb68-34"></a><span class="co"># (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
+<p>The results are the same as for using <code>TukeyHSD()</code> as we have done the same tests using a different function.</p>
+<p>You can see what a contrasts matrix looks like by looking at the <code>linfct</code> variable of the <code>glht</code> object. You don’t need it now but in the future you may need to specify your own constrasts matrices so let’s have a look to make a step towards understanding:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="two-way-anova-revisit.html#cb69-1"></a>mod_mc<span class="op">$</span>linfct</span>
+<span id="cb69-2"><a href="two-way-anova-revisit.html#cb69-2"></a><span class="co">#                                                         (Intercept)</span></span>
+<span id="cb69-3"><a href="two-way-anova-revisit.html#cb69-3"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula           0</span></span>
+<span id="cb69-4"><a href="two-way-anova-revisit.html#cb69-4"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula            0</span></span>
+<span id="cb69-5"><a href="two-way-anova-revisit.html#cb69-5"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula            0</span></span>
+<span id="cb69-6"><a href="two-way-anova-revisit.html#cb69-6"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula            0</span></span>
+<span id="cb69-7"><a href="two-way-anova-revisit.html#cb69-7"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula            0</span></span>
+<span id="cb69-8"><a href="two-way-anova-revisit.html#cb69-8"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea             0</span></span>
+<span id="cb69-9"><a href="two-way-anova-revisit.html#cb69-9"></a><span class="co">#                                                         seasxsppSummer.Littorina brevicula</span></span>
+<span id="cb69-10"><a href="two-way-anova-revisit.html#cb69-10"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula                                  1</span></span>
+<span id="cb69-11"><a href="two-way-anova-revisit.html#cb69-11"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula                                   0</span></span>
+<span id="cb69-12"><a href="two-way-anova-revisit.html#cb69-12"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula                                   0</span></span>
+<span id="cb69-13"><a href="two-way-anova-revisit.html#cb69-13"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula                                  -1</span></span>
+<span id="cb69-14"><a href="two-way-anova-revisit.html#cb69-14"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula                                  -1</span></span>
+<span id="cb69-15"><a href="two-way-anova-revisit.html#cb69-15"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea                                    0</span></span>
+<span id="cb69-16"><a href="two-way-anova-revisit.html#cb69-16"></a><span class="co">#                                                         seasxsppSpring.Littorina littorea</span></span>
+<span id="cb69-17"><a href="two-way-anova-revisit.html#cb69-17"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula                                 0</span></span>
+<span id="cb69-18"><a href="two-way-anova-revisit.html#cb69-18"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula                                  1</span></span>
+<span id="cb69-19"><a href="two-way-anova-revisit.html#cb69-19"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula                                  0</span></span>
+<span id="cb69-20"><a href="two-way-anova-revisit.html#cb69-20"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula                                  1</span></span>
+<span id="cb69-21"><a href="two-way-anova-revisit.html#cb69-21"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula                                  0</span></span>
+<span id="cb69-22"><a href="two-way-anova-revisit.html#cb69-22"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea                                  -1</span></span>
+<span id="cb69-23"><a href="two-way-anova-revisit.html#cb69-23"></a><span class="co">#                                                         seasxsppSummer.Littorina littorea</span></span>
+<span id="cb69-24"><a href="two-way-anova-revisit.html#cb69-24"></a><span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula                                 0</span></span>
+<span id="cb69-25"><a href="two-way-anova-revisit.html#cb69-25"></a><span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula                                  0</span></span>
+<span id="cb69-26"><a href="two-way-anova-revisit.html#cb69-26"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula                                  1</span></span>
+<span id="cb69-27"><a href="two-way-anova-revisit.html#cb69-27"></a><span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula                                  0</span></span>
+<span id="cb69-28"><a href="two-way-anova-revisit.html#cb69-28"></a><span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula                                  1</span></span>
+<span id="cb69-29"><a href="two-way-anova-revisit.html#cb69-29"></a><span class="co"># Summer.Littorina littorea - Spring.Littorina littorea                                   1</span></span>
+<span id="cb69-30"><a href="two-way-anova-revisit.html#cb69-30"></a><span class="co"># attr(,&quot;type&quot;)</span></span>
+<span id="cb69-31"><a href="two-way-anova-revisit.html#cb69-31"></a><span class="co"># [1] &quot;Tukey&quot;</span></span></code></pre></div>
+<p>It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
+The numbers are how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.</p>
+<ul>
+<li>Spring.Littorina brevicula mean is <span class="math inline">\(\beta_{0}\)</span></li>
+<li>Summer.Littorina brevicula mean is <span class="math inline">\(\beta_{0} + \beta_{1}\)</span></li>
+<li>Spring.Littorina littorea <span class="math inline">\(\beta_{0} + \beta_{2}\)</span></li>
+<li>Summer.Littorina littorea <span class="math inline">\(\beta_{0} + \beta_{3}\)</span></li>
+</ul>
+<p>Therefore:
+* Summer.Littorina brevicula - Spring.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}\)</span> and there is a one in the <code>seasxsppSummer.Littorina brevicula</code> column and zeros else where
+* Spring.Littorina littorea - Spring.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}\)</span> and there is a one in the <code>seasxsppSpring.Littorina littorea</code> column and zeros else where
+* Summer.Littorina littorea - Spring.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{3} - \beta_{0} = \beta_{3}\)</span> and there is a 1 in the the <code>seasxsppSummer.Littorina littorea</code> column and zeros else where
+* Spring.Littorina littorea - Summer.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}\)</span> and there is a 1 in the the <code>seasxsppSpring.Littorina littorea</code> column and a -1 in the <code>seasxsppSummer.Littorina brevicula</code> column
+* Summer.Littorina littorea - Summer.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{1}) = \beta_{3} - \beta_{1}\)</span> and there is a 1 in the the <code>seasxsppSummer.Littorina littorea</code> column and a -1 in the <code>seasxsppSummer.Littorina brevicula</code> column
+* Summer.Littorina littorea - Spring.Littorina littorea is: <span class="math inline">\(\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{2}) = \beta_{3} + \beta_{2}\)</span> and there is a 1 in the the <code>seasxsppSummer.Littorina littorea</code> column and column and a -1 in the <code>seasxsppSpring.Littorina littorea</code> colum</p>
+</div>
+<div id="creating-a-figure" class="section level2">
+<h2><span class="header-section-number">10.9</span> Creating a figure</h2>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="two-way-anova-revisit.html#cb70-1"></a><span class="co">#summarise the data </span></span>
+<span id="cb70-2"><a href="two-way-anova-revisit.html#cb70-2"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb70-3"><a href="two-way-anova-revisit.html#cb70-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> periwinkle, <span class="kw">aes</span>(<span class="dt">x =</span> season,</span>
+<span id="cb70-4"><a href="two-way-anova-revisit.html#cb70-4"></a>                                    <span class="dt">y =</span> para,</span>
+<span id="cb70-5"><a href="two-way-anova-revisit.html#cb70-5"></a>                                    <span class="dt">colour =</span> species),</span>
+<span id="cb70-6"><a href="two-way-anova-revisit.html#cb70-6"></a>             <span class="dt">position =</span> <span class="kw">position_jitterdodge</span>(<span class="dt">dodge.width =</span> <span class="dv">1</span>,</span>
+<span id="cb70-7"><a href="two-way-anova-revisit.html#cb70-7"></a>                                             <span class="dt">jitter.width =</span> <span class="fl">0.4</span>,</span>
+<span id="cb70-8"><a href="two-way-anova-revisit.html#cb70-8"></a>                                             <span class="dt">jitter.height =</span> <span class="dv">0</span>),</span>
+<span id="cb70-9"><a href="two-way-anova-revisit.html#cb70-9"></a>             <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb70-10"><a href="two-way-anova-revisit.html#cb70-10"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> peri_summary, </span>
+<span id="cb70-11"><a href="two-way-anova-revisit.html#cb70-11"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> season, <span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se, <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se, <span class="dt">group =</span> species),</span>
+<span id="cb70-12"><a href="two-way-anova-revisit.html#cb70-12"></a>                <span class="dt">width =</span> <span class="fl">0.4</span>, <span class="dt">size =</span> <span class="dv">1</span>,</span>
+<span id="cb70-13"><a href="two-way-anova-revisit.html#cb70-13"></a>                <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="dv">1</span>)) <span class="op">+</span></span>
+<span id="cb70-14"><a href="two-way-anova-revisit.html#cb70-14"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> peri_summary, </span>
+<span id="cb70-15"><a href="two-way-anova-revisit.html#cb70-15"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> season, <span class="dt">ymin =</span> mean, <span class="dt">ymax =</span> mean, <span class="dt">group =</span> species),</span>
+<span id="cb70-16"><a href="two-way-anova-revisit.html#cb70-16"></a>                <span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">size =</span> <span class="dv">1</span>,</span>
+<span id="cb70-17"><a href="two-way-anova-revisit.html#cb70-17"></a>                <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="dv">1</span>) ) <span class="op">+</span></span>
+<span id="cb70-18"><a href="two-way-anova-revisit.html#cb70-18"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Season&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-19"><a href="two-way-anova-revisit.html#cb70-19"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Number of parasites&quot;</span>,</span>
+<span id="cb70-20"><a href="two-way-anova-revisit.html#cb70-20"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb70-21"><a href="two-way-anova-revisit.html#cb70-21"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">128</span>)) <span class="op">+</span></span>
+<span id="cb70-22"><a href="two-way-anova-revisit.html#cb70-22"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> pal4[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>],</span>
+<span id="cb70-23"><a href="two-way-anova-revisit.html#cb70-23"></a>                      <span class="dt">labels =</span> <span class="kw">c</span>(<span class="kw">bquote</span>(<span class="kw">italic</span>(<span class="st">&quot;L.brevicula&quot;</span>)),</span>
+<span id="cb70-24"><a href="two-way-anova-revisit.html#cb70-24"></a>                                 <span class="kw">bquote</span>(<span class="kw">italic</span>(<span class="st">&quot;L.littorea&quot;</span>)))) <span class="op">+</span></span>
+<span id="cb70-25"><a href="two-way-anova-revisit.html#cb70-25"></a><span class="st">  </span><span class="co"># Spring:Littorina brevicula-Summer:Littorina littorea *</span></span>
+<span id="cb70-26"><a href="two-way-anova-revisit.html#cb70-26"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb70-27"><a href="two-way-anova-revisit.html#cb70-27"></a>           <span class="dt">x =</span> <span class="fl">1.25</span>, <span class="dt">xend =</span> <span class="fl">1.75</span>, </span>
+<span id="cb70-28"><a href="two-way-anova-revisit.html#cb70-28"></a>           <span class="dt">y =</span> <span class="dv">110</span>, <span class="dt">yend =</span> <span class="dv">110</span>,</span>
+<span id="cb70-29"><a href="two-way-anova-revisit.html#cb70-29"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-30"><a href="two-way-anova-revisit.html#cb70-30"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb70-31"><a href="two-way-anova-revisit.html#cb70-31"></a>           <span class="dt">x =</span> <span class="fl">1.25</span>, <span class="dt">xend =</span> <span class="fl">1.25</span>,</span>
+<span id="cb70-32"><a href="two-way-anova-revisit.html#cb70-32"></a>           <span class="dt">y =</span> <span class="dv">110</span>, <span class="dt">yend =</span> <span class="dv">105</span>,</span>
+<span id="cb70-33"><a href="two-way-anova-revisit.html#cb70-33"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-34"><a href="two-way-anova-revisit.html#cb70-34"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb70-35"><a href="two-way-anova-revisit.html#cb70-35"></a>           <span class="dt">x =</span> <span class="fl">1.75</span>, <span class="dt">xend =</span> <span class="fl">1.75</span>,</span>
+<span id="cb70-36"><a href="two-way-anova-revisit.html#cb70-36"></a>           <span class="dt">y =</span> <span class="dv">110</span>, <span class="dt">yend =</span> <span class="dv">105</span>,</span>
+<span id="cb70-37"><a href="two-way-anova-revisit.html#cb70-37"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-38"><a href="two-way-anova-revisit.html#cb70-38"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, </span>
+<span id="cb70-39"><a href="two-way-anova-revisit.html#cb70-39"></a>           <span class="dt">x =</span> <span class="fl">1.5</span>,  <span class="dt">y =</span> <span class="dv">112</span>,</span>
+<span id="cb70-40"><a href="two-way-anova-revisit.html#cb70-40"></a>           <span class="dt">label =</span> <span class="st">&quot;***&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
+<span id="cb70-41"><a href="two-way-anova-revisit.html#cb70-41"></a><span class="st">  </span><span class="co"># Summer:Littorina brevicula-Spring:Littorina littorea: ***</span></span>
+<span id="cb70-42"><a href="two-way-anova-revisit.html#cb70-42"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb70-43"><a href="two-way-anova-revisit.html#cb70-43"></a>           <span class="dt">x =</span> <span class="fl">1.25</span>, <span class="dt">xend =</span> <span class="fl">0.75</span>,</span>
+<span id="cb70-44"><a href="two-way-anova-revisit.html#cb70-44"></a>           <span class="dt">y =</span> <span class="dv">90</span>, <span class="dt">yend =</span> <span class="dv">90</span>,</span>
+<span id="cb70-45"><a href="two-way-anova-revisit.html#cb70-45"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-46"><a href="two-way-anova-revisit.html#cb70-46"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb70-47"><a href="two-way-anova-revisit.html#cb70-47"></a>           <span class="dt">x =</span> <span class="fl">1.25</span>, <span class="dt">xend =</span> <span class="fl">1.25</span>,</span>
+<span id="cb70-48"><a href="two-way-anova-revisit.html#cb70-48"></a>           <span class="dt">y =</span> <span class="dv">90</span>, <span class="dt">yend =</span> <span class="dv">85</span>,</span>
+<span id="cb70-49"><a href="two-way-anova-revisit.html#cb70-49"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-50"><a href="two-way-anova-revisit.html#cb70-50"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>, </span>
+<span id="cb70-51"><a href="two-way-anova-revisit.html#cb70-51"></a>           <span class="dt">x =</span> <span class="fl">0.75</span>, <span class="dt">xend =</span> <span class="fl">0.75</span>,</span>
+<span id="cb70-52"><a href="two-way-anova-revisit.html#cb70-52"></a>           <span class="dt">y =</span> <span class="dv">90</span>, <span class="dt">yend =</span> <span class="dv">85</span>,</span>
+<span id="cb70-53"><a href="two-way-anova-revisit.html#cb70-53"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-54"><a href="two-way-anova-revisit.html#cb70-54"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">1</span>,  <span class="dt">y =</span> <span class="dv">92</span>,</span>
+<span id="cb70-55"><a href="two-way-anova-revisit.html#cb70-55"></a>           <span class="dt">label =</span> <span class="st">&quot;*&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
+<span id="cb70-56"><a href="two-way-anova-revisit.html#cb70-56"></a><span class="co"># Summer:Littorina littorea-Spring:Littorina littorea: ***</span></span>
+<span id="cb70-57"><a href="two-way-anova-revisit.html#cb70-57"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>,</span>
+<span id="cb70-58"><a href="two-way-anova-revisit.html#cb70-58"></a>           <span class="dt">x =</span> <span class="fl">0.75</span>, <span class="dt">xend =</span> <span class="fl">1.75</span>,</span>
+<span id="cb70-59"><a href="two-way-anova-revisit.html#cb70-59"></a>           <span class="dt">y =</span> <span class="dv">120</span>, <span class="dt">yend =</span> <span class="dv">120</span>,</span>
+<span id="cb70-60"><a href="two-way-anova-revisit.html#cb70-60"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-61"><a href="two-way-anova-revisit.html#cb70-61"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>,</span>
+<span id="cb70-62"><a href="two-way-anova-revisit.html#cb70-62"></a>           <span class="dt">x =</span> <span class="fl">0.75</span>, <span class="dt">xend =</span> <span class="fl">0.75</span>,</span>
+<span id="cb70-63"><a href="two-way-anova-revisit.html#cb70-63"></a>           <span class="dt">y =</span> <span class="dv">120</span>, <span class="dt">yend =</span> <span class="dv">115</span>,</span>
+<span id="cb70-64"><a href="two-way-anova-revisit.html#cb70-64"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-65"><a href="two-way-anova-revisit.html#cb70-65"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;segment&quot;</span>,</span>
+<span id="cb70-66"><a href="two-way-anova-revisit.html#cb70-66"></a>           <span class="dt">x =</span> <span class="fl">1.75</span>, <span class="dt">xend =</span> <span class="fl">1.75</span>,</span>
+<span id="cb70-67"><a href="two-way-anova-revisit.html#cb70-67"></a>           <span class="dt">y =</span> <span class="dv">120</span>, <span class="dt">yend =</span> <span class="dv">115</span>,</span>
+<span id="cb70-68"><a href="two-way-anova-revisit.html#cb70-68"></a>           <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb70-69"><a href="two-way-anova-revisit.html#cb70-69"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="fl">1.25</span>,  <span class="dt">y =</span> <span class="dv">123</span>,</span>
+<span id="cb70-70"><a href="two-way-anova-revisit.html#cb70-70"></a>           <span class="dt">label =</span> <span class="st">&quot;***&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
+<span id="cb70-71"><a href="two-way-anova-revisit.html#cb70-71"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
+<span id="cb70-72"><a href="two-way-anova-revisit.html#cb70-72"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb70-73"><a href="two-way-anova-revisit.html#cb70-73"></a>        <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.85</span>, <span class="fl">0.98</span>)) </span></code></pre></div>
+<p><img src="two-way-anova-revisit_files/figure-html/fig-two-anova-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="reporting-the-results" class="section level2">
+<h2><span class="header-section-number">10.10</span> Reporting the results</h2>
+<p><em>to add: principle, sig, magnitude and direction of effects, test result, figure</em></p>
+<p>See figure <a href="two-way-anova-revisit.html#fig:fig-two-anova-report">10.4</a>.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:fig-two-anova-report"></span>
+<img src="two-way-anova-revisit_files/figure-html/fig-two-anova-report-1.png" alt="periwinkles blah blah" width="60%" />
+<p class="caption">
+Figure 10.4: periwinkles blah blah
+</p>
+</div>
+
+</div>
+</div>
+
+
+
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-multcomp">
+<p>Hothorn, Torsten, Frank Bretz, and Peter Westfall. 2008. “Simultaneous Inference in General Parametric Models.” <em>Biometrical Journal</em> 50 (3): 346–63.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="one-way-anova-revisit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="glm-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/3mmaRand/singlm/edit/master/two-way-anova-revisit.Rmd",
+"text": "Make an edit suggestion"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["singlm.pdf", "singlm.epub", "https://github.com/3mmaRand/singlm/raw/master/two-way-anova-revisit.Rmd"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

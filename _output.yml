@@ -1,0 +1,28 @@
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
+bookdown::gitbook:
+  includes:
+    in_header: assets/header.html
+  highlight: tango
+  css: assets/style.css
+  config:
+    edit:
+      link: https://github.com/3mmaRand/singlm/edit/master/%s
+      text: "Make an edit suggestion"
+    toc:
+      collapse: section
+      before: |
+        <li class="toc-logo"><a href="./"><img src="images/hex-s.png"></a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    download: ["pdf", "epub", "rmd"]
+    sharing:
+      github: yes
+      facebook: no
+      twitter: yes
+      all: no

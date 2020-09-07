@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Overview | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</title>
+  <meta name="description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Overview | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://3mmarand.github.io/singlm/" />
+  <meta property="og:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+  <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="3mmaRand/singlm" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Overview | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  
+  <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+
+<meta name="author" content="Emma Rand" />
+
+
+<meta name="date" content="2020-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="two-way-anova-revisit.html"/>
+<link rel="next" href="pois-glm-overview.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="assets/book.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="assets\style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/hex-s.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#who-is-this-book-for"><i class="fa fa-check"></i><b>0.1</b> Who is this book for?</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#formatting-options"><i class="fa fa-check"></i><b>0.2</b> Formatting options</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#conventions-used-in-the-book"><i class="fa fa-check"></i><b>0.3</b> Conventions used in the book</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#approach-of-this-book"><i class="fa fa-check"></i><b>0.4</b> Approach of this book</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>0.5</b> Outline</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#following-along-with-the-examples"><i class="fa fa-check"></i><b>0.6</b> Following along with the examples</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="blue-pink-green-triadic.html"><a href="blue-pink-green-triadic.html"><i class="fa fa-check"></i><b>1</b> blue, pink, green triadic</a></li>
+<li class="chapter" data-level="2" data-path="blue-pink-green-triadic-1.html"><a href="blue-pink-green-triadic-1.html"><i class="fa fa-check"></i><b>2</b> blue, pink, green triadic</a></li>
+<li class="chapter" data-level="3" data-path="blue-pink-green-triadic-2.html"><a href="blue-pink-green-triadic-2.html"><i class="fa fa-check"></i><b>3</b> blue, pink, green triadic</a><ul>
+<li class="chapter" data-level="3.1" data-path="blue-pink-green-triadic-2.html"><a href="blue-pink-green-triadic-2.html#overview-of-the-chapter-contents"><i class="fa fa-check"></i><b>3.1</b> Overview of the chapter contents</a></li>
+<li class="chapter" data-level="3.2" data-path="blue-pink-green-triadic-2.html"><a href="blue-pink-green-triadic-2.html#software-information"><i class="fa fa-check"></i><b>3.2</b> Software information</a></li>
+</ul></li>
+<li class="part"><span><b>I INTRODUCTION</b></span></li>
+<li class="chapter" data-level="4" data-path="revision.html"><a href="revision.html"><i class="fa fa-check"></i><b>4</b> Revision of your Introductory class</a></li>
+<li class="chapter" data-level="5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html"><i class="fa fa-check"></i><b>5</b> What are General Linear Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#overview"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>5.2</b> Model fitting</a></li>
+<li class="chapter" data-level="5.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>5.3</b> More than one explanatory variable</a></li>
+<li class="chapter" data-level="5.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#general-linear-models-in-r"><i class="fa fa-check"></i><b>5.4</b> General linear models in R</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>5.4.1</b> Building and viewing</a></li>
+<li class="chapter" data-level="5.4.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>5.4.2</b> Getting predictions</a></li>
+<li class="chapter" data-level="5.4.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>5.4.3</b> Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>5.5</b> Reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>6</b> Terminolgy</a><ul>
+<li class="chapter" data-level="6.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>6.1</b> General? Generalised?</a></li>
+<li class="chapter" data-level="6.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>6.2</b> Testing modelling fitting</a></li>
+<li class="chapter" data-level="6.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>6.3</b> paramters, coefficients estimates</a></li>
+</ul></li>
+<li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
+<li class="chapter" data-level="7" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>7</b> Single linear regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>7.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="7.2" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>7.2</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="7.3" data-path="single-regression.html"><a href="single-regression.html#link-to-chapter-2.1"><i class="fa fa-check"></i><b>7.3</b> Link to Chapter 2.1</a></li>
+<li class="chapter" data-level="7.4" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>7.4</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="7.5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>7.5</b> Checking assumptions</a></li>
+<li class="chapter" data-level="7.6" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>7.6</b> Creating a figure</a></li>
+<li class="chapter" data-level="7.7" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>7.7</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html"><i class="fa fa-check"></i><b>8</b> <em>t</em>-tests revisited</a><ul>
+<li class="chapter" data-level="8.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>8.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="8.2" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t.test-output-reminder"><i class="fa fa-check"></i><b>8.2</b> <code>t.test()</code> output reminder</a></li>
+<li class="chapter" data-level="8.3" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t-tests-as-linear-models"><i class="fa fa-check"></i><b>8.3</b> <em>t</em>-tests as linear models</a></li>
+<li class="chapter" data-level="8.4" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>8.4</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="8.5" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>8.5</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="8.6" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>8.6</b> Checking assumptions</a></li>
+<li class="chapter" data-level="8.7" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>8.7</b> Creating a figure</a></li>
+<li class="chapter" data-level="8.8" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>8.8</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html"><i class="fa fa-check"></i><b>9</b> One-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="9.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>9.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="9.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>9.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="9.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>9.3</b> Post-hoc testing for <code>aov()</code></a></li>
+<li class="chapter" data-level="9.4" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#one-way-anovas-as-linear-models"><i class="fa fa-check"></i><b>9.4</b> One-way ANOVAs as linear models</a></li>
+<li class="chapter" data-level="9.5" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>9.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="9.6" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>9.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="9.7" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>9.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="9.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>9.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="9.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>9.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="9.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>9.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html"><i class="fa fa-check"></i><b>10</b> Two-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="10.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>10.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="10.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>10.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="10.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>10.3</b> Post-hoc testing for <code>aov</code></a></li>
+<li class="chapter" data-level="10.4" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html#two-way-anovas-as-linear-models"><i class="fa fa-check"></i><b>10.4</b> Two-way ANOVAs as linear models</a></li>
+<li class="chapter" data-level="10.5" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>10.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="10.6" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>10.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="10.7" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>10.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="10.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>10.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="10.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>10.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="10.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>10.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="part"><span><b>III GENERALISED LINEAR MODELS</b></span></li>
+<li class="chapter" data-level="11" data-path="glm-overview.html"><a href="glm-overview.html"><i class="fa fa-check"></i><b>11</b> Overview</a><ul>
+<li class="chapter" data-level="11.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>11.1</b> Model fitting</a></li>
+<li class="chapter" data-level="11.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>11.2</b> More than one explanatory variable</a></li>
+<li class="chapter" data-level="11.3" data-path="glm-overview.html"><a href="glm-overview.html#generalised-linear-models-in-r"><i class="fa fa-check"></i><b>11.3</b> Generalised linear models in R</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>11.3.1</b> Building and viewing</a></li>
+<li class="chapter" data-level="11.3.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>11.3.2</b> Getting predictions</a></li>
+<li class="chapter" data-level="11.3.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>11.3.3</b> Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>11.4</b> Reporting</a></li>
+</ul></li>
+<li class="part"><span><b>IV POISSON GLMs</b></span></li>
+<li class="chapter" data-level="12" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html"><i class="fa fa-check"></i><b>12</b> Poisson GLM overview</a><ul>
+<li class="chapter" data-level="12.1" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#when-explanatory-is-categorical"><i class="fa fa-check"></i><b>12.1</b> When explanatory is categorical</a></li>
+<li class="chapter" data-level="12.2" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#more-than-one-explanatory"><i class="fa fa-check"></i><b>12.2</b> More than one explanatory</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html"><i class="fa fa-check"></i><b>13</b> Single continuous explanatory</a><ul>
+<li class="chapter" data-level="13.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>13.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="13.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>13.2</b> Applying and interpreting <code>glm()</code></a></li>
+<li class="chapter" data-level="13.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>13.3</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="13.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>13.4</b> Checking assumptions</a></li>
+<li class="chapter" data-level="13.5" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>13.5</b> Creating a figure</a></li>
+<li class="chapter" data-level="13.6" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>13.6</b> Reporting the results.</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="pois-glm-two-cont.html"><a href="pois-glm-two-cont.html"><i class="fa fa-check"></i><b>14</b> Two explanatory variables</a><ul>
+<li class="chapter" data-level="14.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>14.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="14.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>14.2</b> Applying and interpreting <code>glm()</code></a></li>
+<li class="chapter" data-level="14.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>14.3</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="14.4" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>14.4</b> Creating a figure</a></li>
+<li class="chapter" data-level="14.5" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>14.5</b> Reporting the results.</a></li>
+</ul></li>
+<li class="part"><span><b>V BINOMIAL GLMs</b></span></li>
+<li class="chapter" data-level="15" data-path="bino-glm-overview.html"><a href="bino-glm-overview.html"><i class="fa fa-check"></i><b>15</b> Binomial GLM overview</a></li>
+<li class="chapter" data-level="16" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>16</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="glm-overview" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Overview</h1>
+<p>General Linear models predict the value of a normally distributed response from a linear combination of predictor variables.</p>
+<p>The General<em>ised</em> Linear Model is an extension of the General Linear model for situations where the response variable does not follow the normal distribution. It can, instead, come from a large family of distributions known as the Exponential family which includes the normal, Poisson and binomial distributions. It generalises by allowing the linear model to be related to the response variable by a something we call a <em>link</em> function.</p>
+<p>When you have a single explanatory variable, that model is:</p>
+<p><span class="math display" id="eq:glm1">\[\begin{equation}
+function(E(y_{i}))=\beta_{0}+\beta_{1}X1_{i}
+\tag{11.1}
+\end{equation}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(y\)</span> is the response variable and <span class="math inline">\(X1\)</span> is the explanatory variable.<br />
+</li>
+<li><span class="math inline">\(i\)</span> is the index so <span class="math inline">\(X1_{i}\)</span> is the <span class="math inline">\(i\)</span>th value of <span class="math inline">\(X1\)</span></li>
+<li><span class="math inline">\(E(y_{i})\)</span> is the expected value of <span class="math inline">\(y\)</span> for the <span class="math inline">\(i\)</span>th value of <span class="math inline">\(X1\)</span>.</li>
+<li><span class="math inline">\(function()\)</span> is the link function</li>
+<li><span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> are the coefficients in the model.</li>
+</ul>
+<p>The link function is a transformation applied to the expected value of the response to link it to the explanatory variables. If you measured the response for a particular value of <span class="math inline">\(x\)</span> very many times there would be some distribution of those responses. Instead of that distribution having to be normal, it can come from a different distribution such has the Poisson or Binomial distributions. As a consequence, the residuals also come from that distribution. The fact that the residuals can follow a distribution other than normal also means the the variance no longer has to be homogeneous but can change for the values of x.</p>
+<div id="model-fitting" class="section level2">
+<h2><span class="header-section-number">11.1</span> Model fitting</h2>
+<p>A very important difference between the general linear model (applied with <code>lm()</code>) and the generalised linear model (applied with <code>glm()</code>) is that the estimates of the coefficients are given on the scale of the link function. You cannot just read the predicted response at <span class="math inline">\(x=0\)</span> from <span class="math inline">\(\beta_{0}\)</span>. You have to invert the link function to express the coefficients in terms of the response.</p>
+<p>Another important difference between these models is in the measure of fit and the test on that measure of fit. The parameters of General linear models are chosen to minimise the sum of the squared residuals and use <span class="math inline">\(R^2\)</span>, the proportion of variance explained, and a variance ratio test, the <em>F</em>-test.</p>
+<p>In GLMS we maximise the log-likelihood, <span class="math inline">\(l\)</span>, of our model to choose our parameter values. This is known as maximum likelihood estimation. The measure of fit used in GLMs is <strong>deviance</strong> where deviance is <span class="math inline">\(-2l\)</span>. Low deviance means a good fit and high deviance a worse fit. Thus maximum likelihood estimation can be thought of as minimising deviance. The test again compares deviance predictions by the model and predictions from the intercept alone (the overall mean). This deviance in predictions from the intercept alone is called the Null deviance. Instead of considering the size of the <span class="math inline">\(R^2\)</span> we consider the reduction in deviance between the null model and the residual deviance (the deviance left over after the model fit). You can consider the null deviance to play the same role as <span class="math inline">\(SSE\)</span>. The difference between the null model and the residual deviance of the full model has a chi-squared distribution and the test of whether the model is good overall is a chi-squared test of deviance in the similar way that general linear model use the <span class="math inline">\(F\)</span> variance ration test.</p>
+<div class="key">
+<p>The deviance plays the same role in GLMs that SSE plays in the general linear model. It is how much variation is unexplained by the model</p>
+</div>
+<p>AIC is the equivalent of adjusted <span class="math inline">\(R^2\)</span>,</p>
+<p>Poisson GLMs are used when our response is a count. They are also known as GLMs with Poisson errors or Poisson regression. The link function is <span class="math inline">\(ln\)</span>, a function you probably know. This means the coefficients have to be exponentiated using <code>exp()</code> to get predicted counts because <code>exp()</code> is the inverse of <code>log()</code></p>
+<p>Binomial GLMs are used when our response is binary, a zero or one, or a proportion. They are also known as GLMs with binomial errors, binomial regression or logistic regression. The link function is <span class="math inline">\(logit\)</span>, a function you may not have heard of before. We will discuss what that function looks like in ……</p>
+<p><em>to add: illustrations of good fit and bad fit</em></p>
+</div>
+<div id="more-than-one-explanatory-variable" class="section level2">
+<h2><span class="header-section-number">11.2</span> More than one explanatory variable</h2>
+</div>
+<div id="generalised-linear-models-in-r" class="section level2">
+<h2><span class="header-section-number">11.3</span> Generalised linear models in R</h2>
+<div id="building-and-viewing" class="section level3">
+<h3><span class="header-section-number">11.3.1</span> Building and viewing</h3>
+<p>Poisson and binomial generalised linear models (and others) can be carried out with the <code>glm()</code> function in R. It uses the same method for specifying the model. When you have one explanatory variable the command is:</p>
+<p><code>glm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory</em>, family = <em>distribution</em>(link = <em>linkfunction</em>))</code></p>
+<p>For a Poisson GLM this is:</p>
+<p><code>glm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory</em>, family = poisson(link = log))</code></p>
+<p>In R, the log() function compute natural logarithms (<em>i.e.</em>, logs to the base <span class="math inline">\(e\)</span> by default</p>
+<p>For a binomial distribution this is:</p>
+<p><code>glm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory</em>, family = binomial(link = “logit”))</code></p>
+<p>The model formula can be developed in the same way we’ve seen previously. When you have two explanatory variable we add the second explanatory variable to the formula using a <code>+</code> or a <code>*</code>. The command is:</p>
+<p><code>lm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory1</em> + <em>explanatory2</em>, family = <em>distribution</em>(link = <em>linkfunction</em>))</code></p>
+<p>or</p>
+<p><code>lm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory1</em> * <em>explanatory2</em>, family = <em>distribution</em>(link = <em>linkfunction</em>))</code></p>
+<p>A model with <code>explanatory1 + explanatory2</code> considers the effects of the two variables independently. A model with <code>explanatory1 + explanatory2</code> considers the effects of the two variables <em>and</em> any interaction between them.</p>
+<p>We usually assign the output of <code>glm()</code> commands to an object and view it with <code>summary()</code>. The typical workflow would be:</p>
+<p><code>
+mod &lt;- glm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory</em>, family = <em>distribution</em>(link = <em>linkfunction</em>))<br />
+summary(mod)
+</code></p>
+<!-- There are two sorts of statistical tests in the output of `summary(mod)`: tests of whether each coefficient is significantly different from zero; a test of whether the model as a whole explains a significant amount of the variation in the response. -->
+<div class="key">
+<p><code>glm()</code> can be used to perform tests using the Generalised Linear Model including Poisson and Binomial regression.</p>
+</div>
+<p>Elements of the <code>glm()</code> object include the estimated coefficients, the predicted values and the residuals can be accessed with <code>mod$coeffients</code>, <code>mod$fitted.values</code> and <code>mod$residuals</code> respectively.</p>
+</div>
+<div id="getting-predictions" class="section level3">
+<h3><span class="header-section-number">11.3.2</span> Getting predictions</h3>
+<p><code>mod$fitted.values</code> gives the predicted values for the explanatory variable values actually used in the experiment, <em>i.e.</em>, there is a prediction for each row of data. These are given on the scale of the response. This means they will be predicted counts for Poisson GLMs and predicted probabilities for Binomial GLMs.</p>
+<p><em>tests of the model</em>
+With an lm() you get an <em>F</em> variance ratio test of the model over all when you view a summary. It answers the questions “does the model explain a significant amount of the variance in the response relative to the response mean?” With a glm() you hae to ask for a test and that test is a chi-squared test of deviance. “does the model significantly decrease the deviance relative to the response mean?”
+<code>
+anova(mod, test = “Chisq”)
+</code></p>
+<p>To get predictions for a different set of values make a dataframe of the different set of values and use the <code>predict()</code> function. When using the <code>predict()</code> function we have to specify that we want our predictions on the scale of the response rather than the scale of the link function using the <code>type</code> argument.
+The typical workflow would be:</p>
+<p><code>predict_for &lt;- data.frame(<em>explanatory</em> = <em>values</em>)<br />
+predict_for$pred &lt;- predict(mod, newdata = predict_for, type = “response”)</code></p>
+</div>
+<div id="checking-assumptions" class="section level3">
+<h3><span class="header-section-number">11.3.3</span> Checking assumptions</h3>
+<!-- The assumptions of the model are checked using the `plot()` function which produces diagnostic plots to explore the distribution of the residuals. They are not proof of the assumptions being met but allow us to quickly determine if the assumptions are plausible, and if not, how the assumptions are violated and what data points contribute to the violation. -->
+<!-- The two plots which are most useful are the "Q-Q" plot (plot 2) and the "Residuals vs Fitted" plot (plot 1). These are given as values to the `which` argument of `plot()`. -->
+<!-- The Q-Q plot is a scatterplot of the residuals (standardised to a mean of zero and a standard deviation of 1) against what is expected if the residuals are normally distributed.  -->
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="glm-overview.html#cb71-1"></a><span class="co"># plot(mod, which = 2)</span></span></code></pre></div>
+<!-- The following are two examples in which the residuals are not normally distributed. -->
+<!-- The Residuals vs Fitted plot shows if residuals have homogeneous variance or have non-linear patterns. Non-linear relationship between explanatory variables and the response will usually show in this plot if the model does not capture the non-linear relationship. For the assumptions to be met, the residuals should be equally spread around a horizontal line: -->
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="glm-overview.html#cb72-1"></a><span class="co"># plot(mod, which = 1)</span></span></code></pre></div>
+<!-- The following are two examples in which the residuals do not have homogeneous variance and display non-linear patterns. -->
+</div>
+</div>
+<div id="reporting" class="section level2">
+<h2><span class="header-section-number">11.4</span> Reporting</h2>
+<p><em>to add, same principles apply</em></p>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="two-way-anova-revisit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pois-glm-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/3mmaRand/singlm/edit/master/glm-intro.Rmd",
+"text": "Make an edit suggestion"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["singlm.pdf", "singlm.epub", "https://github.com/3mmaRand/singlm/raw/master/glm-intro.Rmd"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

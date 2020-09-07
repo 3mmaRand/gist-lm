@@ -1,0 +1,12 @@
+# Terminolgy
+
+## General? Generalised?
+
+Before we get started, I need to explain some potentially confusing terminology. I use the term "general linear model" to mean classical linear regression models of a continuous response variable explained by one or more continuous or categorical variables. These include regression, *t*-tests, analysis of variance (ANOVA) and analysis of covariance (ANCOVA). I use the term  "generalised linear model" or GLM to refers to a larger class of models formulated by  John Nelder and Robert Wedderburn [-@Nelder_Wedderburn1972] and popularised in "Generalized Linear Models", an influential book by Peter McCullagh and John Nelder [-@Mccullagh_Nelder1989]. In these models, the response variable can follow a number of other distributions including Poisson and binomial distributions. In some texts, the general linear model is referred to by the acronym GLM and the generalised linear model as GLIM but in this book I use GLM to refer to generalised linear models only.
+
+## Testing modelling fitting
+
+t.test fit and test simult; lm fit then test
+
+
+## paramters, coefficients estimates

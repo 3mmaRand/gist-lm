@@ -1,0 +1,25 @@
+book_filename: "singlm"
+repo: "https://github.com/3mmaRand/singlm"
+delete_merged_file: true
+rmd_files: [
+  "index.Rmd",
+  
+  "introductory-class-revision.Rmd",
+  "what-are-linear-models.Rmd",
+  "terminology.Rmd",
+  
+  "single-linear-regression.Rmd",
+  "t-test-revisit.rmd",
+  "one-way-anova-revisit.Rmd",
+  "two-way-anova-revisit.Rmd",
+  
+  "summary.Rmd",
+  
+  "references.Rmd"
+  ]
+output_dir: docs
+language:
+  ui:
+    chapter_name: "Chapter "
+new_session: true
+before_chapter_script: "_common.R"

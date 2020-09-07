@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Single linear regression | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</title>
+  <meta name="description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Single linear regression | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://3mmarand.github.io/singlm/" />
+  <meta property="og:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+  <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="3mmaRand/singlm" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Single linear regression | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  
+  <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+
+<meta name="author" content="Emma Rand" />
+
+
+<meta name="date" content="2020-08-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="what-are-linear-models.html"/>
+<link rel="next" href="t-tests-revisit.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="assets/book.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="assets\style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/hex-s.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#who-is-this-book-for"><i class="fa fa-check"></i><b>0.1</b> Who is this book for?</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#formatting-options"><i class="fa fa-check"></i><b>0.2</b> Formatting options</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#conventions-used-in-the-book"><i class="fa fa-check"></i><b>0.3</b> Conventions used in the book</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#approach-of-this-book"><i class="fa fa-check"></i><b>0.4</b> Approach of this book</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>0.5</b> Outline</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#overview-of-the-chapter-contents"><i class="fa fa-check"></i><b>0.6</b> Overview of the chapter contents</a></li>
+</ul></li>
+<li class="part"><span><b>I INTRODUCTION</b></span></li>
+<li class="chapter" data-level="1" data-path="revision-of-your-introductory-class.html"><a href="revision-of-your-introductory-class.html"><i class="fa fa-check"></i><b>1</b> Revision of your Introductory class</a></li>
+<li class="chapter" data-level="2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html"><i class="fa fa-check"></i><b>2</b> What are linear models</a><ul>
+<li class="chapter" data-level="2.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#what-is-a-linear-model"><i class="fa fa-check"></i><b>2.1</b> What is a linear model?</a></li>
+<li class="chapter" data-level="2.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#linear-models-in-r"><i class="fa fa-check"></i><b>2.2</b> Linear models in R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="single-linear-regression.html"><a href="single-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Single linear regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="single-linear-regression.html"><a href="single-linear-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>3.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="3.2" data-path="single-linear-regression.html"><a href="single-linear-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>3.2</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="3.3" data-path="single-linear-regression.html"><a href="single-linear-regression.html#link-to-chapter-2.1"><i class="fa fa-check"></i><b>3.3</b> Link to Chapter 2.1</a></li>
+<li class="chapter" data-level="3.4" data-path="single-linear-regression.html"><a href="single-linear-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>3.4</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="3.5" data-path="single-linear-regression.html"><a href="single-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>3.5</b> Checking assumptions</a></li>
+<li class="chapter" data-level="3.6" data-path="single-linear-regression.html"><a href="single-linear-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>3.6</b> Creating a figure</a></li>
+<li class="chapter" data-level="3.7" data-path="single-linear-regression.html"><a href="single-linear-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>3.7</b> Reporting the results</a></li>
+</ul></li>
+<li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
+<li class="chapter" data-level="4" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html"><i class="fa fa-check"></i><b>4</b> <em>t</em>-tests revisited</a><ul>
+<li class="chapter" data-level="4.1" data-path="single-linear-regression.html"><a href="single-linear-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>4.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="4.2" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t.test-output-reminder"><i class="fa fa-check"></i><b>4.2</b> <code>t.test()</code> output reminder</a></li>
+<li class="chapter" data-level="4.3" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t-tests-as-linear-models"><i class="fa fa-check"></i><b>4.3</b> <em>t</em>-tests as linear models</a></li>
+<li class="chapter" data-level="4.4" data-path="single-linear-regression.html"><a href="single-linear-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>4.4</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="4.5" data-path="single-linear-regression.html"><a href="single-linear-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>4.5</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="4.6" data-path="single-linear-regression.html"><a href="single-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>4.6</b> Checking assumptions</a></li>
+<li class="chapter" data-level="4.7" data-path="single-linear-regression.html"><a href="single-linear-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>4.7</b> Creating a figure</a></li>
+<li class="chapter" data-level="4.8" data-path="single-linear-regression.html"><a href="single-linear-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>4.8</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html"><i class="fa fa-check"></i><b>5</b> One-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="5.1" data-path="single-linear-regression.html"><a href="single-linear-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>5.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="5.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>5.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="5.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>5.3</b> Post-hoc testing for <code>aov()</code></a></li>
+<li class="chapter" data-level="5.4" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#one-way-anova-as-linear-models"><i class="fa fa-check"></i><b>5.4</b> One-way ANOVA as linear models</a></li>
+<li class="chapter" data-level="5.5" data-path="single-linear-regression.html"><a href="single-linear-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>5.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="5.6" data-path="single-linear-regression.html"><a href="single-linear-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>5.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="5.7" data-path="single-linear-regression.html"><a href="single-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>5.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="5.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>5.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="5.9" data-path="single-linear-regression.html"><a href="single-linear-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>5.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="5.10" data-path="single-linear-regression.html"><a href="single-linear-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>5.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html"><i class="fa fa-check"></i><b>6</b> Two-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="6.1" data-path="single-linear-regression.html"><a href="single-linear-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>6.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>6.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>6.3</b> Post-hoc testing for <code>aov</code></a></li>
+<li class="chapter" data-level="6.4" data-path="single-linear-regression.html"><a href="single-linear-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>6.4</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="6.5" data-path="single-linear-regression.html"><a href="single-linear-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>6.5</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="6.6" data-path="single-linear-regression.html"><a href="single-linear-regression.html#link-to-chapter-2.1"><i class="fa fa-check"></i><b>6.6</b> Link to Chapter 2.1</a></li>
+<li class="chapter" data-level="6.7" data-path="single-linear-regression.html"><a href="single-linear-regression.html#checking-assumptions"><i class="fa fa-check"></i><b>6.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="6.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>6.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="6.9" data-path="single-linear-regression.html"><a href="single-linear-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>6.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="6.10" data-path="single-linear-regression.html"><a href="single-linear-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>6.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="part"><span><b>III INTRODUCTION TO GENERALISED LINEAR MODELS</b></span></li>
+<li class="chapter" data-level="7" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>7</b> Overview</a><ul>
+<li class="chapter" data-level="7.1" data-path="overview.html"><a href="overview.html#generalised-linear-models-in-r"><i class="fa fa-check"></i><b>7.1</b> Generalised linear models in R</a></li>
+</ul></li>
+<li class="part"><span><b>IV USING <code>glm()</code> FOR POISSON RESPONSES</b></span></li>
+<li class="chapter" data-level="8" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>8</b> Introduction</a></li>
+<li class="chapter" data-level="9" data-path="single-continuous-predictor.html"><a href="single-continuous-predictor.html"><i class="fa fa-check"></i><b>9</b> Single continuous predictor</a><ul>
+<li class="chapter" data-level="9.1" data-path="single-linear-regression.html"><a href="single-linear-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>9.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="9.2" data-path="single-linear-regression.html"><a href="single-linear-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>9.2</b> Applying and interpreting lm()</a></li>
+<li class="chapter" data-level="9.3" data-path="single-linear-regression.html"><a href="single-linear-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>9.3</b> Getting predictions from the model</a></li>
+</ul></li>
+<li class="part"><span><b>V USING <code>glm()</code> FOR BINOMIAL RESPONSES</b></span></li>
+<li class="chapter" data-level="10" data-path="bino.html"><a href="bino.html"><i class="fa fa-check"></i><b>10</b> GLM for binomial responses</a></li>
+<li class="chapter" data-level="11" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>11</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="single-linear-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Single linear regression</h1>
+<p>You have probably carried out a single linear regression in your introductory data analysis class. It is covered here as revision.</p>
+<div id="introduction-to-the-example" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction to the example</h2>
+
+<div class="figure" style="text-align: left"><span id="fig:lucanus-fig"></span>
+<img src="images/640px-Lucanus_cervus_male_top_2.jpg" alt="Male stag beetles Lucanus cervus, have large mandibles that resemble the antlers of a stag and give them their common and scientific name (Cervus is a genus of deer). By Simon A. Eugster - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=7790887" width="80%" />
+<p class="caption">
+Figure 3.1: Male stag beetles <em>Lucanus cervus</em>, have large mandibles that resemble the antlers of a stag and give them their common and scientific name (<em>Cervus</em> is a genus of deer). By Simon A. Eugster - Own work, CC BY 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=7790887" class="uri">https://commons.wikimedia.org/w/index.php?curid=7790887</a>
+</p>
+</div>
+<p>The concentration of Juvenile growth hormone in male stag beetles (<em>Lucanus cervus</em>) is known to influence mandible growth. See Figure <a href="single-linear-regression.html#fig:lucanus-fig">3.1</a></p>
+<p>Groups of ten stag beetles were treated with different concentrations of Juvenile growth hormone (pg<span class="math inline">\(\mu\)</span>l<sup>-1</sup>) and their average mandible size (mm) determined. The data are in <a href="data-raw/stag.txt">stag.txt</a>. Juvenile hormone is has been set by the experimenter and we would expect mandible size to be normally distributed.</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+jh
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mand
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.56
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+0.48
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+0.86
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+0.68
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+0.55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+1.18
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+1.44
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+120
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:right;">
+1.66
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+140
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+150
+</td>
+<td style="text-align:right;">
+1.17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="key">
+<p>There are 2 variables: <code>jh</code>, the concentration of Juvenile growth hormone and <code>mand</code>, the average mandible size (mm) of 10 stag beetles</p>
+</div>
+<p>We will import the data with the <code>read_table2()</code> function from the <strong><code>readr</code></strong> package and plot it with <code>ggplot()</code> from the <strong><code>ggplot2</code></strong> package. Both packages are part of the tidyverse.</p>
+<p>Import the data:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="single-linear-regression.html#cb6-1"></a>stag &lt;-<span class="st"> </span><span class="kw">read_table2</span>(<span class="st">&quot;data-raw/stag.txt&quot;</span>)</span></code></pre></div>
+<p>Visualising our data before any further analysis is sensible. In this case, it will help us determine if any relationship between the two variables is linear.
+A simple scatter plot is appropriate.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="single-linear-regression.html#cb7-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> stag, <span class="kw">aes</span>(<span class="dt">x =</span> jh, <span class="dt">y =</span> mand)) <span class="op">+</span></span>
+<span id="cb7-2"><a href="single-linear-regression.html#cb7-2"></a><span class="st">        </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="single_linear_regression_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
+The relationship between the two variables looks roughly linear. So far, common sense suggests the assumptions of regression are met.</p>
+</div>
+<div id="applying-and-interpreting-lm" class="section level2">
+<h2><span class="header-section-number">3.2</span> Applying and interpreting <code>lm()</code></h2>
+<p>The <code>lm()</code> function is used to build the regression model:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="single-linear-regression.html#cb8-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> stag, mand <span class="op">~</span><span class="st"> </span>jh)</span></code></pre></div>
+<p>This can be read as: fit a linear of model of mandible size explained by the concentration of Juvenile growth hormone.</p>
+<p>Printing <code>mod</code> to the console will reveal the estimated model parameters (coefficients) but little else:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="single-linear-regression.html#cb9-1"></a>mod</span>
+<span id="cb9-2"><a href="single-linear-regression.html#cb9-2"></a><span class="co"># </span></span>
+<span id="cb9-3"><a href="single-linear-regression.html#cb9-3"></a><span class="co"># Call:</span></span>
+<span id="cb9-4"><a href="single-linear-regression.html#cb9-4"></a><span class="co"># lm(formula = mand ~ jh, data = stag)</span></span>
+<span id="cb9-5"><a href="single-linear-regression.html#cb9-5"></a><span class="co"># </span></span>
+<span id="cb9-6"><a href="single-linear-regression.html#cb9-6"></a><span class="co"># Coefficients:</span></span>
+<span id="cb9-7"><a href="single-linear-regression.html#cb9-7"></a><span class="co"># (Intercept)           jh  </span></span>
+<span id="cb9-8"><a href="single-linear-regression.html#cb9-8"></a><span class="co">#     0.41934      0.00646</span></span></code></pre></div>
+<p><span class="math inline">\(\beta_{0}\)</span> is labelled <code>(Intercept)</code> and <span class="math inline">\(\beta_{1}\)</span> is labelled <code>jh</code>. Thus, the equation of the line is:</p>
+<center>
+<span class="math inline">\(mand\)</span> = 0.419 + 0.006<span class="math inline">\(jh\)</span>
+</center>
+<p>More information including statistical tests of the model and its parameters is obtained by using <code>summary()</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="single-linear-regression.html#cb10-1"></a><span class="kw">summary</span>(mod)</span>
+<span id="cb10-2"><a href="single-linear-regression.html#cb10-2"></a><span class="co"># </span></span>
+<span id="cb10-3"><a href="single-linear-regression.html#cb10-3"></a><span class="co"># Call:</span></span>
+<span id="cb10-4"><a href="single-linear-regression.html#cb10-4"></a><span class="co"># lm(formula = mand ~ jh, data = stag)</span></span>
+<span id="cb10-5"><a href="single-linear-regression.html#cb10-5"></a><span class="co"># </span></span>
+<span id="cb10-6"><a href="single-linear-regression.html#cb10-6"></a><span class="co"># Residuals:</span></span>
+<span id="cb10-7"><a href="single-linear-regression.html#cb10-7"></a><span class="co">#     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb10-8"><a href="single-linear-regression.html#cb10-8"></a><span class="co"># -0.3860 -0.2028 -0.0975  0.1503  0.6069 </span></span>
+<span id="cb10-9"><a href="single-linear-regression.html#cb10-9"></a><span class="co"># </span></span>
+<span id="cb10-10"><a href="single-linear-regression.html#cb10-10"></a><span class="co"># Coefficients:</span></span>
+<span id="cb10-11"><a href="single-linear-regression.html#cb10-11"></a><span class="co">#             Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span id="cb10-12"><a href="single-linear-regression.html#cb10-12"></a><span class="co"># (Intercept)  0.41934    0.13943    3.01   0.0094 **</span></span>
+<span id="cb10-13"><a href="single-linear-regression.html#cb10-13"></a><span class="co"># jh           0.00646    0.00158    4.08   0.0011 **</span></span>
+<span id="cb10-14"><a href="single-linear-regression.html#cb10-14"></a><span class="co"># ---</span></span>
+<span id="cb10-15"><a href="single-linear-regression.html#cb10-15"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb10-16"><a href="single-linear-regression.html#cb10-16"></a><span class="co"># </span></span>
+<span id="cb10-17"><a href="single-linear-regression.html#cb10-17"></a><span class="co"># Residual standard error: 0.292 on 14 degrees of freedom</span></span>
+<span id="cb10-18"><a href="single-linear-regression.html#cb10-18"></a><span class="co"># Multiple R-squared:  0.543,	Adjusted R-squared:  0.51 </span></span>
+<span id="cb10-19"><a href="single-linear-regression.html#cb10-19"></a><span class="co"># F-statistic: 16.6 on 1 and 14 DF,  p-value: 0.00113</span></span></code></pre></div>
+<p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated value for the intercept is 0.419 <span class="math inline">\(\pm\)</span> 0.139 and this differs significantly from zero (<span class="math inline">\(p\)</span> = 0.009). The estimated value for the slope is 0.006 <span class="math inline">\(\pm\)</span> 0.002, also differs significantly from zero (<span class="math inline">\(p\)</span> = 0.001).</p>
+<p>The three lines at the bottom of the output give information about the fit of the model to the data. The <code>Multiple R-squared</code> gives the proportion of the variance in the response which is explained by the model. In our case, 0.543 of the variance in mandible length is explained by the model and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> = 0.001).</p>
+<p>The <em>p</em>-value for the model and the <em>p</em>-value for the slope are the same in a single linear regression because, except for the intercept, there is only one parameter (the slope) in the model. Linear models in the form of a two-sample <em>t</em>-test also estimate just one parameter and its <em>p</em>-value will also equal the model <em>p</em>-value. This is <strong>not</strong> the case for other linear models.</p>
+</div>
+<div id="link-to-chapter-2.1" class="section level2">
+<h2><span class="header-section-number">3.3</span> Link to Chapter 2.1</h2>
+<p>The estimated coefficients tell us mandible size is predicted to be 0.419 when Juvenile growth hormone is zero and increases by 0.006 mm for each pg<span class="math inline">\(\mu\)</span>l<sup>-1</sup> of Juvenile growth hormone.</p>
+<p>At a Juvenile growth hormone of 1 pg<span class="math inline">\(\mu\)</span>l<sup>-1</sup> the mandible is predicted to be 0.419 + 0.006 = 0.426 mm.</p>
+<p>At 2 pg<span class="math inline">\(\mu\)</span>l<sup>-1</sup> the predicted mandible size is 0.419 + 0.006 + 0.006 = 0.432 mm.</p>
+<p>In general mandible size is: <span class="math inline">\(\beta_{0}\)</span> + <span class="math inline">\(x\times\beta_{0}\)</span> mm at <span class="math inline">\(x\)</span> pg<span class="math inline">\(\mu\)</span>l<sup>-1</sup>. See Figure <a href="single-linear-regression.html#fig:stag-annotated">3.2</a> for a version of Figure <a href="what-are-linear-models.html#fig:lm-annotated">2.1</a> annotated with values from this example.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:stag-annotated"></span>
+<img src="images/stag_reg_eg.svg" alt="The model annotated with values from the stag beetle example. The measured response values are in pink, the predictions are in green, and the residuals, are in blue. One example of a measured value, a predicted value and the residual is shown for a Juvenile hormone of 130 pg\(\mu\)l-1. The estimated model parameters, \(\beta_{0}\) and \(\beta_{1}\) are indicated. Compare to Figure 2.1." width="80%" />
+<p class="caption">
+Figure 3.2: The model annotated with values from the stag beetle example. The measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span>, the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span>, and the <span style=" font-weight: bold;    color: #64c0d2 !important;">residuals, are in blue</span>. One example of a measured value, a predicted value and the residual is shown for a Juvenile hormone of 130 pg<span class="math inline">\(\mu\)</span>l<sup>-1</sup>. The estimated model parameters, <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> are indicated. Compare to Figure <a href="what-are-linear-models.html#fig:lm-annotated">2.1</a>.
+</p>
+</div>
+</div>
+<div id="getting-predictions-from-the-model" class="section level2">
+<h2><span class="header-section-number">3.4</span> Getting predictions from the model</h2>
+<p>The <code>predict()</code> returns the predicted values of the response. To add a column of predicted values to the <code>stag</code> dataframe we use:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="single-linear-regression.html#cb11-1"></a>stag<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod)</span>
+<span id="cb11-2"><a href="single-linear-regression.html#cb11-2"></a><span class="kw">glimpse</span>(stag)</span>
+<span id="cb11-3"><a href="single-linear-regression.html#cb11-3"></a><span class="co"># Rows: 16</span></span>
+<span id="cb11-4"><a href="single-linear-regression.html#cb11-4"></a><span class="co"># Columns: 3</span></span>
+<span id="cb11-5"><a href="single-linear-regression.html#cb11-5"></a><span class="co"># $ jh   &lt;dbl&gt; 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140...</span></span>
+<span id="cb11-6"><a href="single-linear-regression.html#cb11-6"></a><span class="co"># $ mand &lt;dbl&gt; 0.56, 0.35, 0.28, 1.22, 0.48, 0.86, 0.68, 0.77, 0.55, 1.18, 0....</span></span>
+<span id="cb11-7"><a href="single-linear-regression.html#cb11-7"></a><span class="co"># $ pred &lt;dbl&gt; 0.419, 0.484, 0.549, 0.613, 0.678, 0.742, 0.807, 0.871, 0.936,...</span></span></code></pre></div>
+<p>This gives predictions for the actual Juvenile growth hormone concentration values used. If you want predictions for other values, you need to create a data frame of the Juvenile growth hormone values from which you want to predict.
+The following creates a dataframe with one column of Juvenile growth hormone values from 0 to 150 in steps of 5:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="single-linear-regression.html#cb12-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">jh =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">150</span>, <span class="dv">5</span>))</span>
+<span id="cb12-2"><a href="single-linear-regression.html#cb12-2"></a><span class="kw">glimpse</span>(predict_for)</span>
+<span id="cb12-3"><a href="single-linear-regression.html#cb12-3"></a><span class="co"># Rows: 31</span></span>
+<span id="cb12-4"><a href="single-linear-regression.html#cb12-4"></a><span class="co"># Columns: 1</span></span>
+<span id="cb12-5"><a href="single-linear-regression.html#cb12-5"></a><span class="co"># $ jh &lt;dbl&gt; 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80...</span></span></code></pre></div>
+<p>Note that the column is named <code>jh</code> - the same as in the dataset and the model. Its variable type must also match.</p>
+<div class="key">
+<p>To predict responses for a new set of explanatory variable values, the name and type of explanatory variables in the new set must match those in the model.</p>
+</div>
+<p>To get predicted mandible sizes for the Juvenile growth hormone values we use:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="single-linear-regression.html#cb13-1"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for)</span>
+<span id="cb13-2"><a href="single-linear-regression.html#cb13-2"></a><span class="kw">glimpse</span>(predict_for)</span>
+<span id="cb13-3"><a href="single-linear-regression.html#cb13-3"></a><span class="co"># Rows: 31</span></span>
+<span id="cb13-4"><a href="single-linear-regression.html#cb13-4"></a><span class="co"># Columns: 2</span></span>
+<span id="cb13-5"><a href="single-linear-regression.html#cb13-5"></a><span class="co"># $ jh   &lt;dbl&gt; 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, ...</span></span>
+<span id="cb13-6"><a href="single-linear-regression.html#cb13-6"></a><span class="co"># $ pred &lt;dbl&gt; 0.419, 0.452, 0.484, 0.516, 0.549, 0.581, 0.613, 0.645, 0.678,...</span></span></code></pre></div>
+</div>
+<div id="checking-assumptions" class="section level2">
+<h2><span class="header-section-number">3.5</span> Checking assumptions</h2>
+<p>The two assumptions of the model can be checked using diagnostic plots. The Q-Q plot is obtained with:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="single-linear-regression.html#cb14-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="single_linear_regression_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
+<p>This sample is relatively small so we should expect more wiggliness than we saw in 2.2 but this looks OK.</p>
+<p>Let’s look at the Residuals vs Fitted plot:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="single-linear-regression.html#cb15-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="single_linear_regression_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
+<p>Again the red line wiggles a little but there is no particular pattern and it appears that the variance is homogeneous along mandible size.</p>
+</div>
+<div id="creating-a-figure" class="section level2">
+<h2><span class="header-section-number">3.6</span> Creating a figure</h2>
+<p>A suitable figure includes the data themselves and the model fitted:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="single-linear-regression.html#cb16-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> stag, <span class="kw">aes</span>(<span class="dt">x =</span> jh, <span class="dt">y =</span> mand)) <span class="op">+</span></span>
+<span id="cb16-2"><a href="single-linear-regression.html#cb16-2"></a><span class="st">        </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb16-3"><a href="single-linear-regression.html#cb16-3"></a><span class="st">        </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="dv">0</span>),</span>
+<span id="cb16-4"><a href="single-linear-regression.html#cb16-4"></a>                           <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">160</span>),</span>
+<span id="cb16-5"><a href="single-linear-regression.html#cb16-5"></a>                           <span class="dt">name =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Juvenile growth hormone (pg&quot;</span>,</span>
+<span id="cb16-6"><a href="single-linear-regression.html#cb16-6"></a>                                                   mu,</span>
+<span id="cb16-7"><a href="single-linear-regression.html#cb16-7"></a>                                                   l<span class="op">^-</span><span class="dv">1</span>,</span>
+<span id="cb16-8"><a href="single-linear-regression.html#cb16-8"></a>                                                   <span class="st">&quot;)&quot;</span>))) <span class="op">+</span></span>
+<span id="cb16-9"><a href="single-linear-regression.html#cb16-9"></a><span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb16-10"><a href="single-linear-regression.html#cb16-10"></a>                           <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb16-11"><a href="single-linear-regression.html#cb16-11"></a>                           <span class="dt">name =</span> <span class="st">&quot;Mandible length (mm)&quot;</span>) <span class="op">+</span></span>
+<span id="cb16-12"><a href="single-linear-regression.html#cb16-12"></a><span class="st">        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></span>
+<span id="cb16-13"><a href="single-linear-regression.html#cb16-13"></a><span class="st">        </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<p><img src="single_linear_regression_files/figure-html/fig-reg-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="reporting-the-results" class="section level2">
+<h2><span class="header-section-number">3.7</span> Reporting the results</h2>
+<p>There was a significant positive relationship between the concentration of Juvenile growth hormone and mandible length (<span class="math inline">\(\beta_{1}\pm s.e.\)</span>: 0.006 <span class="math inline">\(\pm\)</span> 0.002; <span class="math inline">\(p\)</span> = 0.001). See figure <a href="single-linear-regression.html#fig:fig-reg-report">3.3</a>.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:fig-reg-report"></span>
+<img src="single_linear_regression_files/figure-html/fig-reg-report-1.png" alt="Relationship between the concentration of Juvenile growth hormone and mandible length." width="60%" />
+<p class="caption">
+Figure 3.3: Relationship between the concentration of Juvenile growth hormone and mandible length.
+</p>
+</div>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="what-are-linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="t-tests-revisit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/3mmaRand/singlm/edit/master/single_linear_regression.Rmd",
+"text": "Make an edit suggestion"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["singlm.pdf", "singlm.epub", "https://github.com/3mmaRand/singlm/raw/master/single_linear_regression.Rmd"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

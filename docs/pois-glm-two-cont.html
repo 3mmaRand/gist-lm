@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Two explanatory variables | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</title>
+  <meta name="description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Two explanatory variables | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://3mmarand.github.io/singlm/" />
+  <meta property="og:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+  <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="3mmaRand/singlm" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Two explanatory variables | singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R" />
+  
+  <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:image" content="https://3mmarand.github.io/singlm/images/android-chrome-512x512.png" />
+
+<meta name="author" content="Emma Rand" />
+
+
+<meta name="date" content="2020-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="pois-glm-single-cont.html"/>
+<link rel="next" href="bino-glm-overview.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="assets/book.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="assets\style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="toc-logo"><a href="./"><img src="images/hex-s.png"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#who-is-this-book-for"><i class="fa fa-check"></i><b>0.1</b> Who is this book for?</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#formatting-options"><i class="fa fa-check"></i><b>0.2</b> Formatting options</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#conventions-used-in-the-book"><i class="fa fa-check"></i><b>0.3</b> Conventions used in the book</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#approach-of-this-book"><i class="fa fa-check"></i><b>0.4</b> Approach of this book</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>0.5</b> Outline</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#following-along-with-the-examples"><i class="fa fa-check"></i><b>0.6</b> Following along with the examples</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#overview-of-the-chapter-contents"><i class="fa fa-check"></i><b>0.7</b> Overview of the chapter contents</a></li>
+<li class="chapter" data-level="0.8" data-path="index.html"><a href="index.html#software-information"><i class="fa fa-check"></i><b>0.8</b> Software information</a></li>
+</ul></li>
+<li class="part"><span><b>I INTRODUCTION</b></span></li>
+<li class="chapter" data-level="1" data-path="revision.html"><a href="revision.html"><i class="fa fa-check"></i><b>1</b> Revision of your Introductory class</a></li>
+<li class="chapter" data-level="2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html"><i class="fa fa-check"></i><b>2</b> What are General Linear Models</a><ul>
+<li class="chapter" data-level="2.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#overview"><i class="fa fa-check"></i><b>2.1</b> Overview</a></li>
+<li class="chapter" data-level="2.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>2.2</b> Model fitting</a></li>
+<li class="chapter" data-level="2.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>2.3</b> More than one explanatory variable</a></li>
+<li class="chapter" data-level="2.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#general-linear-models-in-r"><i class="fa fa-check"></i><b>2.4</b> General linear models in R</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>2.4.1</b> Building and viewing</a></li>
+<li class="chapter" data-level="2.4.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>2.4.2</b> Getting predictions</a></li>
+<li class="chapter" data-level="2.4.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>2.4.3</b> Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>2.5</b> Reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>3</b> Terminolgy</a><ul>
+<li class="chapter" data-level="3.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>3.1</b> General? Generalised?</a></li>
+<li class="chapter" data-level="3.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>3.2</b> Testing modelling fitting</a></li>
+<li class="chapter" data-level="3.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>3.3</b> paramters, coefficients estimates</a></li>
+</ul></li>
+<li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
+<li class="chapter" data-level="4" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>4</b> Single linear regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>4.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="4.2" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>4.2</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="4.3" data-path="single-regression.html"><a href="single-regression.html#link-to-chapter-2.1"><i class="fa fa-check"></i><b>4.3</b> Link to Chapter 2.1</a></li>
+<li class="chapter" data-level="4.4" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>4.4</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="4.5" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>4.5</b> Checking assumptions</a></li>
+<li class="chapter" data-level="4.6" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>4.6</b> Creating a figure</a></li>
+<li class="chapter" data-level="4.7" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>4.7</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html"><i class="fa fa-check"></i><b>5</b> <em>t</em>-tests revisited</a><ul>
+<li class="chapter" data-level="5.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>5.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="5.2" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t.test-output-reminder"><i class="fa fa-check"></i><b>5.2</b> <code>t.test()</code> output reminder</a></li>
+<li class="chapter" data-level="5.3" data-path="t-tests-revisit.html"><a href="t-tests-revisit.html#t-tests-as-linear-models"><i class="fa fa-check"></i><b>5.3</b> <em>t</em>-tests as linear models</a></li>
+<li class="chapter" data-level="5.4" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>5.4</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="5.5" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>5.5</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="5.6" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>5.6</b> Checking assumptions</a></li>
+<li class="chapter" data-level="5.7" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>5.7</b> Creating a figure</a></li>
+<li class="chapter" data-level="5.8" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>5.8</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html"><i class="fa fa-check"></i><b>6</b> One-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="6.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>6.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="6.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>6.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="6.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>6.3</b> Post-hoc testing for <code>aov()</code></a></li>
+<li class="chapter" data-level="6.4" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#one-way-anovas-as-linear-models"><i class="fa fa-check"></i><b>6.4</b> One-way ANOVAs as linear models</a></li>
+<li class="chapter" data-level="6.5" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>6.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="6.6" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>6.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="6.7" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>6.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="6.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>6.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="6.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>6.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="6.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>6.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html"><i class="fa fa-check"></i><b>7</b> Two-way ANOVA revisited</a><ul>
+<li class="chapter" data-level="7.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>7.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="7.2" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#aov-output-reminder"><i class="fa fa-check"></i><b>7.2</b> <code>aov()</code> output reminder</a></li>
+<li class="chapter" data-level="7.3" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-aov"><i class="fa fa-check"></i><b>7.3</b> Post-hoc testing for <code>aov</code></a></li>
+<li class="chapter" data-level="7.4" data-path="two-way-anova-revisit.html"><a href="two-way-anova-revisit.html#two-way-anovas-as-linear-models"><i class="fa fa-check"></i><b>7.4</b> Two-way ANOVAs as linear models</a></li>
+<li class="chapter" data-level="7.5" data-path="single-regression.html"><a href="single-regression.html#applying-and-interpreting-lm"><i class="fa fa-check"></i><b>7.5</b> Applying and interpreting <code>lm()</code></a></li>
+<li class="chapter" data-level="7.6" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>7.6</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="7.7" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>7.7</b> Checking assumptions</a></li>
+<li class="chapter" data-level="7.8" data-path="one-way-anova-revisit.html"><a href="one-way-anova-revisit.html#post-hoc-testing-for-lm"><i class="fa fa-check"></i><b>7.8</b> Post-hoc testing for <code>lm()</code></a></li>
+<li class="chapter" data-level="7.9" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>7.9</b> Creating a figure</a></li>
+<li class="chapter" data-level="7.10" data-path="single-regression.html"><a href="single-regression.html#reporting-the-results"><i class="fa fa-check"></i><b>7.10</b> Reporting the results</a></li>
+</ul></li>
+<li class="part"><span><b>III GENERALISED LINEAR MODELS</b></span></li>
+<li class="chapter" data-level="8" data-path="glm-overview.html"><a href="glm-overview.html"><i class="fa fa-check"></i><b>8</b> Overview</a><ul>
+<li class="chapter" data-level="8.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#model-fitting"><i class="fa fa-check"></i><b>8.1</b> Model fitting</a></li>
+<li class="chapter" data-level="8.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#more-than-one-explanatory-variable"><i class="fa fa-check"></i><b>8.2</b> More than one explanatory variable</a></li>
+<li class="chapter" data-level="8.3" data-path="glm-overview.html"><a href="glm-overview.html#generalised-linear-models-in-r"><i class="fa fa-check"></i><b>8.3</b> Generalised linear models in R</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#building-and-viewing"><i class="fa fa-check"></i><b>8.3.1</b> Building and viewing</a></li>
+<li class="chapter" data-level="8.3.2" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#getting-predictions"><i class="fa fa-check"></i><b>8.3.2</b> Getting predictions</a></li>
+<li class="chapter" data-level="8.3.3" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>8.3.3</b> Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#reporting"><i class="fa fa-check"></i><b>8.4</b> Reporting</a></li>
+</ul></li>
+<li class="part"><span><b>IV POISSON GLMs</b></span></li>
+<li class="chapter" data-level="9" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html"><i class="fa fa-check"></i><b>9</b> Poisson GLM overview</a><ul>
+<li class="chapter" data-level="9.1" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#when-explanatory-is-categorical"><i class="fa fa-check"></i><b>9.1</b> When explanatory is categorical</a></li>
+<li class="chapter" data-level="9.2" data-path="pois-glm-overview.html"><a href="pois-glm-overview.html#more-than-one-explanatory"><i class="fa fa-check"></i><b>9.2</b> More than one explanatory</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html"><i class="fa fa-check"></i><b>10</b> Single continuous explanatory</a><ul>
+<li class="chapter" data-level="10.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>10.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="10.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>10.2</b> Applying and interpreting <code>glm()</code></a></li>
+<li class="chapter" data-level="10.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>10.3</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="10.4" data-path="what-are-linear-models.html"><a href="what-are-linear-models.html#checking-assumptions"><i class="fa fa-check"></i><b>10.4</b> Checking assumptions</a></li>
+<li class="chapter" data-level="10.5" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>10.5</b> Creating a figure</a></li>
+<li class="chapter" data-level="10.6" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>10.6</b> Reporting the results.</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pois-glm-two-cont.html"><a href="pois-glm-two-cont.html"><i class="fa fa-check"></i><b>11</b> Two explanatory variables</a><ul>
+<li class="chapter" data-level="11.1" data-path="single-regression.html"><a href="single-regression.html#introduction-to-the-example"><i class="fa fa-check"></i><b>11.1</b> Introduction to the example</a></li>
+<li class="chapter" data-level="11.2" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#applying-and-interpreting-glm"><i class="fa fa-check"></i><b>11.2</b> Applying and interpreting <code>glm()</code></a></li>
+<li class="chapter" data-level="11.3" data-path="single-regression.html"><a href="single-regression.html#getting-predictions-from-the-model"><i class="fa fa-check"></i><b>11.3</b> Getting predictions from the model</a></li>
+<li class="chapter" data-level="11.4" data-path="single-regression.html"><a href="single-regression.html#creating-a-figure"><i class="fa fa-check"></i><b>11.4</b> Creating a figure</a></li>
+<li class="chapter" data-level="11.5" data-path="pois-glm-single-cont.html"><a href="pois-glm-single-cont.html#reporting-the-results."><i class="fa fa-check"></i><b>11.5</b> Reporting the results.</a></li>
+</ul></li>
+<li class="part"><span><b>V BINOMIAL GLMs</b></span></li>
+<li class="chapter" data-level="12" data-path="bino-glm-overview.html"><a href="bino-glm-overview.html"><i class="fa fa-check"></i><b>12</b> Binomial GLM overview</a></li>
+<li class="chapter" data-level="13" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>13</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">singlm: A simple introduction to GLM for analysing Poisson and Binomial responses in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pois-glm-two-cont" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Two explanatory variables</h1>
+<div id="introduction-to-the-example" class="section level2">
+<h2><span class="header-section-number">11.1</span> Introduction to the example</h2>
+<p>he number of insect prey individuals of a particular bird species manages to collect varies. In an effort to understand this variation, researchers recorded the number of prey an individual caught, its age (in years) and how it spent the majority of it’s time (as a single individual, in a pair or in a group of many). The data are in <a href="data-raw/birds.txt">birds.txt</a>.</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+prey
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+age
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+group
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5.7
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6.7
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:left;">
+single
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4.4
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+4.4
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+4.4
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+3.4
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+4.2
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:left;">
+pair
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+5.4
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:left;">
+many
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="key">
+<p>There are 3 variables: the response, <code>prey</code>, is the number of caught by an individual; <code>age</code>, gives the individual’s agein years (to one tenth of a year); and <code>group</code> indicates how the individuals spent the majority of its time.</p>
+</div>
+<p>We will import the data with the <code>read_table2()</code> function and plot it with <code>ggplot()</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="pois-glm-two-cont.html#cb1-1"></a>birds &lt;-<span class="st"> </span><span class="kw">read_table2</span>(<span class="st">&quot;data-raw/birds.txt&quot;</span>)</span></code></pre></div>
+<p>We need to be able to show the different group behaviours</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="pois-glm-two-cont.html#cb2-1"></a><span class="co"># a default scatter plot of the data</span></span>
+<span id="cb2-2"><a href="pois-glm-two-cont.html#cb2-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> birds, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> prey, <span class="dt">colour =</span> group)) <span class="op">+</span></span>
+<span id="cb2-3"><a href="pois-glm-two-cont.html#cb2-3"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="glm-poisson-two-explan_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
+Individuals that spend most of their time with many individuals catch more prey and this effect is increased with age. Individuals that spend most of their time alone do not seem to improve with age.</p>
+</div>
+<div id="applying-and-interpreting-glm" class="section level2">
+<h2><span class="header-section-number">11.2</span> Applying and interpreting <code>glm()</code></h2>
+<p>We build a generalised linear model of the number of cases explained by the distance with the <code>glm()</code> function as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="pois-glm-two-cont.html#cb3-1"></a>mod &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">data =</span> birds, prey <span class="op">~</span><span class="st"> </span>group <span class="op">*</span><span class="st"> </span>age, <span class="dt">family =</span> poisson)</span></code></pre></div>
+<p>Printing <code>mod</code> to the console gives us the estimated model parameters:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="pois-glm-two-cont.html#cb4-1"></a>mod</span>
+<span id="cb4-2"><a href="pois-glm-two-cont.html#cb4-2"></a><span class="co"># </span></span>
+<span id="cb4-3"><a href="pois-glm-two-cont.html#cb4-3"></a><span class="co"># Call:  glm(formula = prey ~ group * age, family = poisson, data = birds)</span></span>
+<span id="cb4-4"><a href="pois-glm-two-cont.html#cb4-4"></a><span class="co"># </span></span>
+<span id="cb4-5"><a href="pois-glm-two-cont.html#cb4-5"></a><span class="co"># Coefficients:</span></span>
+<span id="cb4-6"><a href="pois-glm-two-cont.html#cb4-6"></a><span class="co">#     (Intercept)        grouppair      groupsingle              age  </span></span>
+<span id="cb4-7"><a href="pois-glm-two-cont.html#cb4-7"></a><span class="co">#           2.794           -0.416           -1.406            0.293  </span></span>
+<span id="cb4-8"><a href="pois-glm-two-cont.html#cb4-8"></a><span class="co">#   grouppair:age  groupsingle:age  </span></span>
+<span id="cb4-9"><a href="pois-glm-two-cont.html#cb4-9"></a><span class="co">#          -0.168           -0.323  </span></span>
+<span id="cb4-10"><a href="pois-glm-two-cont.html#cb4-10"></a><span class="co"># </span></span>
+<span id="cb4-11"><a href="pois-glm-two-cont.html#cb4-11"></a><span class="co"># Degrees of Freedom: 29 Total (i.e. Null);  24 Residual</span></span>
+<span id="cb4-12"><a href="pois-glm-two-cont.html#cb4-12"></a><span class="co"># Null Deviance:	    849 </span></span>
+<span id="cb4-13"><a href="pois-glm-two-cont.html#cb4-13"></a><span class="co"># Residual Deviance: 21 	AIC: 172</span></span></code></pre></div>
+<p><span class="math inline">\(\beta_{0}\)</span> is labelled “(Intercept)” and <span class="math inline">\(\beta_{1}\)</span> to <span class="math inline">\(\beta_{5}\)</span> are labelled “grouppair”, “groupsingle”, “age”, “grouppair:age” and “groupsingle:age” Thus the equation of the line is:</p>
+<center>
+<span class="math inline">\(ln(prey)\)</span> = 2.794 <span class="math inline">\(+\)</span> -0.416<span class="math inline">\(\times grouppair\)</span> <span class="math inline">\(+\)</span> -1.406<span class="math inline">\(\times groupsingle\)</span> <span class="math inline">\(+\)</span> 0.293<span class="math inline">\(\times age\)</span> <span class="math inline">\(+\)</span> -0.168<span class="math inline">\(\times grouppair:age\)</span> <span class="math inline">\(+\)</span> -0.323<span class="math inline">\(\times groupsingle:age\)</span>
+</center>
+<p>The intercept is the log of the expected number of prey items caught by 0 aged birds that spend the majority of their time in a group of many. The fact that the estimate for grouppair (-0.416) is negative tells us that as such those in pairs catch fewer. Single birds also catch fewer. The positive coefficient for age indicates that more prey are caught with age.</p>
+<p>These estimates are on the scale of the link function, that is, they are logged (to the base e, natural logs) in this case.</p>
+<p>To understand the parameters the on the scale of the response we apply the inverse of the <span class="math inline">\(ln\)</span> function, the <code>exp()</code> function</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="pois-glm-two-cont.html#cb5-1"></a><span class="kw">exp</span>(mod<span class="op">$</span>coefficients)</span>
+<span id="cb5-2"><a href="pois-glm-two-cont.html#cb5-2"></a><span class="co">#     (Intercept)       grouppair     groupsingle             age   grouppair:age </span></span>
+<span id="cb5-3"><a href="pois-glm-two-cont.html#cb5-3"></a><span class="co">#          16.338           0.660           0.245           1.340           0.845 </span></span>
+<span id="cb5-4"><a href="pois-glm-two-cont.html#cb5-4"></a><span class="co"># groupsingle:age </span></span>
+<span id="cb5-5"><a href="pois-glm-two-cont.html#cb5-5"></a><span class="co">#           0.724</span></span></code></pre></div>
+<p>These estimates are on the scale of the link function, that is, they are logged (to the base e, natural logs) in this case.</p>
+<p>To understand the parameters the on the scale of the response we apply the inverse of the <span class="math inline">\(ln\)</span> function, the <code>exp()</code> function</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="pois-glm-two-cont.html#cb6-1"></a><span class="kw">exp</span>(mod<span class="op">$</span>coefficients)</span>
+<span id="cb6-2"><a href="pois-glm-two-cont.html#cb6-2"></a><span class="co">#     (Intercept)       grouppair     groupsingle             age   grouppair:age </span></span>
+<span id="cb6-3"><a href="pois-glm-two-cont.html#cb6-3"></a><span class="co">#          16.338           0.660           0.245           1.340           0.845 </span></span>
+<span id="cb6-4"><a href="pois-glm-two-cont.html#cb6-4"></a><span class="co"># groupsingle:age </span></span>
+<span id="cb6-5"><a href="pois-glm-two-cont.html#cb6-5"></a><span class="co">#           0.724</span></span></code></pre></div>
+<p>So:</p>
+<p><span class="math inline">\(prey\)</span> = 16.338 <span class="math inline">\(\times\)</span> 0.66<span class="math inline">\(^{grouppair}\)</span> <span class="math inline">\(\times\)</span> 0.245<span class="math inline">\(^{groupsingle}\)</span> <span class="math inline">\(\times\)</span> 0.66<span class="math inline">\(^{grouppair}\)</span> <span class="math inline">\(\times\)</span> 0.845<span class="math inline">\(^{grouppair:age}\)</span> <span class="math inline">\(\times\)</span> 0.724<span class="math inline">\(^{groupsingle:age}\)</span></p>
+<p>More information including statistical tests of the model and its parameters is obtained by using <code>summary()</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="pois-glm-two-cont.html#cb7-1"></a><span class="kw">summary</span>(mod) </span>
+<span id="cb7-2"><a href="pois-glm-two-cont.html#cb7-2"></a><span class="co"># </span></span>
+<span id="cb7-3"><a href="pois-glm-two-cont.html#cb7-3"></a><span class="co"># Call:</span></span>
+<span id="cb7-4"><a href="pois-glm-two-cont.html#cb7-4"></a><span class="co"># glm(formula = prey ~ group * age, family = poisson, data = birds)</span></span>
+<span id="cb7-5"><a href="pois-glm-two-cont.html#cb7-5"></a><span class="co"># </span></span>
+<span id="cb7-6"><a href="pois-glm-two-cont.html#cb7-6"></a><span class="co"># Deviance Residuals: </span></span>
+<span id="cb7-7"><a href="pois-glm-two-cont.html#cb7-7"></a><span class="co">#    Min      1Q  Median      3Q     Max  </span></span>
+<span id="cb7-8"><a href="pois-glm-two-cont.html#cb7-8"></a><span class="co"># -1.640  -0.667  -0.172   0.650   1.767  </span></span>
+<span id="cb7-9"><a href="pois-glm-two-cont.html#cb7-9"></a><span class="co"># </span></span>
+<span id="cb7-10"><a href="pois-glm-two-cont.html#cb7-10"></a><span class="co"># Coefficients:</span></span>
+<span id="cb7-11"><a href="pois-glm-two-cont.html#cb7-11"></a><span class="co">#                 Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb7-12"><a href="pois-glm-two-cont.html#cb7-12"></a><span class="co"># (Intercept)       2.7935     0.1813   15.41   &lt;2e-16 ***</span></span>
+<span id="cb7-13"><a href="pois-glm-two-cont.html#cb7-13"></a><span class="co"># grouppair        -0.4161     0.4078   -1.02    0.308    </span></span>
+<span id="cb7-14"><a href="pois-glm-two-cont.html#cb7-14"></a><span class="co"># groupsingle      -1.4059     0.5949   -2.36    0.018 *  </span></span>
+<span id="cb7-15"><a href="pois-glm-two-cont.html#cb7-15"></a><span class="co"># age               0.2927     0.0354    8.27   &lt;2e-16 ***</span></span>
+<span id="cb7-16"><a href="pois-glm-two-cont.html#cb7-16"></a><span class="co"># grouppair:age    -0.1685     0.0789   -2.13    0.033 *  </span></span>
+<span id="cb7-17"><a href="pois-glm-two-cont.html#cb7-17"></a><span class="co"># groupsingle:age  -0.3226     0.1260   -2.56    0.010 *  </span></span>
+<span id="cb7-18"><a href="pois-glm-two-cont.html#cb7-18"></a><span class="co"># ---</span></span>
+<span id="cb7-19"><a href="pois-glm-two-cont.html#cb7-19"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb7-20"><a href="pois-glm-two-cont.html#cb7-20"></a><span class="co"># </span></span>
+<span id="cb7-21"><a href="pois-glm-two-cont.html#cb7-21"></a><span class="co"># (Dispersion parameter for poisson family taken to be 1)</span></span>
+<span id="cb7-22"><a href="pois-glm-two-cont.html#cb7-22"></a><span class="co"># </span></span>
+<span id="cb7-23"><a href="pois-glm-two-cont.html#cb7-23"></a><span class="co">#     Null deviance: 848.806  on 29  degrees of freedom</span></span>
+<span id="cb7-24"><a href="pois-glm-two-cont.html#cb7-24"></a><span class="co"># Residual deviance:  21.048  on 24  degrees of freedom</span></span>
+<span id="cb7-25"><a href="pois-glm-two-cont.html#cb7-25"></a><span class="co"># AIC: 171.8</span></span>
+<span id="cb7-26"><a href="pois-glm-two-cont.html#cb7-26"></a><span class="co"># </span></span>
+<span id="cb7-27"><a href="pois-glm-two-cont.html#cb7-27"></a><span class="co"># Number of Fisher Scoring iterations: 4</span></span></code></pre></div>
+<p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta s\)</span> again but this time with their standard errors and tests of whether the estimates differ from zero. For example, The estimated value for the intercept is 2.794 <span class="math inline">\(\pm\)</span> 0.181 and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated value for <span class="math inline">\(\beta_{1}\)</span> is -0.416 <span class="math inline">\(\pm\)</span> 0.408 does not differ significantly from zero (<span class="math inline">\(p\)</span> = 0.308). At age 0, birds in pairs do not catch significantly fewer prey.</p>
+<p>Towards the bottom of the output there is information about the model fit. The null deviance (what exists if we predict the number of prey from the mean of birds in groups of many, <span class="math inline">\(\beta_{0}\)</span>) is 848.806 with 29 degrees of freedom and the residual deviance (left over after our model is fitted) is 21.048 with 24 <span class="math inline">\(d.f.\)</span>. The model fits a five parameters and thus accounts for 5 <span class="math inline">\(d.f.\)</span> for a reduction in deviance by 827.758.</p>
+<p>To get a test of whether the reduction in deviance is significant for each term in the the model formula we use:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="pois-glm-two-cont.html#cb8-1"></a><span class="kw">anova</span>(mod, <span class="dt">test =</span> <span class="st">&quot;Chisq&quot;</span>) </span>
+<span id="cb8-2"><a href="pois-glm-two-cont.html#cb8-2"></a><span class="co"># Analysis of Deviance Table</span></span>
+<span id="cb8-3"><a href="pois-glm-two-cont.html#cb8-3"></a><span class="co"># </span></span>
+<span id="cb8-4"><a href="pois-glm-two-cont.html#cb8-4"></a><span class="co"># Model: poisson, link: log</span></span>
+<span id="cb8-5"><a href="pois-glm-two-cont.html#cb8-5"></a><span class="co"># </span></span>
+<span id="cb8-6"><a href="pois-glm-two-cont.html#cb8-6"></a><span class="co"># Response: prey</span></span>
+<span id="cb8-7"><a href="pois-glm-two-cont.html#cb8-7"></a><span class="co"># </span></span>
+<span id="cb8-8"><a href="pois-glm-two-cont.html#cb8-8"></a><span class="co"># Terms added sequentially (first to last)</span></span>
+<span id="cb8-9"><a href="pois-glm-two-cont.html#cb8-9"></a><span class="co"># </span></span>
+<span id="cb8-10"><a href="pois-glm-two-cont.html#cb8-10"></a><span class="co"># </span></span>
+<span id="cb8-11"><a href="pois-glm-two-cont.html#cb8-11"></a><span class="co">#           Df Deviance Resid. Df Resid. Dev Pr(&gt;Chi)    </span></span>
+<span id="cb8-12"><a href="pois-glm-two-cont.html#cb8-12"></a><span class="co"># NULL                         29        849             </span></span>
+<span id="cb8-13"><a href="pois-glm-two-cont.html#cb8-13"></a><span class="co"># group      2      752        27         97  &lt; 2e-16 ***</span></span>
+<span id="cb8-14"><a href="pois-glm-two-cont.html#cb8-14"></a><span class="co"># age        1       66        26         31  4.1e-16 ***</span></span>
+<span id="cb8-15"><a href="pois-glm-two-cont.html#cb8-15"></a><span class="co"># group:age  2       10        24         21   0.0071 ** </span></span>
+<span id="cb8-16"><a href="pois-glm-two-cont.html#cb8-16"></a><span class="co"># ---</span></span>
+<span id="cb8-17"><a href="pois-glm-two-cont.html#cb8-17"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<p>All three terms in the model significantly reduce the deviance: group (<span class="math inline">\(p=\)</span>&lt; 0.001), age (<span class="math inline">\(p=\)</span>&lt; 0.001) and the interaction between them (<span class="math inline">\(p=\)</span>= 0.007). The effect of age is not the same for individuals in groups of different sizes.</p>
+</div>
+<div id="getting-predictions-from-the-model" class="section level2">
+<h2><span class="header-section-number">11.3</span> Getting predictions from the model</h2>
+<p>The <code>predict()</code> function returns the predicted values of the response. To add a column of predicted values to the dataframe: we need to specify they should be on the scale of the responses, not on the scale of the link function.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="pois-glm-two-cont.html#cb9-1"></a>birds<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<p>This gives predictions for the ages used. If you want predictions for other ages you need to create a data frame of the values from which you want to predict</p>
+<p>To predict for ages 0, 1 and 7 for each group size we can use:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="pois-glm-two-cont.html#cb10-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">group =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;many&quot;</span>, <span class="st">&quot;pair&quot;</span>, <span class="st">&quot;single&quot;</span>), <span class="dt">each =</span> <span class="dv">3</span>),</span>
+<span id="cb10-2"><a href="pois-glm-two-cont.html#cb10-2"></a>                      <span class="dt">age =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">7</span>)), <span class="dt">times =</span> <span class="dv">3</span>))</span></code></pre></div>
+<p>We then specify this dataframe in the <code>predict()</code> function using the <code>newdata</code> argument</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="pois-glm-two-cont.html#cb11-1"></a></span>
+<span id="cb11-2"><a href="pois-glm-two-cont.html#cb11-2"></a><span class="co"># then predicting</span></span>
+<span id="cb11-3"><a href="pois-glm-two-cont.html#cb11-3"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+</div>
+<div id="creating-a-figure" class="section level2">
+<h2><span class="header-section-number">11.4</span> Creating a figure</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="pois-glm-two-cont.html#cb12-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> birds, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> prey, <span class="dt">colour =</span> group)) <span class="op">+</span></span>
+<span id="cb12-2"><a href="pois-glm-two-cont.html#cb12-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb12-3"><a href="pois-glm-two-cont.html#cb12-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb12-4"><a href="pois-glm-two-cont.html#cb12-4"></a>              <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>),</span>
+<span id="cb12-5"><a href="pois-glm-two-cont.html#cb12-5"></a>              <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb12-6"><a href="pois-glm-two-cont.html#cb12-6"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> pal4, <span class="dt">name =</span> <span class="st">&quot;Group size&quot;</span>) <span class="op">+</span></span>
+<span id="cb12-7"><a href="pois-glm-two-cont.html#cb12-7"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb12-8"><a href="pois-glm-two-cont.html#cb12-8"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">7.5</span>),</span>
+<span id="cb12-9"><a href="pois-glm-two-cont.html#cb12-9"></a>                     <span class="dt">name =</span> <span class="st">&quot;Age (years)&quot;</span>) <span class="op">+</span></span>
+<span id="cb12-10"><a href="pois-glm-two-cont.html#cb12-10"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.03</span>),</span>
+<span id="cb12-11"><a href="pois-glm-two-cont.html#cb12-11"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">110</span>),</span>
+<span id="cb12-12"><a href="pois-glm-two-cont.html#cb12-12"></a>                     <span class="dt">name =</span> <span class="st">&quot;Number of prey caught&quot;</span>) <span class="op">+</span></span>
+<span id="cb12-13"><a href="pois-glm-two-cont.html#cb12-13"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span>
+<span id="cb12-14"><a href="pois-glm-two-cont.html#cb12-14"></a>  </span></code></pre></div>
+<p><img src="glm-poisson-two-explan_files/figure-html/fig-birds-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="reporting-the-results." class="section level2">
+<h2><span class="header-section-number">11.5</span> Reporting the results.</h2>
+<p>…. . See figure <a href="#fig:fig-birds"><strong>??</strong></a>.</p>
+
+<div class="figure" style="text-align: left"><span id="fig:fig-birds-report"></span>
+<img src="glm-poisson-two-explan_files/figure-html/fig-birds-report-1.png" alt="tum tee tum" width="60%" />
+<p class="caption">
+Figure 11.1: tum tee tum
+</p>
+</div>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pois-glm-single-cont.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bino-glm-overview.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/3mmaRand/singlm/edit/master/glm-poisson-two-explan.Rmd",
+"text": "Make an edit suggestion"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["singlm.pdf", "singlm.epub", "https://github.com/3mmaRand/singlm/raw/master/glm-poisson-two-explan.Rmd"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
