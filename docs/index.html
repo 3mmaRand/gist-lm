@@ -138,13 +138,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#who-is-this-book-for"><i class="fa fa-check"></i><b>0.1</b> Who is this book for?</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#formatting-options"><i class="fa fa-check"></i><b>0.2</b> Formatting options</a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#conventions-used-in-the-book"><i class="fa fa-check"></i><b>0.3</b> Conventions used in the book</a></li>
-<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#approach-of-this-book"><i class="fa fa-check"></i><b>0.4</b> Approach of this book</a></li>
-<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#outline"><i class="fa fa-check"></i><b>0.5</b> Outline</a></li>
-<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#following-along-with-the-examples"><i class="fa fa-check"></i><b>0.6</b> Following along with the examples</a></li>
-<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#overview-of-the-chapter-contents"><i class="fa fa-check"></i><b>0.7</b> Overview of the chapter contents</a></li>
-<li class="chapter" data-level="0.8" data-path="index.html"><a href="index.html#software-information"><i class="fa fa-check"></i><b>0.8</b> Software information</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#approach-of-this-book"><i class="fa fa-check"></i><b>0.2</b> Approach of this book</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#options-on-the-toolbar"><i class="fa fa-check"></i><b>0.3</b> Options on the toolbar</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#conventions-used-in-the-book"><i class="fa fa-check"></i><b>0.4</b> Conventions used in the book</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#following-along-with-the-examples"><i class="fa fa-check"></i><b>0.5</b> Following along with the examples</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#overview-of-the-chapter-contents"><i class="fa fa-check"></i><b>0.6</b> Overview of the chapter contents</a></li>
 </ul></li>
 <li class="part"><span><b>I INTRODUCTION</b></span></li>
 <li class="chapter" data-level="1" data-path="revision.html"><a href="revision.html"><i class="fa fa-check"></i><b>1</b> Revision of your Introductory class</a></li>
@@ -239,17 +237,27 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h1>Preface</h1>
 <div id="who-is-this-book-for" class="section level2">
 <h2><span class="header-section-number">0.1</span> Who is this book for?</h2>
-<p>This book is for R users who have done an introductory class in data analysis which covered classical univariate tests such as single linear regression, <em>t</em>-tests, one-way ANOVA and two-way ANOVA. It is aimed at people who understand these as separate tests. A short revision chapter is included to set the scene and clarify terminology used in the rest of the book.</p>
+<p>This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have done an introductory class in data analysis as a skill for research in another field such as in the life or social sciences. Introductory classes usually cover single linear regression, <em>t</em>-tests, one-way ANOVA and two-way ANOVA. It might be especially helpful to those who see these as separate tests. A short revision chapter giving an overview is included to set the scene and clarify terminology used in the rest of the book.</p>
 <p>I assume you have some familiarity with R and RStudio and have a general, but not expert, understanding of summarising, analysing and visualising data with functions such as <code>t.test()</code>, <code>aov()</code>, <code>TukeyHSD()</code> and <code>ggplot()</code>. I do not assume your fluency allows you to do these things with looking anything up, just that you would understand what you were doing and how to interpret the results.</p>
 <p>The book has two aims. First to explain how the <em>t</em>-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the <code>lm()</code> function.</p>
 </div>
-<div id="formatting-options" class="section level2">
-<h2><span class="header-section-number">0.2</span> Formatting options</h2>
+<div id="approach-of-this-book" class="section level2">
+<h2><span class="header-section-number">0.2</span> Approach of this book</h2>
+<p>Regression, <em>t</em>-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the “general linear model”. Since they are fundamentally the same test, all can be carried out with the <code>lm()</code> function in R. However, it is common for <em>t</em>-tests and ANOVA to be taught to non-specialists using the <code>t.test()</code> and <code>aov()</code> functions respectively. There are some sensible reasons for this. For example, many introductory texts take the same approach and typically, the outputs of <code>t.test()</code> and <code>aov()</code> are easier for beginners to understand and interpret.</p>
+<p>However, the output of <code>lm()</code> is more typical of statistical modelling functions in general and these are harder to understand if you are not used to using <code>lm()</code> for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is and extending your statistical repertoire more intimidating. The approach taken in this book is to exploit your pre-existing knowledge of <em>t</em>-tests and ANOVA using <code>t.test()</code> and <code>aov()</code> to understand the output of <code>lm()</code>.</p>
+<div class="key">
+<p><code>lm()</code> can be used to perform <em>t</em>-tests, ANOVAs and regression.</p>
+</div>
+<p>Examples are carried out with then familiar functions and then with <code>lm()</code> so you can make the link between the two. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested <strong><code>ggplot2</code></strong> figures.
+The code is given for figures but, as this isn’t a book about <code>ggplot</code>, it is not extensively explained. To learn more go to <a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a></p>
+</div>
+<div id="options-on-the-toolbar" class="section level2">
+<h2><span class="header-section-number">0.3</span> Options on the toolbar</h2>
 <p>You can change the appearance of the book using the toolbar at the top of the page. The menu on the left can be hidden, the font size increased or decreased and the colour altered to a dark or sepia theme.</p>
 <p>Search the book by clicking on the magnifying glass, entering a search term and using the up and down arrows to navigate through the results.</p>
 </div>
 <div id="conventions-used-in-the-book" class="section level2">
-<h2><span class="header-section-number">0.3</span> Conventions used in the book</h2>
+<h2><span class="header-section-number">0.4</span> Conventions used in the book</h2>
 <p>Code and any output appears in blocks formatted like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a>stag &lt;-<span class="st"> </span><span class="kw">read_table2</span>(<span class="st">&quot;data-raw/stag.txt&quot;</span>)</span>
 <span id="cb1-2"><a href="index.html#cb1-2"></a><span class="kw">glimpse</span>(stag)</span>
@@ -270,35 +278,17 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div class="fyi">
 <p>Extra information and tips are in boxes like these</p>
 </div>
-<p>I use packages from the <strong><code>tidyverse</code></strong> <span class="citation">(Wickham et al. <a href="#ref-tidyverse2019" role="doc-biblioref">2019</a>)</span> throughout and chapters assume it has been loaded. If you get an error like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="co"># Error in read_table2(&quot;data-raw/stag.txt&quot;) : </span></span>
-<span id="cb2-2"><a href="index.html#cb2-2"></a><span class="co">#  could not find function &quot;read_table2&quot;</span></span></code></pre></div>
-<p>Then load the <strong><code>tidyverse</code></strong> like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<p>I use packages from the <strong><code>tidyverse</code></strong> <span class="citation">(Wickham et al. <a href="#ref-tidyverse2019" role="doc-biblioref">2019</a>)</span> including <strong><code>ggplot2</code></strong> <span class="citation">(Wickham <a href="#ref-ggplot2-book" role="doc-biblioref">2016</a>)</span>, <strong><code>dplyr</code></strong> <span class="citation">(Wickham et al. <a href="#ref-dplyr" role="doc-biblioref">2020</a>)</span>, <strong><code>tidyr</code></strong> <span class="citation">(Wickham <a href="#ref-tidyr" role="doc-biblioref">2020</a>)</span> and <strong><code>readr</code></strong> <span class="citation">(Wickham, Hester, and Francois <a href="#ref-readr" role="doc-biblioref">2018</a>)</span> throughout the book
+All the code assumes you have loaded the core <strong><code>tidyverse</code></strong> packages with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<p>If you run examples and get an error like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1"></a><span class="co"># Error in read_table2(&quot;data-raw/stag.txt&quot;) : </span></span>
+<span id="cb3-2"><a href="index.html#cb3-2"></a><span class="co">#  could not find function &quot;read_table2&quot;</span></span></code></pre></div>
+<p>It is likely you need to load the <strong><code>tidyverse</code></strong> as shown above.</p>
 <p>All other packages will be loaded explicitly where needed with <code>library()</code> statements.</p>
 </div>
-<div id="approach-of-this-book" class="section level2">
-<h2><span class="header-section-number">0.4</span> Approach of this book</h2>
-<p>Regression, <em>t</em>-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the “general linear model”. Since they are fundamentally the same test, all can be carried out with the <code>lm()</code> function in R. However, it is common for <em>t</em>-tests and ANOVA to be taught using the <code>t.test()</code> and <code>aov()</code> functions respectively. One reason for this is because their outputs are easier for beginners to understand and interpret.</p>
-<p>However, the output of <code>lm()</code> is more typical of statistical modelling functions in general and not using <code>lm()</code> for the relatively simple cases makes it more difficult for people to extend their the statistical repertoire. The approach taken in this book is to exploit preexisting knowledge of <em>t</em>-tests and ANOVA using <code>t.test()</code> and <code>aov()</code> to understand the output of <code>lm()</code>. This will make it easier to extend your statistical knowledge.</p>
-</div>
-<div id="outline" class="section level2">
-<h2><span class="header-section-number">0.5</span> Outline</h2>
-<p>This book introduces the the Generalised Linear Model for two types of discrete response:</p>
-<ol style="list-style-type: decimal">
-<li>Binomially distributed: when a response variable can take one of only two values, such as “yes” or “no”, “alive” or “dead”, “present” or “absent”.<br />
-</li>
-<li>Poisson distributed: when a response variable is the number of things.</li>
-</ol>
-<p>In R, these are analysed with the <code>glm()</code> function.</p>
-<div class="key">
-<p><code>lm()</code> can be used to perform <em>t</em>-tests, ANOVAs and regression. <code>glm()</code> can be used to perform tests using the Generalised Linear Model for response variables which are counts or binary.</p>
-</div>
-<p>Models are explained with reference to examples. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested <strong><code>ggplot2</code></strong>figures.
-The code is given for figures but not extensively explained. To learn more go to <a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a></p>
-</div>
 <div id="following-along-with-the-examples" class="section level2">
-<h2><span class="header-section-number">0.6</span> Following along with the examples</h2>
+<h2><span class="header-section-number">0.5</span> Following along with the examples</h2>
 <p>instructions rstudio projects, data-raw, script file, down load “data-raw/stag.txt”</p>
 <p>palettes
 pal1 &lt;- c(“#eef8fa”, “#faeef8”,“#f8faee”)</p>
@@ -310,15 +300,9 @@ pal3 &lt;- c(“#64c0d2”, “#d264c0”, “#c0d264”)</p>
 pal4 &lt;- c(“#256c7a”, “#7a256c”, “#6c7a25”)</p>
 </div>
 <div id="overview-of-the-chapter-contents" class="section level2">
-<h2><span class="header-section-number">0.7</span> Overview of the chapter contents</h2>
+<h2><span class="header-section-number">0.6</span> Overview of the chapter contents</h2>
 <p><strong>Part 1</strong> provides a brief revision of an introductory data analysis class using terminology that will used throughout the remaining chapters. Single linear regression is used as an example of <code>lm()</code>. If the concepts in this chapter are very unfamiliar, you may benefit from revising your previous work.</p>
 <p>In <strong>Part 2</strong> works through <em>t</em>-test, one-way ANOVA and two-way ANOVA examples carried out first with <code>t.test()</code> and <code>aov()</code> and then with <code>lm()</code> to gain a good understanding of the <code>lm()</code> output and interrogation for reporting.</p>
-<p><strong>Part 3</strong> gives a introduction to generalised linear models.</p>
-<p><strong>Part 4</strong> gives a introduction to generalised linear models for count data and works through several examples.</p>
-<p><strong>Part 5</strong> gives a introduction to generalised linear models for binomial data and works through several examples.</p>
-</div>
-<div id="software-information" class="section level2">
-<h2><span class="header-section-number">0.8</span> Software information</h2>
 <p>I used the <strong><code>knitr</code></strong> package <span class="citation">(Xie <a href="#ref-xie2015" role="doc-biblioref">2015</a>)</span> and the <strong>bookdown</strong> package <span class="citation">(Xie <a href="#ref-R-bookdown" role="doc-biblioref">2020</a>)</span> to compile my book. My R session information is shown below:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1"></a><span class="kw">sessionInfo</span>()</span>
 <span id="cb4-2"><a href="index.html#cb4-2"></a><span class="co"># R version 4.0.2 (2020-06-22)</span></span>
@@ -365,8 +349,20 @@ pal4 &lt;- c(“#256c7a”, “#7a256c”, “#6c7a25”)</p>
 
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-ggplot2-book">
+<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.</p>
+</div>
+<div id="ref-tidyr">
+<p>Wickham, Hadley. 2020. <em>Tidyr: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.</p>
+</div>
 <div id="ref-tidyverse2019">
 <p>Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.</p>
+</div>
+<div id="ref-dplyr">
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div id="ref-readr">
+<p>Wickham, Hadley, Jim Hester, and Romain Francois. 2018. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.</p>
 </div>
 <div id="ref-xie2015">
 <p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.org/knitr/">http://yihui.org/knitr/</a>.</p>
@@ -412,7 +408,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/3mmaRand/singlm/edit/master/index.Rmd",
+"link": "https://github.com/3mmaRand/gist-lm/edit/master/index.Rmd",
 "text": "Make an edit suggestion"
 },
 "history": {
@@ -423,7 +419,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["singlm.pdf", "singlm.epub", "https://github.com/3mmaRand/singlm/raw/master/index.Rmd"],
+"download": ["singlm.pdf", "singlm.epub", "https://github.com/3mmaRand/gist-lm/raw/master/index.Rmd"],
 "toc": {
 "collapse": "section"
 }

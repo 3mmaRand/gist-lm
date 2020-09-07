@@ -21,13 +21,27 @@ url: 'https://3mmarand.github.io/gist-lm/'
 
 ## Who is this book for?
 
-This book is for R users who have done an introductory class in data analysis which covered classical univariate tests such as single linear regression, *t*-tests, one-way ANOVA and two-way ANOVA. It is aimed at people who understand these as separate tests. A short revision chapter is included to set the scene and clarify terminology used in the rest of the book.
+This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have done an introductory class in data analysis as a skill for research in another field such as in the life or social sciences. Introductory classes usually cover single linear regression, *t*-tests, one-way ANOVA and two-way ANOVA. It might be especially helpful to those who see these as separate tests. A short revision chapter giving an overview is included to set the scene and clarify terminology used in the rest of the book.
 
-I assume you have some familiarity with R and RStudio and have a general, but not expert, understanding of summarising, analysing and visualising data with functions such as `t.test()`, `aov()`, `TukeyHSD()` and `ggplot()`. I do not assume your fluency allows you to do these things with looking anything up, just that you would understand what you were doing and how to interpret the results.
+I assume you have some familiarity with R and RStudio and have a general, but not expert, understanding of summarising, analysing and visualising data with functions such as `t.test()`, `aov()`, `TukeyHSD()` and `ggplot()`. I do not assume your fluency allows you to do these things with looking anything up, just that you would understand what you were doing and how to interpret the results. 
 
 The book has two aims. First to explain how the *t*-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the `lm()` function. 
 
-## Formatting options 
+## Approach of this book
+
+Regression, *t*-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the "general linear model". Since they are fundamentally the same test, all can be carried out with the `lm()` function in R. However, it is common for *t*-tests and ANOVA to be taught to non-specialists using the `t.test()` and `aov()` functions respectively. There are some sensible reasons for this. For example, many introductory texts take the same approach and typically, the outputs of `t.test()` and `aov()` are easier for beginners to understand and interpret. 
+
+However, the output of `lm()` is more typical of statistical modelling functions in general and these are harder to understand if you are not used to using `lm()` for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is and extending your statistical repertoire more intimidating. The approach taken in this book is to exploit your pre-existing knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. 
+
+:::key
+`lm()` can be used to perform *t*-tests, ANOVAs and regression. 
+:::
+
+Examples are carried out with then familiar functions and then with `lm()` so you can make the link between the two. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested **`ggplot2`** figures. 
+The code is given for figures but, as this isn't a book about `ggplot`, it is not extensively explained. To learn more go to  https://ggplot2.tidyverse.org/
+
+
+## Options on the toolbar 
 
 You can change the appearance of the book using the toolbar at the top of the page. The menu on the left can be hidden, the font size increased or decreased and the colour altered to a dark or sepia theme.
 
@@ -66,7 +80,15 @@ Extra information and tips are in boxes like these
 :::
 
 
-I use packages from the **`tidyverse`** [@tidyverse2019] throughout and chapters assume it has been loaded. If you get an error like this: 
+I use packages from the **`tidyverse`** [@tidyverse2019] including **`ggplot2`** [@ggplot2-book], **`dplyr`** [@dplyr], **`tidyr`** [@tidyr] and **`readr`** [@readr] throughout the book
+All the code assumes you have loaded the core **`tidyverse`** packages with: 
+
+
+```r
+library(tidyverse)
+```
+
+If you run examples and get an error like this: 
 
 
 ```r
@@ -74,37 +96,11 @@ I use packages from the **`tidyverse`** [@tidyverse2019] throughout and chapters
 #  could not find function "read_table2"
 ```
 
-Then load the **`tidyverse`** like this:
-
-
-```r
-library(tidyverse)
-```
-
+It is likely you need to load the **`tidyverse`** as shown above.
 
 All other packages will be loaded explicitly where needed with `library()` statements. 
 
 
-## Approach of this book
-
-Regression, *t*-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the "general linear model". Since they are fundamentally the same test, all can be carried out with the `lm()` function in R. However, it is common for *t*-tests and ANOVA to be taught using the `t.test()` and `aov()` functions respectively. One reason for this is because their outputs are easier for beginners to understand and interpret. 
-
-However, the output of `lm()` is more typical of statistical modelling functions in general and not using `lm()` for the relatively simple cases makes it more difficult for people to extend their the statistical repertoire. The approach taken in this book is to exploit preexisting knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. This will make it easier to extend your statistical knowledge.
-
-## Outline
-This book introduces the the Generalised Linear Model for two types of discrete response:
-
-1. Binomially distributed: when a response variable can take one of only two values, such as "yes" or "no", "alive" or "dead", "present" or "absent".  
-2. Poisson distributed: when a response variable is the number of things.
-
-In R, these are analysed with the `glm()` function.
-
-:::key
-`lm()` can be used to perform *t*-tests, ANOVAs and regression. `glm()` can be used to perform tests using the Generalised Linear Model for response variables which are counts or binary.
-:::
-
-Models are explained with reference to examples. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested **`ggplot2`**figures. 
-The code is given for figures but not extensively explained. To learn more go to  https://ggplot2.tidyverse.org/
 
 ## Following along with the examples
 instructions rstudio projects, data-raw, script file, down load "data-raw/stag.txt"
@@ -128,14 +124,6 @@ pal4 <- c("#256c7a", "#7a256c", "#6c7a25")
 
 In **Part 2**  works through *t*-test, one-way ANOVA and two-way ANOVA examples carried out first with `t.test()` and `aov()` and then with `lm()` to gain a good understanding of the `lm()` output and interrogation for reporting.
 
-
-**Part 3** gives a introduction to generalised linear models.
-
-**Part 4** gives a introduction to generalised linear models for count data and works through several examples.
-
-**Part 5** gives a introduction to generalised linear models for binomial data and works through several examples.
-
-## Software information
 
 I used the **`knitr`** package [@xie2015] and the **bookdown** package [@R-bookdown] to compile my book. My R session information is shown below:
 

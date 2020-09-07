@@ -12,7 +12,7 @@ bookdown::gitbook:
   css: assets/style.css
   config:
     edit:
-      link: https://github.com/3mmaRand/singlm/edit/master/%s
+      link: https://github.com/3mmaRand/gist-lm/edit/master/%s
       text: "Make an edit suggestion"
     toc:
       collapse: section
