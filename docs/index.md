@@ -112,13 +112,13 @@ instructions rstudio projects, data-raw, script file, down load "data-raw/stag.t
 palettes
 pal1 <- c("#eef8fa", "#faeef8","#f8faee")
 
-#  blue, pink, green triadic
+blue, pink, green triadic
 pal2 <- c("#9fd8e3", "#e39fd8", "#d8e39f")
 
-#  blue, pink, green triadic
+blue, pink, green triadic
 pal3 <- c("#64c0d2", "#d264c0", "#c0d264")
 
-# blue, pink, green triadic
+blue, pink, green triadic
 pal4 <- c("#256c7a", "#7a256c", "#6c7a25")
 
 
