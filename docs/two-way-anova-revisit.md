@@ -1578,7 +1578,10 @@ Therefore:
 
 
 ```r
-#summarise the data 
+# palette
+# blue, pink, green triadic
+pal4 <- c("#256c7a", "#7a256c", "#6c7a25")
+
 ggplot() +
   geom_point(data = periwinkle, aes(x = season,
                                     y = para,

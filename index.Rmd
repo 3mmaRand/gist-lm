@@ -1,7 +1,7 @@
 --- 
 title: "gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users"
 author: "Emma Rand"
-date: "`r Sys.Date()`"
+date: "August 2020"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [refs/book.bib, refs/packages.bib]
@@ -31,9 +31,9 @@ url: 'https://3mmarand.github.io/gist-lm/'
 
 ## Who is this book for?
 
-This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have done an introductory class in data analysis as a skill for research in another field such as in the life or social sciences. Introductory classes usually cover single linear regression, *t*-tests, one-way ANOVA and two-way ANOVA. It might be especially helpful to those who see these as separate tests. A short revision chapter giving an overview is included to set the scene and clarify terminology used in the rest of the book.
+This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have learned introductory data analysis as a skill for doing research in another field  The audience I had in mind when writing the book are undergraduates on degree programmes in the life sciences who have done an introductory course covering hypothesis testing with single linear regression, *t*-tests, and ANOVA. However, students on social science, media, finance and education degree programmes often do similar course. This book can also help them although the examples are from the life sciences. A short revision chapter giving an overview of such a course is included to set the scene and clarify terminology used in the rest of the book. The coverage of single linear regression in the first chapter of Part 2 is also likely to be revision.
 
-I assume you have some familiarity with R and RStudio and have a general, but not expert, understanding of summarising, analysing and visualising data with functions such as `t.test()`, `aov()`, `TukeyHSD()` and `ggplot()`. I do not assume your fluency allows you to do these things with looking anything up, just that you would understand what you were doing and how to interpret the results. 
+I assume you have an understanding of the rationale of hypothesis testing and some experience selecting, applying and interpreting tests. I also assume you have some familiarity with R and RStudio and have general, but not expert, proficiency in summarising, analysing and visualising data with functions such as `t.test()`, `aov()`, `TukeyHSD()` and `ggplot()`. I do not assume your fluency allows you to do these things without looking things up. 
 
 The book has two aims. First to explain how the *t*-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the `lm()` function. 
 
@@ -41,14 +41,14 @@ The book has two aims. First to explain how the *t*-test, ANOVA and regression a
 
 Regression, *t*-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the "general linear model". Since they are fundamentally the same test, all can be carried out with the `lm()` function in R. However, it is common for *t*-tests and ANOVA to be taught to non-specialists using the `t.test()` and `aov()` functions respectively. There are some sensible reasons for this. For example, many introductory texts take the same approach and typically, the outputs of `t.test()` and `aov()` are easier for beginners to understand and interpret. 
 
-However, the output of `lm()` is more typical of statistical modelling functions in general and these are harder to understand if you are not used to using `lm()` for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is and extending your statistical repertoire more intimidating. The approach taken in this book is to exploit your pre-existing knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. 
+However, the output of `lm()` is more typical of statistical modelling functions in general and these are made harder to understand if you are not used to using `lm()` for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is and extending your statistical repertoire more intimidating. The approach taken in this book is to exploit your pre-existing knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. 
 
 :::key
 `lm()` can be used to perform *t*-tests, ANOVAs and regression. 
 :::
 
-Examples are carried out with then familiar functions and then with `lm()` so you can make the link between the two. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested **`ggplot2`** figures. 
-The code is given for figures but, as this isn't a book about `ggplot`, it is not extensively explained. To learn more go to  https://ggplot2.tidyverse.org/
+Examples are carried out with the familiar functions and then with `lm()` so you can make the link between the two. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested **`ggplot2`** figures. 
+The code is given for figures but, as this isn't a book about **`ggplot2`**, it is not extensively explained. Readers keen to learn more about **`ggplot2`** are advised to go to https://ggplot2.tidyverse.org/.
 
 
 ## Options on the toolbar 
@@ -65,7 +65,7 @@ stag <- read_table2("data-raw/stag.txt")
 glimpse(stag)
 ```
 
-Lines of output start with a `#`. The content of a code block can be copied using the icon in its top right.
+Lines of output start with a `#`. 
 
 Within the text:
 - packages are indicated in bold code font like this: **`ggplot2`**
@@ -85,8 +85,28 @@ Extra information and tips are in boxes like these
 :::
 
 
-I use packages from the **`tidyverse`** [@tidyverse2019] including **`ggplot2`** [@ggplot2-book], **`dplyr`** [@dplyr], **`tidyr`** [@tidyr] and **`readr`** [@readr] throughout the book
-All the code assumes you have loaded the core **`tidyverse`** packages with: 
+## Following along with the examples
+Readers may wish to code along and the following gives guidance on how best to do that.
+
+I recommend starting a new RStudio project and creating a folder inside that project called `data-raw` where you will save the data files, and scripts for each example. Links to the data files are given in the text and these can be downloaded to your `data-raw` folder by right-clicking the link choosing the option to save.
+
+
+For example, if you call your Project `gist` and you have just started [Chapter 4 Single linear regression](#single-regression), your folder structure would look like this:
+
+```
+-- gist
+   |-- gist.Rproj
+   |-- stagbeetle_regresion.R
+   |-- data-raw
+      |-- stag.text
+
+```
+
+Using this structure will mean the paths to files needed in your code are the same as those given in the book.
+
+The content of a code block can be copied using the icon in its top right corner.
+
+I use packages from the **`tidyverse`** [@tidyverse2019] including **`ggplot2`** [@ggplot2-book], **`dplyr`** [@dplyr], **`tidyr`** [@tidyr] and **`readr`** [@readr] throughout the book. All the code assumes you have loaded the core **`tidyverse`** packages with: 
 
 ```{r eval=FALSE}
 library(tidyverse)
@@ -101,32 +121,14 @@ If you run examples and get an error like this:
 
 It is likely you need to load the **`tidyverse`** as shown above.
 
-All other packages will be loaded explicitly where needed with `library()` statements. 
-
-
-
-## Following along with the examples
-instructions rstudio projects, data-raw, script file, down load "data-raw/stag.txt"
-
-palettes
-pal1 <- c("#eef8fa", "#faeef8","#f8faee")
-
-blue, pink, green triadic
-pal2 <- c("#9fd8e3", "#e39fd8", "#d8e39f")
-
-blue, pink, green triadic
-pal3 <- c("#64c0d2", "#d264c0", "#c0d264")
-
-blue, pink, green triadic
-pal4 <- c("#256c7a", "#7a256c", "#6c7a25")
-
+All other packages will be loaded explicitly with `library()` statements where needed. 
 
 ##  Overview of the chapter contents
 
-**Part 1** provides a brief revision of an introductory data analysis class using terminology that will used throughout the remaining chapters. Single linear regression is used as an example of `lm()`. If the concepts in this chapter are very unfamiliar, you may benefit from revising your previous work. 
+**Part 1 Introduction** provides a very brief overview of a typical introductory data analysis class using terminology that will used throughout the remaining chapters. If the concepts in this chapter are very unfamiliar, you may benefit from revising your previous work. 
 
-In **Part 2**  works through *t*-test, one-way ANOVA and two-way ANOVA examples carried out first with `t.test()` and `aov()` and then with `lm()` to gain a good understanding of the `lm()` output and interrogation for reporting.
-
+In **Part 2**  we revise single linear regression which is likely where you have previously encountered the `lm()` function. We then
+work through *t*-test, one-way ANOVA and two-way ANOVA examples carried out first with `t.test()` and `aov()` and then with `lm()` to gain a good understanding of the `lm()` output and interrogation for reporting.
 
 I used the **`knitr`** package [@xie2015] and the **bookdown** package [@R-bookdown] to compile my book. My R session information is shown below:
 
