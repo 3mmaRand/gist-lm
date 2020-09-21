@@ -9,7 +9,7 @@ biblio-style: apalike
 link-citations: true
 description: "The output format for this example is bookdown::gitbook."
 favicon: images/favicon.ico
-cover-image: images/android-chrome-512x512.png
+cover-image: images/hex-s.png
 github-repo: 3mmaRand/singlm
 url: 'https://3mmarand.github.io/gist-lm/'
 ---
