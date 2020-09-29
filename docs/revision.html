@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 1 Revision of your Introductory class | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://3mmarand.github.io/gist-lm/" />
-  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
   <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="3mmaRand/singlm" />
 
@@ -19,12 +19,11 @@
   <meta name="twitter:title" content="Chapter 1 Revision of your Introductory class | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   
   <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
-  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
 
 <meta name="author" content="Emma Rand" />
 
 
-<meta name="date" content="2020-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,8 +158,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>3</b> Terminolgy</a><ul>
 <li class="chapter" data-level="3.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>3.1</b> General? Generalised?</a></li>
-<li class="chapter" data-level="3.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>3.2</b> Testing modelling fitting</a></li>
-<li class="chapter" data-level="3.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>3.3</b> paramters, coefficients estimates</a></li>
 </ul></li>
 <li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
 <li class="chapter" data-level="4" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>4</b> Single linear regression</a><ul>
@@ -237,7 +234,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div class="key">
 <p>Predicted, Response, <em>y</em> and Dependent: all terms used to describe the variable we measure.</p>
 </div>
-<p>When we plot data, the response variable goes on the <em>y</em>-axis and the explanatory variable goes on the <em>x</em>-axis. If we have two explanatory variables we might indicate the different values of one of them with colour. See Figure <a href="revision.html#fig:expl-resp">1.1</a>.</p>
+<p>When we plot data, the response variable goes on the <em>y</em>-axis and the explanatory variable goes on the <em>x</em>-axis. If we have two explanatory variables we need another way to visualise it. Often we might indicate the different values of a second explanatory variable with colour. The third explanatory variable can be displayed using different panels. See Figure <a href="revision.html#fig:expl-resp">1.1</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:expl-resp"></span>
 <img src="images/expl_rep_graph.svg" alt="Explanatory variables are placed on the x-axis and, if there is more than one, indicated with different colours (or shapes) and panels. The response variable is always on the y-axis." width="80%" />
@@ -246,7 +243,8 @@ Figure 1.1: Explanatory variables are placed on the <em>x</em>-axis and, if ther
 </p>
 </div>
 <p>In choosing between regression, <em>t</em>-tests, one-way ANOVA and two-way ANOVA we consider how many explanatory variables we have and whether they are continuous or categorical.</p>
-<p>If we have one explanatory variable and it is continuous, we can apply a regression. If it is a categorical variable with two groups (or levels) we have the choice of a <em>t</em>-test or a one way ANOVA but when there are more than two groups we use a one-way ANOVA. A two-way ANOVA is used when there are two categorical explanatory variables. See Figure <a href="revision.html#fig:decision-tree">1.2</a>.</p>
+<p>If we have one continuous explanatory variable we can apply a regression. If the explanatory variable is categorical with two groups (or levels) we have the choice of a <em>t</em>-test or a one-way ANOVA, but when there are more than two groups we must use a one-way ANOVA.</p>
+<p>A two-way ANOVA is used when there are two categorical explanatory variables. See Figure <a href="revision.html#fig:decision-tree">1.2</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:decision-tree"></span>
 <img src="images/decision_tree.svg" alt="Decision tree for choosing between single linear regression, t-tests, one-way ANOVA and two-way ANOVA." width="100%" />
@@ -254,7 +252,7 @@ Figure 1.1: Explanatory variables are placed on the <em>x</em>-axis and, if ther
 Figure 1.2: Decision tree for choosing between single linear regression, <em>t</em>-tests, one-way ANOVA and two-way ANOVA.
 </p>
 </div>
-<p>These apparently different tests are, in fact, the same test. They have the same underlying mathematics, or to put it another way, the follow the same model. That model is often known as the <strong>General Linear Model</strong>.</p>
+<p>These apparently different tests are, in fact, the same test. They have the same underlying mathematics, or to put it another way, they all follow the same model. That model is often known as the <strong>General Linear Model</strong>.</p>
 
 </div>
             </section>

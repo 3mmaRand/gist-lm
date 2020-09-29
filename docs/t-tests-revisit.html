@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 5 t-tests revisited | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://3mmarand.github.io/gist-lm/" />
-  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
   <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="3mmaRand/singlm" />
 
@@ -19,12 +19,11 @@
   <meta name="twitter:title" content="Chapter 5 t-tests revisited | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   
   <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
-  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
 
 <meta name="author" content="Emma Rand" />
 
 
-<meta name="date" content="2020-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,8 +158,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>3</b> Terminolgy</a><ul>
 <li class="chapter" data-level="3.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>3.1</b> General? Generalised?</a></li>
-<li class="chapter" data-level="3.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>3.2</b> Testing modelling fitting</a></li>
-<li class="chapter" data-level="3.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>3.3</b> paramters, coefficients estimates</a></li>
 </ul></li>
 <li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
 <li class="chapter" data-level="4" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>4</b> Single linear regression</a><ul>
@@ -1056,22 +1053,22 @@ wild
 <code>omega</code>, a continuous variable, is the response.</p>
 </div>
 <p>We again use the <code>read_table2()</code> function to import the data and visualise it with <code>ggplot()</code></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="t-tests-revisit.html#cb18-1"></a>csativa  &lt;-<span class="st">  </span><span class="kw">read_table2</span>(<span class="st">&quot;data-raw/csativa.txt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="t-tests-revisit.html#cb19-1"></a>csativa  &lt;-<span class="st">  </span><span class="kw">read_table2</span>(<span class="st">&quot;data-raw/csativa.txt&quot;</span>)</span></code></pre></div>
 <p>A quick plot of the data:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="t-tests-revisit.html#cb19-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> csativa, <span class="kw">aes</span>(<span class="dt">x =</span> plant, <span class="dt">y =</span> omega)) <span class="op">+</span></span>
-<span id="cb19-2"><a href="t-tests-revisit.html#cb19-2"></a><span class="st">  </span><span class="kw">geom_violin</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="t-tests-revisit.html#cb20-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> csativa, <span class="kw">aes</span>(<span class="dt">x =</span> plant, <span class="dt">y =</span> omega)) <span class="op">+</span></span>
+<span id="cb20-2"><a href="t-tests-revisit.html#cb20-2"></a><span class="st">  </span><span class="kw">geom_violin</span>()</span></code></pre></div>
 <p><img src="t-test-revisit_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
 <div class="fyi">
 <p>Violin plots are a useful way to show the distribution of data in each group but not the only way. One alternative is <code>geom_boxplot()</code>.</p>
 </div>
-<p>The modified plant have a lower mean omega 3 content than the wild type plants. The modification appears not to be successful. In fact, it may have significantly lowered the omega 3 content!</p>
+<p>The modified plants have a lower mean omega 3 content than the wild type plants. The modification appears not to be successful! In fact, it may have significantly lowered the omega 3 content!</p>
 <p>Let’s create a summary of the data that will be useful for plotting later:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="t-tests-revisit.html#cb20-1"></a>csativa_summary &lt;-<span class="st"> </span>csativa <span class="op">%&gt;%</span></span>
-<span id="cb20-2"><a href="t-tests-revisit.html#cb20-2"></a><span class="st">  </span><span class="kw">group_by</span>(plant) <span class="op">%&gt;%</span></span>
-<span id="cb20-3"><a href="t-tests-revisit.html#cb20-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(omega),</span>
-<span id="cb20-4"><a href="t-tests-revisit.html#cb20-4"></a>            <span class="dt">std =</span> <span class="kw">sd</span>(omega),</span>
-<span id="cb20-5"><a href="t-tests-revisit.html#cb20-5"></a>            <span class="dt">n =</span> <span class="kw">length</span>(omega),</span>
-<span id="cb20-6"><a href="t-tests-revisit.html#cb20-6"></a>            <span class="dt">se =</span> std<span class="op">/</span><span class="kw">sqrt</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="t-tests-revisit.html#cb21-1"></a>csativa_summary &lt;-<span class="st"> </span>csativa <span class="op">%&gt;%</span></span>
+<span id="cb21-2"><a href="t-tests-revisit.html#cb21-2"></a><span class="st">  </span><span class="kw">group_by</span>(plant) <span class="op">%&gt;%</span></span>
+<span id="cb21-3"><a href="t-tests-revisit.html#cb21-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(omega),</span>
+<span id="cb21-4"><a href="t-tests-revisit.html#cb21-4"></a>            <span class="dt">std =</span> <span class="kw">sd</span>(omega),</span>
+<span id="cb21-5"><a href="t-tests-revisit.html#cb21-5"></a>            <span class="dt">n =</span> <span class="kw">length</span>(omega),</span>
+<span id="cb21-6"><a href="t-tests-revisit.html#cb21-6"></a>            <span class="dt">se =</span> std<span class="op">/</span><span class="kw">sqrt</span>(n))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1135,32 +1132,34 @@ wild
 <div id="t.test-output-reminder" class="section level2">
 <h2><span class="header-section-number">5.2</span> <code>t.test()</code> output reminder</h2>
 <p>We can apply a two-sample <em>t</em>-test with:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="t-tests-revisit.html#cb21-1"></a><span class="kw">t.test</span>(<span class="dt">data =</span> csativa, omega <span class="op">~</span><span class="st"> </span>plant, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb21-2"><a href="t-tests-revisit.html#cb21-2"></a><span class="co"># </span></span>
-<span id="cb21-3"><a href="t-tests-revisit.html#cb21-3"></a><span class="co"># 	Two Sample t-test</span></span>
-<span id="cb21-4"><a href="t-tests-revisit.html#cb21-4"></a><span class="co"># </span></span>
-<span id="cb21-5"><a href="t-tests-revisit.html#cb21-5"></a><span class="co"># data:  omega by plant</span></span>
-<span id="cb21-6"><a href="t-tests-revisit.html#cb21-6"></a><span class="co"># t = -5, df = 98, p-value = 2e-06</span></span>
-<span id="cb21-7"><a href="t-tests-revisit.html#cb21-7"></a><span class="co"># alternative hypothesis: true difference in means is not equal to 0</span></span>
-<span id="cb21-8"><a href="t-tests-revisit.html#cb21-8"></a><span class="co"># 95 percent confidence interval:</span></span>
-<span id="cb21-9"><a href="t-tests-revisit.html#cb21-9"></a><span class="co">#  -9.69 -4.21</span></span>
-<span id="cb21-10"><a href="t-tests-revisit.html#cb21-10"></a><span class="co"># sample estimates:</span></span>
-<span id="cb21-11"><a href="t-tests-revisit.html#cb21-11"></a><span class="co"># mean in group modif  mean in group wild </span></span>
-<span id="cb21-12"><a href="t-tests-revisit.html#cb21-12"></a><span class="co">#                49.5                56.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="t-tests-revisit.html#cb22-1"></a><span class="kw">t.test</span>(<span class="dt">data =</span> csativa, omega <span class="op">~</span><span class="st"> </span>plant, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb22-2"><a href="t-tests-revisit.html#cb22-2"></a><span class="co"># </span></span>
+<span id="cb22-3"><a href="t-tests-revisit.html#cb22-3"></a><span class="co"># 	Two Sample t-test</span></span>
+<span id="cb22-4"><a href="t-tests-revisit.html#cb22-4"></a><span class="co"># </span></span>
+<span id="cb22-5"><a href="t-tests-revisit.html#cb22-5"></a><span class="co"># data:  omega by plant</span></span>
+<span id="cb22-6"><a href="t-tests-revisit.html#cb22-6"></a><span class="co"># t = -5, df = 98, p-value = 2e-06</span></span>
+<span id="cb22-7"><a href="t-tests-revisit.html#cb22-7"></a><span class="co"># alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span id="cb22-8"><a href="t-tests-revisit.html#cb22-8"></a><span class="co"># 95 percent confidence interval:</span></span>
+<span id="cb22-9"><a href="t-tests-revisit.html#cb22-9"></a><span class="co">#  -9.69 -4.21</span></span>
+<span id="cb22-10"><a href="t-tests-revisit.html#cb22-10"></a><span class="co"># sample estimates:</span></span>
+<span id="cb22-11"><a href="t-tests-revisit.html#cb22-11"></a><span class="co"># mean in group modif  mean in group wild </span></span>
+<span id="cb22-12"><a href="t-tests-revisit.html#cb22-12"></a><span class="co">#                49.5                56.4</span></span></code></pre></div>
 <p>The two groups means are given in the section labelled <code>sample estimates</code> and the test of whether they differ significantly is given in the fourth line (beginning <code>t = -5, df = ...</code>). We conclude the mean omega 3 content of the modified plants (49.465 units) is significantly lower than that of the wild type plants (<span class="math inline">\(t\)</span> = 5.029, <span class="math inline">\(d.f.\)</span> = 98, <span class="math inline">\(p\)</span> &lt; 0.001).</p>
 <p>The line under <code>95 percent confidence interval</code>gives the confidence limits on the difference between the two means.</p>
-<p>The sign on the <span class="math inline">\(t\)</span> value and the confidence limits, and the order in which the sample estimates are given is determined by R’s alphabetical ordering of the groups. As “modif” comes before “wild” in the alphabet, “modif” is the first group and the test is the modified plant mean minus the wild type mean. This has no impact on our conclusions. If the wild type plants been labelled “control” so that “modif” would be the second group, our output would look like this:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="t-tests-revisit.html#cb22-1"></a><span class="co"># 	Two Sample t-test</span></span>
-<span id="cb22-2"><a href="t-tests-revisit.html#cb22-2"></a><span class="co"># </span></span>
-<span id="cb22-3"><a href="t-tests-revisit.html#cb22-3"></a><span class="co"># data:  omega by plant</span></span>
-<span id="cb22-4"><a href="t-tests-revisit.html#cb22-4"></a><span class="co"># t = 5.0289, df = 98, p-value = 2.231e-06</span></span>
-<span id="cb22-5"><a href="t-tests-revisit.html#cb22-5"></a><span class="co"># alternative hypothesis: true difference in means is not equal to 0</span></span>
-<span id="cb22-6"><a href="t-tests-revisit.html#cb22-6"></a><span class="co"># 95 percent confidence interval:</span></span>
-<span id="cb22-7"><a href="t-tests-revisit.html#cb22-7"></a><span class="co">#  4.205372 9.687828</span></span>
-<span id="cb22-8"><a href="t-tests-revisit.html#cb22-8"></a><span class="co"># sample estimates:</span></span>
-<span id="cb22-9"><a href="t-tests-revisit.html#cb22-9"></a><span class="co"># mean in group control  mean in group modif</span></span>
-<span id="cb22-10"><a href="t-tests-revisit.html#cb22-10"></a><span class="co">#             56.4118             49.4652</span></span>
-<span id="cb22-11"><a href="t-tests-revisit.html#cb22-11"></a><span class="co"># </span></span></code></pre></div>
+<p>The sign on the <span class="math inline">\(t\)</span> value and the confidence limits, and the order in which the sample estimates are given is determined by R’s alphabetical ordering of the groups. As “modif” comes before “wild” in the alphabet, “modif” is the first group. The statistical test is: the modified plant mean <span class="math inline">\(-\)</span> the wild type mean.</p>
+<p>This ordering is arbitrary and has has no impact on our conclusions. If the wild type plants been labelled “control” so that “modif” would be the second group, our output would look like this:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="t-tests-revisit.html#cb23-1"></a><span class="co"># 	Two Sample t-test</span></span>
+<span id="cb23-2"><a href="t-tests-revisit.html#cb23-2"></a><span class="co"># </span></span>
+<span id="cb23-3"><a href="t-tests-revisit.html#cb23-3"></a><span class="co"># data:  omega by plant</span></span>
+<span id="cb23-4"><a href="t-tests-revisit.html#cb23-4"></a><span class="co"># t = 5.0289, df = 98, p-value = 2.231e-06</span></span>
+<span id="cb23-5"><a href="t-tests-revisit.html#cb23-5"></a><span class="co"># alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span id="cb23-6"><a href="t-tests-revisit.html#cb23-6"></a><span class="co"># 95 percent confidence interval:</span></span>
+<span id="cb23-7"><a href="t-tests-revisit.html#cb23-7"></a><span class="co">#  4.205372 9.687828</span></span>
+<span id="cb23-8"><a href="t-tests-revisit.html#cb23-8"></a><span class="co"># sample estimates:</span></span>
+<span id="cb23-9"><a href="t-tests-revisit.html#cb23-9"></a><span class="co"># mean in group control  mean in group modif</span></span>
+<span id="cb23-10"><a href="t-tests-revisit.html#cb23-10"></a><span class="co">#             56.4118             49.4652</span></span>
+<span id="cb23-11"><a href="t-tests-revisit.html#cb23-11"></a><span class="co"># </span></span></code></pre></div>
+<p>Our conclusion would remain the same: 49.465 is significantly lower than 56.412.</p>
 <div class="key">
 <p><code>t.test()</code> output: the estimates are the two group means and the <em>p</em>-value is for a test on the difference between them.</p>
 </div>
@@ -1177,7 +1176,7 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}
 <p><span class="math inline">\(X1_{i}\)</span> is an indicator variable that takes the value of 0 or 1 and indicates whether the <span class="math inline">\(i\)</span>th value was from one group or not. Such variables are known as <strong>dummy explanatory variables</strong>. They are dummy in the sense that they are numerical substitutes for the categorical variable whose ‘real’ values are the names of the categories.</p>
 <p>You can think of <span class="math inline">\(X1_{i}\)</span> as toggling on and off the <span class="math inline">\(\beta_{1}\)</span> effect:</p>
 <ul>
-<li>If it has a value of 0 for a data point it means that <span class="math inline">\(\beta_{1}\)</span> will not impact the response which will be <span class="math inline">\(\beta_{0}\)</span>.</li>
+<li>If it has a value of 0 for a data point it means that <span class="math inline">\(\beta_{1}\)</span> will not impact the response. The response will be will be <span class="math inline">\(\beta_{0}\)</span>.</li>
 <li>If it has a value 1 then <span class="math inline">\(\beta_{1}\)</span> will change the response to <span class="math inline">\(\beta_{0}\)</span> + <span class="math inline">\(\beta_{1}\)</span></li>
 </ul>
 <p><span class="math inline">\(\beta_{1}\)</span> is thus the <em>difference</em> between the group means.</p>
@@ -1193,17 +1192,17 @@ Figure 5.1: A linear model when the explanatory variable is categorical with two
 <div id="applying-and-interpreting-lm" class="section level2">
 <h2><span class="header-section-number">5.4</span> Applying and interpreting <code>lm()</code></h2>
 <p>The <code>lm()</code> function is applied to this example as follows:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="t-tests-revisit.html#cb23-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> csativa, omega <span class="op">~</span><span class="st"> </span>plant)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="t-tests-revisit.html#cb24-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> csativa, omega <span class="op">~</span><span class="st"> </span>plant)</span></code></pre></div>
 <p>This can be read as: fit a linear of model of omega content explained by plant type. Notice that the model formula is the same in both the <code>t.test()</code> and the <code>lm()</code> functions.</p>
 <p>Printing <code>mod</code> to the console gives us the estimated model parameters (coefficients):</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="t-tests-revisit.html#cb24-1"></a>mod</span>
-<span id="cb24-2"><a href="t-tests-revisit.html#cb24-2"></a><span class="co"># </span></span>
-<span id="cb24-3"><a href="t-tests-revisit.html#cb24-3"></a><span class="co"># Call:</span></span>
-<span id="cb24-4"><a href="t-tests-revisit.html#cb24-4"></a><span class="co"># lm(formula = omega ~ plant, data = csativa)</span></span>
-<span id="cb24-5"><a href="t-tests-revisit.html#cb24-5"></a><span class="co"># </span></span>
-<span id="cb24-6"><a href="t-tests-revisit.html#cb24-6"></a><span class="co"># Coefficients:</span></span>
-<span id="cb24-7"><a href="t-tests-revisit.html#cb24-7"></a><span class="co"># (Intercept)    plantwild  </span></span>
-<span id="cb24-8"><a href="t-tests-revisit.html#cb24-8"></a><span class="co">#       49.47         6.95</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="t-tests-revisit.html#cb25-1"></a>mod</span>
+<span id="cb25-2"><a href="t-tests-revisit.html#cb25-2"></a><span class="co"># </span></span>
+<span id="cb25-3"><a href="t-tests-revisit.html#cb25-3"></a><span class="co"># Call:</span></span>
+<span id="cb25-4"><a href="t-tests-revisit.html#cb25-4"></a><span class="co"># lm(formula = omega ~ plant, data = csativa)</span></span>
+<span id="cb25-5"><a href="t-tests-revisit.html#cb25-5"></a><span class="co"># </span></span>
+<span id="cb25-6"><a href="t-tests-revisit.html#cb25-6"></a><span class="co"># Coefficients:</span></span>
+<span id="cb25-7"><a href="t-tests-revisit.html#cb25-7"></a><span class="co"># (Intercept)    plantwild  </span></span>
+<span id="cb25-8"><a href="t-tests-revisit.html#cb25-8"></a><span class="co">#       49.47         6.95</span></span></code></pre></div>
 The equation for the model is:
 <center>
 <span class="math inline">\(omega\)</span> = 49.465 + 6.947<span class="math inline">\(plantwild\)</span>
@@ -1211,25 +1210,25 @@ The equation for the model is:
 <p>The first group of <code>plant</code> is <code>modif</code> so <span class="math inline">\(\beta_{0}\)</span> is the mean of the modified plants. <span class="math inline">\(\beta_{1}\)</span> is the coefficient labelled <code>plantwild</code>. In R, the coefficients are consistently named like this: variable name followed by the value without spaces. It means when the variable <code>plant</code> takes the value <code>wild</code>, <span class="math inline">\(\beta_{1}\)</span> must be added to <span class="math inline">\(\beta_{0}\)</span></p>
 <p>Thus, the mean omega 3 in the modified plants is 49.465 units and that in the wild type plants is 49.465 + 6.947 = 56.412 units.</p>
 <p>More information including statistical tests of the model and its parameters is obtained by using <code>summary()</code>:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="t-tests-revisit.html#cb25-1"></a><span class="kw">summary</span>(mod)</span>
-<span id="cb25-2"><a href="t-tests-revisit.html#cb25-2"></a><span class="co"># </span></span>
-<span id="cb25-3"><a href="t-tests-revisit.html#cb25-3"></a><span class="co"># Call:</span></span>
-<span id="cb25-4"><a href="t-tests-revisit.html#cb25-4"></a><span class="co"># lm(formula = omega ~ plant, data = csativa)</span></span>
-<span id="cb25-5"><a href="t-tests-revisit.html#cb25-5"></a><span class="co"># </span></span>
-<span id="cb25-6"><a href="t-tests-revisit.html#cb25-6"></a><span class="co"># Residuals:</span></span>
-<span id="cb25-7"><a href="t-tests-revisit.html#cb25-7"></a><span class="co">#     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb25-8"><a href="t-tests-revisit.html#cb25-8"></a><span class="co"># -15.872  -3.703  -0.964   4.460  16.918 </span></span>
-<span id="cb25-9"><a href="t-tests-revisit.html#cb25-9"></a><span class="co"># </span></span>
-<span id="cb25-10"><a href="t-tests-revisit.html#cb25-10"></a><span class="co"># Coefficients:</span></span>
-<span id="cb25-11"><a href="t-tests-revisit.html#cb25-11"></a><span class="co">#             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb25-12"><a href="t-tests-revisit.html#cb25-12"></a><span class="co"># (Intercept)   49.465      0.977   50.64  &lt; 2e-16 ***</span></span>
-<span id="cb25-13"><a href="t-tests-revisit.html#cb25-13"></a><span class="co"># plantwild      6.947      1.381    5.03  2.2e-06 ***</span></span>
-<span id="cb25-14"><a href="t-tests-revisit.html#cb25-14"></a><span class="co"># ---</span></span>
-<span id="cb25-15"><a href="t-tests-revisit.html#cb25-15"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb25-16"><a href="t-tests-revisit.html#cb25-16"></a><span class="co"># </span></span>
-<span id="cb25-17"><a href="t-tests-revisit.html#cb25-17"></a><span class="co"># Residual standard error: 6.91 on 98 degrees of freedom</span></span>
-<span id="cb25-18"><a href="t-tests-revisit.html#cb25-18"></a><span class="co"># Multiple R-squared:  0.205,	Adjusted R-squared:  0.197 </span></span>
-<span id="cb25-19"><a href="t-tests-revisit.html#cb25-19"></a><span class="co"># F-statistic: 25.3 on 1 and 98 DF,  p-value: 2.23e-06</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="t-tests-revisit.html#cb26-1"></a><span class="kw">summary</span>(mod)</span>
+<span id="cb26-2"><a href="t-tests-revisit.html#cb26-2"></a><span class="co"># </span></span>
+<span id="cb26-3"><a href="t-tests-revisit.html#cb26-3"></a><span class="co"># Call:</span></span>
+<span id="cb26-4"><a href="t-tests-revisit.html#cb26-4"></a><span class="co"># lm(formula = omega ~ plant, data = csativa)</span></span>
+<span id="cb26-5"><a href="t-tests-revisit.html#cb26-5"></a><span class="co"># </span></span>
+<span id="cb26-6"><a href="t-tests-revisit.html#cb26-6"></a><span class="co"># Residuals:</span></span>
+<span id="cb26-7"><a href="t-tests-revisit.html#cb26-7"></a><span class="co">#     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb26-8"><a href="t-tests-revisit.html#cb26-8"></a><span class="co"># -15.872  -3.703  -0.964   4.460  16.918 </span></span>
+<span id="cb26-9"><a href="t-tests-revisit.html#cb26-9"></a><span class="co"># </span></span>
+<span id="cb26-10"><a href="t-tests-revisit.html#cb26-10"></a><span class="co"># Coefficients:</span></span>
+<span id="cb26-11"><a href="t-tests-revisit.html#cb26-11"></a><span class="co">#             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb26-12"><a href="t-tests-revisit.html#cb26-12"></a><span class="co"># (Intercept)   49.465      0.977   50.64  &lt; 2e-16 ***</span></span>
+<span id="cb26-13"><a href="t-tests-revisit.html#cb26-13"></a><span class="co"># plantwild      6.947      1.381    5.03  2.2e-06 ***</span></span>
+<span id="cb26-14"><a href="t-tests-revisit.html#cb26-14"></a><span class="co"># ---</span></span>
+<span id="cb26-15"><a href="t-tests-revisit.html#cb26-15"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb26-16"><a href="t-tests-revisit.html#cb26-16"></a><span class="co"># </span></span>
+<span id="cb26-17"><a href="t-tests-revisit.html#cb26-17"></a><span class="co"># Residual standard error: 6.91 on 98 degrees of freedom</span></span>
+<span id="cb26-18"><a href="t-tests-revisit.html#cb26-18"></a><span class="co"># Multiple R-squared:  0.205,	Adjusted R-squared:  0.197 </span></span>
+<span id="cb26-19"><a href="t-tests-revisit.html#cb26-19"></a><span class="co"># F-statistic: 25.3 on 1 and 98 DF,  p-value: 2.23e-06</span></span></code></pre></div>
 <p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the modified plants is 49.465 <span class="math inline">\(\pm\)</span> 0.977 and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between the modified and wild type plants is 6.947 <span class="math inline">\(\pm\)</span> 1.381 and also differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The fact that this value is positive tells us that the wild type plants have a higher mean.</p>
 <p>The proportion of the variance in the omega which is explained by the model is 0.205 and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> &lt; 0.001).</p>
 <p>As was true for single linear regression, the <em>p</em>-value for the model and the <em>p</em>-value for the difference between the means are the same because there is only one parameter in the model after the intercept.</p>
@@ -1247,71 +1246,70 @@ Figure 5.2: The annotated model with the values from the Omega 3 content of <em>
 <p>We already have the predictions for all possible values of the explanatory variable because there are only two!</p>
 <p>However the code for using predict is included here because it will make it easier to understand more complex examples later. We need to create a dataframe of values for which we want predictions and pass it as an argument to the <code>predict()</code> function.</p>
 <p>To create a dataframe with one column of Plant values:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="t-tests-revisit.html#cb26-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">plant =</span> <span class="kw">c</span>(<span class="st">&quot;modif&quot;</span>, <span class="st">&quot;wild&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="t-tests-revisit.html#cb27-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">plant =</span> <span class="kw">c</span>(<span class="st">&quot;modif&quot;</span>, <span class="st">&quot;wild&quot;</span>))</span></code></pre></div>
 <div class="key">
 <p>Remember! The variable and its values have to exactly match those in the model.</p>
 </div>
 <p>The to get the predicted omega content for the two plant types:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="t-tests-revisit.html#cb27-1"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for)</span>
-<span id="cb27-2"><a href="t-tests-revisit.html#cb27-2"></a><span class="kw">glimpse</span>(predict_for)</span>
-<span id="cb27-3"><a href="t-tests-revisit.html#cb27-3"></a><span class="co"># Rows: 2</span></span>
-<span id="cb27-4"><a href="t-tests-revisit.html#cb27-4"></a><span class="co"># Columns: 2</span></span>
-<span id="cb27-5"><a href="t-tests-revisit.html#cb27-5"></a><span class="co"># $ plant &lt;chr&gt; &quot;modif&quot;, &quot;wild&quot;</span></span>
-<span id="cb27-6"><a href="t-tests-revisit.html#cb27-6"></a><span class="co"># $ pred  &lt;dbl&gt; 49.5, 56.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="t-tests-revisit.html#cb28-1"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for)</span>
+<span id="cb28-2"><a href="t-tests-revisit.html#cb28-2"></a><span class="kw">glimpse</span>(predict_for)</span>
+<span id="cb28-3"><a href="t-tests-revisit.html#cb28-3"></a><span class="co"># Rows: 2</span></span>
+<span id="cb28-4"><a href="t-tests-revisit.html#cb28-4"></a><span class="co"># Columns: 2</span></span>
+<span id="cb28-5"><a href="t-tests-revisit.html#cb28-5"></a><span class="co"># $ plant &lt;chr&gt; &quot;modif&quot;, &quot;wild&quot;</span></span>
+<span id="cb28-6"><a href="t-tests-revisit.html#cb28-6"></a><span class="co"># $ pred  &lt;dbl&gt; 49.5, 56.4</span></span></code></pre></div>
 </div>
 <div id="checking-assumptions" class="section level2">
 <h2><span class="header-section-number">5.6</span> Checking assumptions</h2>
 <p>The two assumptions of the model can be checked using diagnostic plots. The Q-Q plot is obtained with:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="t-tests-revisit.html#cb28-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="t-tests-revisit.html#cb29-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="t-test-revisit_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
 <p>The residual seem to be normally distributed.</p>
 <p>Let’s look at the Residuals vs Fitted plot:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="t-tests-revisit.html#cb29-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="t-tests-revisit.html#cb30-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="t-test-revisit_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
 <p>We get these two columns of points because the explanatory variable, <code>plant</code>, is categorical so the fitted - or predicted - values are just two means. In my view, the variance looks higher in the group with the higher mean (on the right).</p>
 </div>
 <div id="creating-a-figure" class="section level2">
 <h2><span class="header-section-number">5.7</span> Creating a figure</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="t-tests-revisit.html#cb30-1"></a><span class="co">#summarise the data </span></span>
-<span id="cb30-2"><a href="t-tests-revisit.html#cb30-2"></a></span>
-<span id="cb30-3"><a href="t-tests-revisit.html#cb30-3"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb30-4"><a href="t-tests-revisit.html#cb30-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">data =</span> csativa, </span>
-<span id="cb30-5"><a href="t-tests-revisit.html#cb30-5"></a>              <span class="kw">aes</span>(<span class="dt">x =</span> plant, <span class="dt">y =</span> omega), </span>
-<span id="cb30-6"><a href="t-tests-revisit.html#cb30-6"></a>              <span class="dt">width =</span> <span class="fl">0.25</span>, <span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></span>
-<span id="cb30-7"><a href="t-tests-revisit.html#cb30-7"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> csativa_summary,</span>
-<span id="cb30-8"><a href="t-tests-revisit.html#cb30-8"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> plant,</span>
-<span id="cb30-9"><a href="t-tests-revisit.html#cb30-9"></a>                    <span class="dt">ymin =</span> mean,</span>
-<span id="cb30-10"><a href="t-tests-revisit.html#cb30-10"></a>                    <span class="dt">ymax =</span> mean),</span>
-<span id="cb30-11"><a href="t-tests-revisit.html#cb30-11"></a>                <span class="dt">width =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
-<span id="cb30-12"><a href="t-tests-revisit.html#cb30-12"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> csativa_summary,</span>
-<span id="cb30-13"><a href="t-tests-revisit.html#cb30-13"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> plant,</span>
-<span id="cb30-14"><a href="t-tests-revisit.html#cb30-14"></a>                    <span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se,</span>
-<span id="cb30-15"><a href="t-tests-revisit.html#cb30-15"></a>                    <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se),</span>
-<span id="cb30-16"><a href="t-tests-revisit.html#cb30-16"></a>                <span class="dt">width =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
-<span id="cb30-17"><a href="t-tests-revisit.html#cb30-17"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">75</span>, <span class="dt">xend =</span> <span class="dv">2</span>, <span class="dt">yend =</span> <span class="dv">75</span>),</span>
-<span id="cb30-18"><a href="t-tests-revisit.html#cb30-18"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb30-19"><a href="t-tests-revisit.html#cb30-19"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">75</span>, <span class="dt">xend =</span> <span class="dv">1</span>, <span class="dt">yend =</span> <span class="dv">73</span>),</span>
-<span id="cb30-20"><a href="t-tests-revisit.html#cb30-20"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb30-21"><a href="t-tests-revisit.html#cb30-21"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">75</span>, <span class="dt">xend =</span> <span class="dv">2</span>, <span class="dt">yend =</span> <span class="dv">73</span>),</span>
-<span id="cb30-22"><a href="t-tests-revisit.html#cb30-22"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb30-23"><a href="t-tests-revisit.html#cb30-23"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="fl">1.5</span>, <span class="dt">y =</span> <span class="dv">77</span>,  <span class="dt">label =</span> <span class="st">&quot;***&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
-<span id="cb30-24"><a href="t-tests-revisit.html#cb30-24"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Modified&quot;</span>, <span class="st">&quot;Wild Type&quot;</span>),</span>
-<span id="cb30-25"><a href="t-tests-revisit.html#cb30-25"></a>                   <span class="dt">name =</span> <span class="st">&quot;Plant type&quot;</span>) <span class="op">+</span></span>
-<span id="cb30-26"><a href="t-tests-revisit.html#cb30-26"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Amount of Omega 3 (units)&quot;</span>,</span>
-<span id="cb30-27"><a href="t-tests-revisit.html#cb30-27"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb30-28"><a href="t-tests-revisit.html#cb30-28"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">90</span>)) <span class="op">+</span></span>
-<span id="cb30-29"><a href="t-tests-revisit.html#cb30-29"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="t-tests-revisit.html#cb31-1"></a><span class="co">#summarise the data </span></span>
+<span id="cb31-2"><a href="t-tests-revisit.html#cb31-2"></a></span>
+<span id="cb31-3"><a href="t-tests-revisit.html#cb31-3"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb31-4"><a href="t-tests-revisit.html#cb31-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">data =</span> csativa, </span>
+<span id="cb31-5"><a href="t-tests-revisit.html#cb31-5"></a>              <span class="kw">aes</span>(<span class="dt">x =</span> plant, <span class="dt">y =</span> omega), </span>
+<span id="cb31-6"><a href="t-tests-revisit.html#cb31-6"></a>              <span class="dt">width =</span> <span class="fl">0.25</span>, <span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></span>
+<span id="cb31-7"><a href="t-tests-revisit.html#cb31-7"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> csativa_summary,</span>
+<span id="cb31-8"><a href="t-tests-revisit.html#cb31-8"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> plant,</span>
+<span id="cb31-9"><a href="t-tests-revisit.html#cb31-9"></a>                    <span class="dt">ymin =</span> mean,</span>
+<span id="cb31-10"><a href="t-tests-revisit.html#cb31-10"></a>                    <span class="dt">ymax =</span> mean),</span>
+<span id="cb31-11"><a href="t-tests-revisit.html#cb31-11"></a>                <span class="dt">width =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
+<span id="cb31-12"><a href="t-tests-revisit.html#cb31-12"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> csativa_summary,</span>
+<span id="cb31-13"><a href="t-tests-revisit.html#cb31-13"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> plant,</span>
+<span id="cb31-14"><a href="t-tests-revisit.html#cb31-14"></a>                    <span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se,</span>
+<span id="cb31-15"><a href="t-tests-revisit.html#cb31-15"></a>                    <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se),</span>
+<span id="cb31-16"><a href="t-tests-revisit.html#cb31-16"></a>                <span class="dt">width =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb31-17"><a href="t-tests-revisit.html#cb31-17"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">75</span>, <span class="dt">xend =</span> <span class="dv">2</span>, <span class="dt">yend =</span> <span class="dv">75</span>),</span>
+<span id="cb31-18"><a href="t-tests-revisit.html#cb31-18"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb31-19"><a href="t-tests-revisit.html#cb31-19"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">75</span>, <span class="dt">xend =</span> <span class="dv">1</span>, <span class="dt">yend =</span> <span class="dv">73</span>),</span>
+<span id="cb31-20"><a href="t-tests-revisit.html#cb31-20"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb31-21"><a href="t-tests-revisit.html#cb31-21"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">75</span>, <span class="dt">xend =</span> <span class="dv">2</span>, <span class="dt">yend =</span> <span class="dv">73</span>),</span>
+<span id="cb31-22"><a href="t-tests-revisit.html#cb31-22"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb31-23"><a href="t-tests-revisit.html#cb31-23"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="fl">1.5</span>, <span class="dt">y =</span> <span class="dv">77</span>,  <span class="dt">label =</span> <span class="st">&quot;***&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
+<span id="cb31-24"><a href="t-tests-revisit.html#cb31-24"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Modified&quot;</span>, <span class="st">&quot;Wild Type&quot;</span>),</span>
+<span id="cb31-25"><a href="t-tests-revisit.html#cb31-25"></a>                   <span class="dt">name =</span> <span class="st">&quot;Plant type&quot;</span>) <span class="op">+</span></span>
+<span id="cb31-26"><a href="t-tests-revisit.html#cb31-26"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Amount of Omega 3 (units)&quot;</span>,</span>
+<span id="cb31-27"><a href="t-tests-revisit.html#cb31-27"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb31-28"><a href="t-tests-revisit.html#cb31-28"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">90</span>)) <span class="op">+</span></span>
+<span id="cb31-29"><a href="t-tests-revisit.html#cb31-29"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
 <p><img src="t-test-revisit_files/figure-html/fig-ttest-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
 </div>
 <div id="reporting-the-results" class="section level2">
 <h2><span class="header-section-number">5.8</span> Reporting the results</h2>
-<p><em>to add: principle, sig, magnitude and diection of effects, test result, figure</em></p>
 <p>The genetic modification was unsuccessful with wild type plants (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 56.412 <span class="math inline">\(\pm\)</span> 1.11 units) have significantly higher omega 3 than modified plants(49.465 <span class="math inline">\(\pm\)</span> 0.823 units) (<span class="math inline">\(t\)</span> = 5.029; <span class="math inline">\(d.f.\)</span> = 98; <span class="math inline">\(p\)</span> &lt; 0.001). See figure <a href="t-tests-revisit.html#fig:fig-ttest-report">5.3</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:fig-ttest-report"></span>
-<img src="t-test-revisit_files/figure-html/fig-ttest-report-1.png" alt="Relationship between the concentration of Juvenile growth hormone and mandible length." width="60%" />
+<img src="t-test-revisit_files/figure-html/fig-ttest-report-1.png" alt="Mean Omega 3 content of wild type and genetically modified Cannabis sativa. Error bars are \(\pm 1 S.E.\). *** signifcant difference at the \(p &lt; 0.001\) level." width="60%" />
 <p class="caption">
-Figure 5.3: Relationship between the concentration of Juvenile growth hormone and mandible length.
+Figure 5.3: Mean Omega 3 content of wild type and genetically modified <em>Cannabis sativa</em>. Error bars are <span class="math inline">\(\pm 1 S.E.\)</span>. *** signifcant difference at the <span class="math inline">\(p &lt; 0.001\)</span> level.
 </p>
 </div>
 

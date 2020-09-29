@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 2 What are General Linear Models | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://3mmarand.github.io/gist-lm/" />
-  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
   <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="3mmaRand/singlm" />
 
@@ -19,12 +19,11 @@
   <meta name="twitter:title" content="Chapter 2 What are General Linear Models | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   
   <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
-  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
 
 <meta name="author" content="Emma Rand" />
 
 
-<meta name="date" content="2020-09-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,8 +158,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>3</b> Terminolgy</a><ul>
 <li class="chapter" data-level="3.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>3.1</b> General? Generalised?</a></li>
-<li class="chapter" data-level="3.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>3.2</b> Testing modelling fitting</a></li>
-<li class="chapter" data-level="3.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>3.3</b> paramters, coefficients estimates</a></li>
 </ul></li>
 <li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
 <li class="chapter" data-level="4" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>4</b> Single linear regression</a><ul>
@@ -232,7 +229,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 2</span> What are General Linear Models</h1>
 <div id="overview" class="section level2">
 <h2><span class="header-section-number">2.1</span> Overview</h2>
-<p>A linear model describes a continuous response variable as a function of one or more explanatory variables. When you have a single explanatory variable, that model is:</p>
+<p>A general linear model describes a continuous response variable as a function of one or more explanatory variables.
+For a single explanatory variable, the model is:</p>
 <p><span class="math display" id="eq:lm1">\[\begin{equation}
 E(y_{i})=\beta_{0}+\beta_{1}X1_{i}
 \tag{2.1}
@@ -241,40 +239,44 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}
 <ul>
 <li><span class="math inline">\(y\)</span> is the response variable and <span class="math inline">\(X1\)</span> is the explanatory variable.<br />
 </li>
-<li><span class="math inline">\(i\)</span> is the index so <span class="math inline">\(X1_{i}\)</span> is the <span class="math inline">\(i\)</span>th value of <span class="math inline">\(X1\)</span></li>
+<li><span class="math inline">\(i\)</span> is the index of the values so <span class="math inline">\(X1_{i}\)</span> is the <span class="math inline">\(i\)</span>th value of <span class="math inline">\(X1\)</span></li>
 <li><span class="math inline">\(E(y_{i})\)</span> is the expected value of <span class="math inline">\(y\)</span> for the <span class="math inline">\(i\)</span>th value of <span class="math inline">\(X1\)</span>.</li>
-<li><span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> are the coefficients in the model. In a single linear regression, <span class="math inline">\(\beta_{0}\)</span> is often called the intercept and <span class="math inline">\(\beta_{1}\)</span> the slope.</li>
+<li><span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> are the coefficients - or parameters - in the model. In a single linear regression, <span class="math inline">\(\beta_{0}\)</span> is often called the intercept and <span class="math inline">\(\beta_{1}\)</span> the slope.</li>
 </ul>
-<p>The equation <a href="what-are-linear-models.html#eq:lm1">(2.1)</a> allows the response, <span class="math inline">\(y\)</span> to be predicted for a given value of the explanatory variable.
-Let’s unpack what we mean by <span class="math inline">\(E(y_{i})\)</span>. If you measure the response for a particular value of <span class="math inline">\(x\)</span> very many times there would be some distribution of those responses. In the general linear model that distribution is assumed to be normal and its mean is the expected value for <span class="math inline">\(y\)</span>, <span class="math inline">\(E(y_{i})\)</span>. Another way of saying that is that in a general linear model, we model the mean of the response. That the measured response is drawn from normal distribution with a mean of <span class="math inline">\(E(y_{i})\)</span> is a defining feature of the general linear model. An additional assumption is that those normal distributions have the same variance for all the <span class="math inline">\(x\)</span> values.</p>
+<p>The equation <a href="what-are-linear-models.html#eq:lm1">(2.1)</a> allows the response, <span class="math inline">\(y\)</span>, to be predicted for a given value of the explanatory variable.</p>
+<p>Let’s unpack what we mean by <span class="math inline">\(E(y_{i})\)</span>, the expected value of <span class="math inline">\(y\)</span>. If you measure the response for a particular value of <span class="math inline">\(x\)</span> very many times there would be some distribution of those responses. In the general linear model that distribution is assumed to be normal and its mean is the expected value for <span class="math inline">\(y\)</span>, <span class="math inline">\(E(y_{i})\)</span>.</p>
+<p>Another way of saying that is that in a general linear model, we “model the mean of the response”. That the measured response is drawn from normal distribution with a mean of <span class="math inline">\(E(y_{i})\)</span> is a defining feature of the general linear model.</p>
+<p>An additional assumption is that those normal distributions have the same variance for all the <span class="math inline">\(x\)</span> values.</p>
 </div>
 <div id="model-fitting" class="section level2">
 <h2><span class="header-section-number">2.2</span> Model fitting</h2>
 <p>The process of estimating the model coefficients from your data (set of chosen <span class="math inline">\(X1\)</span> with their measured <span class="math inline">\(y\)</span> values) is known as <em>fitting a linear model</em>. The coefficients are also known as parameters.</p>
-<p>The measured response values in your data, <span class="math inline">\(y_{i}\)</span>, will differ from the predicted values, <span class="math inline">\(\hat{y}\)</span>, randomly and these random differences are known as <em>residuals</em> or errors. Our parameter values are chosen to minimise the sum of the squared residuals and is known as least-squares estimation. A very commonly used abbreviation for the sum of the squared residuals (or errors) is <span class="math inline">\(SSE\)</span>.</p>
+<p>The measured response values in your data, <span class="math inline">\(y_{i}\)</span>, will differ from the predicted values, <span class="math inline">\(\hat{y}\)</span>, randomly and these random differences are known as <em>residuals</em> or <em>errors</em>. Our parameter values are chosen to minimise the sum of the squared residuals. A very commonly used abbreviation for the sum of the squared residuals (or errors) is <span class="math inline">\(SSE\)</span>.</p>
 <p><span class="math display" id="eq:sse">\[\begin{equation}
 SSE = \sum(y_{i}-\hat{y})^2
 \tag{2.2}
 \end{equation}\]</span></p>
-<p>The role played by <span class="math inline">\(SSE\)</span> in estimating our parameters means that it is also used in determining how well our model fits our data. Our model can be considered useful if its predictions are close to the observed data and the smaller the value of <span class="math inline">\(SSE\)</span>, the better the fit. In other words, there is little random variance left over in the response. As the absolute value of <span class="math inline">\(SSE\)</span> will depend on the size of the <span class="math inline">\(y\)</span> values and the sample size, we express it as a proportion or the total variation in <span class="math inline">\(y\)</span>, <span class="math inline">\(SST\)</span> and proportion of variance left over is</p>
+<p>Since the coefficient values are those that minimise the <span class="math inline">\(SSE\)</span>, those values are known as <em>least squares estimates</em>. The mean of a sample is also a least squares estimate -</p>
+<p>The role played by <span class="math inline">\(SSE\)</span> in estimating our parameters means that it is also used in determining how well our model fits our data. Our model can be considered useful if its predictions are close to the observed data and the smaller the value of <span class="math inline">\(SSE\)</span>, the better the fit. In other words, there is little random variance left over in the response.
+The absolute value of <span class="math inline">\(SSE\)</span> will depend on the size of the <span class="math inline">\(y\)</span> values and the sample size so it would be difficult to compare two models. Instead, we express it as a proportion of the total variation in <span class="math inline">\(y\)</span>, <span class="math inline">\(SST\)</span>:</p>
 <p><span class="math display" id="eq:rsq1">\[\begin{equation}
 SSE / SST
 \tag{2.3}
 \end{equation}\]</span></p>
-<p>The proportion of variance explained by the model is a very commonly used metric of model fit and you have probably heard of it - <span class="math inline">\(R^2\)</span></p>
+<p>This is the proportion of variance left over after the model fitting. The proportion of variance explained by the model is a very commonly used metric of model fit and you have probably heard of it - R-squared, <span class="math inline">\(R^2\)</span>. It is:</p>
 <p><span class="math display" id="eq:rsq1">\[\begin{equation}
 R^2=1-\frac{SSE}{SST}
 \tag{2.3}
 \end{equation}\]</span></p>
-<p>If there were no explanatory variables, the value we would predict for the response variable is its mean. Thus a good model should fit the response better than the mean. The output of <code>lm()</code> includes a measure of fit called R-squared which is the proportion of variance explained by the model relative to the total variance of the response. This is the proportional improvement in the predictions from the regression model relative to the mean model. It ranges from zero, the model is no better than the mean, to 1, the predictions are perfect. See Figure <a href="what-are-linear-models.html#fig:lm-fit">2.1</a>.</p>
+<p>If there were no explanatory variables, the value we would predict for the response variable is its mean. Thus a good model should fit the response better than the mean. The output of <code>lm()</code> includes the <span class="math inline">\(R^2\)</span>. It represents the proportional improvement in the predictions from the regression model relative to the mean model. It ranges from zero, the model is no better than the mean, to 1, the predictions are perfect. See Figure <a href="what-are-linear-models.html#fig:lm-fit">2.1</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:lm-fit"></span>
-<img src="images/lm_fit.svg" alt="A linear model with different fits. A) the model is a poor fit - the explanatory variable is no better than the response mean for predicting the response. B) the model is good fit - the explanatory variable explains a high proportion of the variance in the response. C) the model is a perfect fit - the response can be predicted perfectly from the explanatory variable. Measured response values are in pink and the predictions are in green." width="100%" />
+<img src="images/lm_fit.svg" alt="A linear model with different fits. A) the model is a poor fit - the explanatory variable is no better than the response mean for predicting the response. B) the model is good fit - the explanatory variable explains a high proportion of the variance in the response. C) the model is a perfect fit - the response can be predicted perfectly from the explanatory variable. Measured response values are in pink, the predictions are in green and the dashed blue line gives the mean of the response." width="100%" />
 <p class="caption">
-Figure 2.1: A linear model with different fits. A) the model is a poor fit - the explanatory variable is no better than the response mean for predicting the response. B) the model is good fit - the explanatory variable explains a high proportion of the variance in the response. C) the model is a perfect fit - the response can be predicted perfectly from the explanatory variable. Measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span> and the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span>.
+Figure 2.1: A linear model with different fits. A) the model is a poor fit - the explanatory variable is no better than the response mean for predicting the response. B) the model is good fit - the explanatory variable explains a high proportion of the variance in the response. C) the model is a perfect fit - the response can be predicted perfectly from the explanatory variable. Measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span>, the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span> and the <span style=" font-weight: bold;    color: #64c0d2 !important;">dashed blue line gives the mean of the response</span>.
 </p>
 </div>
-<p>Since the distribution of the responses for a given <span class="math inline">\(x\)</span> is assumed to be normal and variances of those distributions are assumed to be homogeneous, these are also true of the residuals and it is our examination of the residuals which allows us to evaluate whether the assumptions are met.</p>
+<p>Since the distribution of the responses for a given <span class="math inline">\(x\)</span> is assumed to be normal and the variances of those distributions are assumed to be homogeneous, both are also true of the residuals. It is our examination of the residuals which allows us to evaluate whether the assumptions are met.</p>
 <p>See Figure <a href="what-are-linear-models.html#fig:lm-annotated">2.2</a> for a graphical representation of linear modelling terms introduced so far. We will reference this figure in later chapters.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:lm-annotated"></span>
@@ -293,7 +295,9 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+...+\beta_{p}Xp_{i}
 \tag{2.4}
 \end{equation}\]</span></p>
 <p>The model has only one intercept which is the value of the response when all the explanatory variables are zero.</p>
-<p>There is one problem with <span class="math inline">\(R^2\)</span> as a measure of model fit: the more explanatory variables that are added, the higher the <span class="math inline">\(R^2\)</span>. This is true even if the added variables explain a really tiny amount of the variance in the response. Using <span class="math inline">\(R^2\)</span> to select a model would mean always choosing the model with the most variables in it. A key aim of statistical modelling is to understand the response and this is easier for simpler models. We want to find a balance between the complexity of the model and its explanatory power. The Adjusted <span class="math inline">\(R^2\)</span> is a way to achieve this. It reduces the <span class="math inline">\(R^2\)</span> for each coefficient added. A related reason for not including variables that explain only tiny amounts of variance is overfitting. Overfitting occurs when your model fits your data very well but does not generalise. We want models that would predict the response equally well for a new set of data.</p>
+<p>There is one problem with <span class="math inline">\(R^2\)</span> as a measure of model fit: the more explanatory variables that are added, the higher the <span class="math inline">\(R^2\)</span>. This is true even if the added variables explain a really tiny amount of the variance in the response. Using <span class="math inline">\(R^2\)</span> to select a model would mean always choosing the model with the most variables in it.
+However, a key aim of statistical modelling is to understand the response and this is easier for simpler models. We want to find a balance between the complexity of the model and its explanatory power. The Adjusted <span class="math inline">\(R^2\)</span> is a way to achieve this. It reduces the <span class="math inline">\(R^2\)</span> for each coefficient added.</p>
+<p>A related reason for not including variables that explain only tiny amounts of variance is overfitting. Overfitting occurs when your model fits your data very well but does not generalise. We want models that would predict the response equally well for a new set of data.</p>
 </div>
 <div id="general-linear-models-in-r" class="section level2">
 <h2><span class="header-section-number">2.4</span> General linear models in R</h2>
@@ -306,7 +310,7 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+...+\beta_{p}Xp_{i}
 <p><code>lm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory1</em> + <em>explanatory2</em>)</code></p>
 <p>or</p>
 <p><code>lm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory1</em> * <em>explanatory2</em>)</code></p>
-<p>A model with <code>explanatory1 + explanatory2</code> considers the effects of the two variables independently. A model with <code>explanatory1 + explanatory2</code> considers the effects of the two variables <em>and</em> any interaction between them.</p>
+<p>A model with <code>explanatory1 + explanatory2</code> considers the effects of the two variables independently. A model with <code>explanatory1 * explanatory2</code> considers the effects of the two variables <em>and</em> any interaction between them.</p>
 <p>We usually assign the output of <code>lm()</code> commands to an object and view it with <code>summary()</code>. The typical workflow would be:</p>
 <p><code>
 mod &lt;- lm(data = <em>dataframe</em>, <em>response</em> ~ <em>explanatory</em>)<br />
@@ -317,11 +321,11 @@ summary(mod)
 <div class="key">
 <p><code>lm()</code> can be used to perform tests using the General Linear Model including <em>t</em>-tests, ANOVA and regression for response variables which are normally distributed.</p>
 </div>
-<p>Elements of the <code>lm()</code> object include the estimated coefficients, the predicted values and the residuals can be accessed with <code>mod$coeffients</code>, <code>mod$fitted.values</code> and <code>mod$residuals</code> respectively.</p>
+<p>Elements of the <code>lm()</code> object include the estimated coefficients, the predicted values and the residuals. These can be accessed with <code>mod$coeffients</code>, <code>mod$fitted.values</code> and <code>mod$residuals</code> respectively.</p>
 </div>
 <div id="getting-predictions" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> Getting predictions</h3>
-<p><code>mod$fitted.values</code> gives the predicted values for the explanatory variable values actually used in the experiment, <em>i.e.</em>, there is a prediction for each row of data. To get predictions for a different set of values make a dataframe of the different set of values and use the <code>predict()</code> function.. The typical workflow would be:</p>
+<p><code>mod$fitted.values</code> gives the predicted values for the explanatory variable values actually used in the experiment, <em>i.e.</em>, there is a prediction for each row of data. To get predictions for a different set of values we need to make a dataframe of the different set of values and use the <code>predict()</code> function. The typical workflow would be:</p>
 <p><code>
 predict_for &lt;- data.frame(<em>explanatory</em> = <em>values</em>)<br />
 predict_for$pred &lt;- predict(mod, newdata = predict_for)
@@ -331,18 +335,25 @@ predict_for$pred &lt;- predict(mod, newdata = predict_for)
 <h3><span class="header-section-number">2.4.3</span> Checking assumptions</h3>
 <p>The assumptions of the model are checked using the <code>plot()</code> function which produces diagnostic plots to explore the distribution of the residuals. They are not proof of the assumptions being met but allow us to quickly determine if the assumptions are plausible, and if not, how the assumptions are violated and what data points contribute to the violation.</p>
 <p>The two plots which are most useful are the “Q-Q” plot (plot 2) and the “Residuals vs Fitted” plot (plot 1). These are given as values to the <code>which</code> argument of <code>plot()</code>.</p>
+<div id="the-q-q-plot" class="section level4">
+<h4><span class="header-section-number">2.4.3.1</span> The Q-Q plot</h4>
 <p>The Q-Q plot is a scatterplot of the residuals (standardised to a mean of zero and a standard deviation of 1) against what is expected if the residuals are normally distributed.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="what-are-linear-models.html#cb1-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="what-are-linear-models.html#cb6-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="what-are-linear-models_files/figure-html/unnamed-chunk-2-1.png" width="60%" style="display: block; margin: auto auto auto 0;" /></p>
-<p>The points should fall roughly on the line if the residuals are normally distributed.</p>
+<p>The points should fall roughly on the line if the residuals are normally distributed. In the example above, the residuals appear normally distributed.</p>
 <p>The following are two examples in which the residuals are not normally distributed.
 <img src="what-are-linear-models_files/figure-html/unnamed-chunk-3-1.png" width="60%" style="display: block; margin: auto auto auto 0;" /></p>
+<p>If you see patterns like these you should find an alternative to a general linear model such as a non-parametric test or a generalised linear model. Sometimes, applying a transformation to the response variable will result in better meeting the assumptions.</p>
+</div>
+<div id="the-residuals-vs-fitted-plot" class="section level4">
+<h4><span class="header-section-number">2.4.3.2</span> The Residuals vs Fitted plot</h4>
 <p><img src="what-are-linear-models_files/figure-html/unnamed-chunk-4-1.png" width="60%" style="display: block; margin: auto auto auto 0;" /></p>
-<p>The Residuals vs Fitted plot shows if residuals have homogeneous variance or have non-linear patterns. Non-linear relationship between explanatory variables and the response will usually show in this plot if the model does not capture the non-linear relationship. For the assumptions to be met, the residuals should be equally spread around a horizontal line:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="what-are-linear-models.html#cb2-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>The Residuals vs Fitted plot shows if residuals have homogeneous variance or non-linear patterns. Non-linear relationships between explanatory variables and the response will usually show in this plot if the model does not capture the non-linear relationship. For the assumptions to be met, the residuals should be equally spread around a horizontal line as they are here:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="what-are-linear-models.html#cb7-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="what-are-linear-models_files/figure-html/unnamed-chunk-5-1.png" width="60%" style="display: block; margin: auto auto auto 0;" /></p>
 <p>The following are two examples in which the residuals do not have homogeneous variance and display non-linear patterns.
 <img src="what-are-linear-models_files/figure-html/unnamed-chunk-6-1.png" width="60%" style="display: block; margin: auto auto auto 0;" /><img src="what-are-linear-models_files/figure-html/unnamed-chunk-6-2.png" width="60%" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
 </div>
 </div>
 <div id="reporting" class="section level2">

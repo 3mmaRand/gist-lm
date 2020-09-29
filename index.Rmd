@@ -31,7 +31,7 @@ url: 'https://3mmarand.github.io/gist-lm/'
 
 ## Who is this book for?
 
-This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have learned introductory data analysis as a skill for doing research in another field  The audience I had in mind when writing the book are undergraduates on degree programmes in the life sciences who have done an introductory course covering hypothesis testing with single linear regression, *t*-tests, and ANOVA. However, students on social science, media, finance and education degree programmes often do similar course. This book can also help them although the examples are from the life sciences. A short revision chapter giving an overview of such a course is included to set the scene and clarify terminology used in the rest of the book. The coverage of single linear regression in the first chapter of Part 2 is also likely to be revision.
+This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have learned introductory data analysis as a skill for doing research in another field.  The audience I had in mind when writing the book are undergraduates on degree programmes in the life sciences who have done an introductory course covering hypothesis testing with single linear regression, *t*-tests, and ANOVA. However, students on social science, media, finance and education degree programmes often do similar introductory data analysis courses. This book can also help them, although the examples are from the life sciences. A short revision chapter giving an overview of introductory data analysis course is included to set the scene and clarify terminology used in the rest of the book. The coverage of single linear regression in the first chapter of Part 2 is also likely to be revision for most readers.
 
 I assume you have an understanding of the rationale of hypothesis testing and some experience selecting, applying and interpreting tests. I also assume you have some familiarity with R and RStudio and have general, but not expert, proficiency in summarising, analysing and visualising data with functions such as `t.test()`, `aov()`, `TukeyHSD()` and `ggplot()`. I do not assume your fluency allows you to do these things without looking things up. 
 
@@ -41,7 +41,7 @@ The book has two aims. First to explain how the *t*-test, ANOVA and regression a
 
 Regression, *t*-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the "general linear model". Since they are fundamentally the same test, all can be carried out with the `lm()` function in R. However, it is common for *t*-tests and ANOVA to be taught to non-specialists using the `t.test()` and `aov()` functions respectively. There are some sensible reasons for this. For example, many introductory texts take the same approach and typically, the outputs of `t.test()` and `aov()` are easier for beginners to understand and interpret. 
 
-However, the output of `lm()` is more typical of statistical modelling functions in general and these are made harder to understand if you are not used to using `lm()` for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is and extending your statistical repertoire more intimidating. The approach taken in this book is to exploit your pre-existing knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. 
+However, the output of `lm()` is more typical of statistical modelling functions in general and these are made harder to understand if you are not used to using `lm()` for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is, and extending your statistical repertoire more intimidating than it could be. The approach taken in this book is to exploit your pre-existing knowledge of *t*-tests and ANOVA using `t.test()` and `aov()` to understand the output of `lm()`. 
 
 :::key
 `lm()` can be used to perform *t*-tests, ANOVAs and regression. 
@@ -68,9 +68,9 @@ glimpse(stag)
 Lines of output start with a `#`. 
 
 Within the text:
-- packages are indicated in bold code font like this: **`ggplot2`**
-- functions are indicated in code font with brackets after their name like this: `ggplot()`
-- R objects are indicated in code font like this: `stag`
+* packages are indicated in bold code font like this: **`ggplot2`**
+* functions are indicated in code font with brackets after their name like this: `ggplot()`
+* R objects are indicated in code font like this: `stag`
 
 Key points are summarised throughout the book using boxes like this:
 
@@ -88,7 +88,7 @@ Extra information and tips are in boxes like these
 ## Following along with the examples
 Readers may wish to code along and the following gives guidance on how best to do that.
 
-I recommend starting a new RStudio project and creating a folder inside that project called `data-raw` where you will save the data files, and scripts for each example. Links to the data files are given in the text and these can be downloaded to your `data-raw` folder by right-clicking the link choosing the option to save.
+I recommend starting a new RStudio project and creating a folder inside that project called `data-raw` where you will save the data files. Links to the data files are given in the text and these can be downloaded to your `data-raw` folder by right-clicking the link choosing the option to save. Then make a new script file for each example to carry our the analysis for that example.
 
 
 For example, if you call your Project `gist` and you have just started [Chapter 4 Single linear regression](#single-regression), your folder structure would look like this:

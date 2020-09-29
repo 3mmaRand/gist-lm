@@ -447,7 +447,7 @@ Violin plots are a useful way to show the distribution of data in each group but
 :::
 
 
-The modified plant have a lower mean omega 3 content than the wild type plants. The modification appears not to be successful. In fact, it may have significantly lowered the omega 3 content!
+The modified plants have a lower mean omega 3 content than the wild type plants. The modification appears not to be successful! In fact, it may have significantly lowered the omega 3 content!
 
 Let’s create a summary of the data that will be useful for plotting later:
 
@@ -518,7 +518,9 @@ The two groups means are given in the section labelled `sample estimates` and th
 
 The line under `95 percent confidence interval`gives the confidence limits on the difference between the two means.
 
-The sign on the $t$ value and the confidence limits, and the order in which the sample estimates are given is determined by R's alphabetical ordering of the groups. As "modif" comes before "wild" in the alphabet, "modif" is the first group and the test is the modified plant mean minus the wild type mean. This has no impact on our conclusions. If the wild type plants been labelled "control" so that "modif" would be the second group, our output would look like this:
+The sign on the $t$ value and the confidence limits, and the order in which the sample estimates are given is determined by R's alphabetical ordering of the groups. As "modif" comes before "wild" in the alphabet, "modif" is the first group. The statistical test is: the modified plant mean $-$ the wild type mean. 
+
+This ordering is arbitrary and has has no impact on our conclusions. If the wild type plants been labelled "control" so that "modif" would be the second group, our output would look like this:
 
 
 ```r
@@ -534,6 +536,8 @@ The sign on the $t$ value and the confidence limits, and the order in which the 
 #             56.4118             49.4652
 # 
 ```
+
+Our conclusion would remain the same: 49.465 is significantly lower than 56.412.
 
 :::key
 `t.test()` output: the estimates are the two group means and the *p*-value is for a test on the difference between them.
@@ -555,7 +559,7 @@ $X1_{i}$ is an indicator variable that takes the value of 0 or 1 and indicates w
 
 You can think of $X1_{i}$ as toggling on and off the $\beta_{1}$ effect:
 
-* If it has a value of 0 for a data point it means that $\beta_{1}$ will not impact the response which will be $\beta_{0}$.
+* If it has a value of 0 for a data point it means that $\beta_{1}$ will not impact the response. The response will be will be $\beta_{0}$.
 * If it has a value 1 then $\beta_{1}$ will change the response to $\beta_{0}$ + $\beta_{1}$
 
 $\beta_{1}$ is thus the *difference* between the group means.
@@ -738,15 +742,14 @@ ggplot() +
 <img src="t-test-revisit_files/figure-html/fig-ttest-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 
 ## Reporting the results
-*to add: principle, sig, magnitude and diection of effects, test result, figure*
 
 The genetic modification was unsuccessful with wild type plants ($\bar{x} \pm s.e.$: 56.412 $\pm$ 1.11 units) have significantly higher omega 3 than modified plants(49.465 $\pm$ 0.823 units) ($t$ = 5.029; $d.f.$ = 98; $p$ < 0.001). See figure \@ref(fig:fig-ttest-report).
 
-(ref:ch1-ttest-report) Omega 3 content of wild type and a genetically modified *Cannabis sativa* 
+(ref:ch1-ttest-report) Mean Omega 3 content of wild type and genetically modified *Cannabis sativa*. Error bars are $\pm 1 S.E.$. *** signifcant difference at the $p < 0.001$ level.  
 
 <div class="figure" style="text-align: left">
-<img src="t-test-revisit_files/figure-html/fig-ttest-report-1.png" alt="(ref:fig-reg-report)" width="60%" />
-<p class="caption">(\#fig:fig-ttest-report)(ref:fig-reg-report)</p>
+<img src="t-test-revisit_files/figure-html/fig-ttest-report-1.png" alt="(ref:ch1-ttest-report)" width="60%" />
+<p class="caption">(\#fig:fig-ttest-report)(ref:ch1-ttest-report)</p>
 </div>
 
 

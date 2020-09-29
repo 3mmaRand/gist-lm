@@ -2,7 +2,7 @@
 
 # Single linear regression {#single-regression}
 
-This is probably the one general linear model you have applied out using `lm()` previously and it is covered here as revision and make more clear links between regression, *t*-tests and ANOVA.
+This is probably the one general linear model you have applied using `lm()` previously and it is covered here as revision and make more clear links between regression, *t*-tests and ANOVA.
 
 ## Introduction to the example
 
@@ -152,7 +152,7 @@ $\beta_{0}$ is labelled `(Intercept)` and $\beta_{1}$ is labelled `jh`. Thus, th
 
 <center> $mand$ = 0.419 + 0.006$jh$ </center>
 
-More information including statistical tests of the model and its parameters is obtained by using `summary()`:
+More information, including statistical tests of the model and its parameters, is obtained by using `summary()`:
 
 ```r
 summary(mod)
@@ -204,7 +204,7 @@ In general mandible size is: $\beta_{0}$ + $x\times\beta_{0}$ mm at $x$ pg$\mu$l
 
 ## Getting predictions from the model
 
-The `predict()` returns the predicted values of the response. To add a column of predicted values to the `stag` dataframe we use: 
+The `predict()` function returns the predicted values of the response. To add a column of predicted values to the `stag` dataframe we use: 
 
 
 ```r
@@ -293,9 +293,6 @@ ggplot(data = stag, aes(x = jh, y = mand)) +
 
 
 ## Reporting the results
-
-*to add: principle, sig, magnitude and diection of effects, test result, figure*
-
 
 There was a significant positive relationship between the concentration of Juvenile growth hormone and mandible length ($\beta_{1}\pm s.e.$: 0.006 $\pm$ 0.002; $p$ = 0.001). See figure \@ref(fig:fig-reg-report).
 
