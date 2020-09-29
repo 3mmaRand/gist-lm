@@ -2,7 +2,7 @@
 
 # Single linear regression {#single-regression}
 
-This is probably the one general linear model you have applied out using `lm()` previously and it is covered here as revision and make more clear links between regression, *t*-tests and ANOVA.
+This is probably the one general linear model you have applied using `lm()` previously and it is covered here as revision and make more clear links between regression, *t*-tests and ANOVA.
 
 ## Introduction to the example
 
@@ -96,7 +96,7 @@ $\beta_{0}$ is labelled `(Intercept)` and $\beta_{1}$ is labelled `jh`. Thus, th
 
 <center> $mand$ = `r b0` + `r b1`$jh$ </center>
 
-More information including statistical tests of the model and its parameters is obtained by using `summary()`:
+More information, including statistical tests of the model and its parameters, is obtained by using `summary()`:
 ```{r}
 summary(mod)
 
@@ -129,7 +129,7 @@ knitr::include_graphics("images/stag_reg_eg.svg")
 
 ## Getting predictions from the model
 
-The `predict()` returns the predicted values of the response. To add a column of predicted values to the `stag` dataframe we use: 
+The `predict()` function returns the predicted values of the response. To add a column of predicted values to the `stag` dataframe we use: 
 
 ```{r }
 stag$pred <- predict(mod)
@@ -196,9 +196,6 @@ ggplot(data = stag, aes(x = jh, y = mand)) +
 
 
 ## Reporting the results
-
-*to add: principle, sig, magnitude and diection of effects, test result, figure*
-
 
 There was a significant positive relationship between the concentration of Juvenile growth hormone and mandible length ($\beta_{1}\pm s.e.$: `r b1` $\pm$ `r b1se`; $p$ `r b1p`). See figure \@ref(fig:fig-reg-report).
 

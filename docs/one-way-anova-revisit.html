@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 6 One-way ANOVA revisited | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://3mmarand.github.io/gist-lm/" />
-  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
   <meta property="og:description" content="The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="3mmaRand/singlm" />
 
@@ -19,12 +19,11 @@
   <meta name="twitter:title" content="Chapter 6 One-way ANOVA revisited | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users" />
   
   <meta name="twitter:description" content="The output format for this example is bookdown::gitbook." />
-  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/android-chrome-512x512.png" />
+  <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png" />
 
 <meta name="author" content="Emma Rand" />
 
 
-<meta name="date" content="2020-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -159,8 +158,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="terminolgy.html"><a href="terminolgy.html"><i class="fa fa-check"></i><b>3</b> Terminolgy</a><ul>
 <li class="chapter" data-level="3.1" data-path="terminolgy.html"><a href="terminolgy.html#general-generalised"><i class="fa fa-check"></i><b>3.1</b> General? Generalised?</a></li>
-<li class="chapter" data-level="3.2" data-path="terminolgy.html"><a href="terminolgy.html#testing-modelling-fitting"><i class="fa fa-check"></i><b>3.2</b> Testing modelling fitting</a></li>
-<li class="chapter" data-level="3.3" data-path="terminolgy.html"><a href="terminolgy.html#paramters-coefficients-estimates"><i class="fa fa-check"></i><b>3.3</b> paramters, coefficients estimates</a></li>
 </ul></li>
 <li class="part"><span><b>II USING <code>lm()</code> FOR FAMILIAR TESTS</b></span></li>
 <li class="chapter" data-level="4" data-path="single-regression.html"><a href="single-regression.html"><i class="fa fa-check"></i><b>4</b> Single linear regression</a><ul>
@@ -984,19 +981,19 @@ Bladdernose Seal
 <code>myoglobin</code>, a continuous variable, is the response.</p>
 </div>
 <p>We can use the <code>read_delim()</code> function to import the data and visualise it with <code>ggplot()</code>.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="one-way-anova-revisit.html#cb31-1"></a>seal &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;data-raw/seal.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="one-way-anova-revisit.html#cb32-1"></a><span class="co"># create a rough plot of the data  </span></span>
-<span id="cb32-2"><a href="one-way-anova-revisit.html#cb32-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> seal, <span class="kw">aes</span>(<span class="dt">x =</span> species, <span class="dt">y =</span> myoglobin)) <span class="op">+</span></span>
-<span id="cb32-3"><a href="one-way-anova-revisit.html#cb32-3"></a><span class="st">  </span><span class="kw">geom_violin</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="one-way-anova-revisit.html#cb32-1"></a>seal &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;data-raw/seal.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="one-way-anova-revisit.html#cb33-1"></a><span class="co"># create a rough plot of the data  </span></span>
+<span id="cb33-2"><a href="one-way-anova-revisit.html#cb33-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> seal, <span class="kw">aes</span>(<span class="dt">x =</span> species, <span class="dt">y =</span> myoglobin)) <span class="op">+</span></span>
+<span id="cb33-3"><a href="one-way-anova-revisit.html#cb33-3"></a><span class="st">  </span><span class="kw">geom_violin</span>()</span></code></pre></div>
 <p><img src="one-way-anova-revisit_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 Harbour Seals seem to have higher myoglobin than the other two species and the variance in myoglobin for the three species looks about the same.</p>
 <p>Let’s create a summary of the data that will be useful for plotting later:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="one-way-anova-revisit.html#cb33-1"></a>seal_summary &lt;-<span class="st"> </span>seal <span class="op">%&gt;%</span></span>
-<span id="cb33-2"><a href="one-way-anova-revisit.html#cb33-2"></a><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span></span>
-<span id="cb33-3"><a href="one-way-anova-revisit.html#cb33-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(myoglobin),</span>
-<span id="cb33-4"><a href="one-way-anova-revisit.html#cb33-4"></a>            <span class="dt">std =</span> <span class="kw">sd</span>(myoglobin),</span>
-<span id="cb33-5"><a href="one-way-anova-revisit.html#cb33-5"></a>            <span class="dt">n =</span> <span class="kw">length</span>(myoglobin),</span>
-<span id="cb33-6"><a href="one-way-anova-revisit.html#cb33-6"></a>            <span class="dt">se =</span> std<span class="op">/</span><span class="kw">sqrt</span>(n))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="one-way-anova-revisit.html#cb34-1"></a>seal_summary &lt;-<span class="st"> </span>seal <span class="op">%&gt;%</span></span>
+<span id="cb34-2"><a href="one-way-anova-revisit.html#cb34-2"></a><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span></span>
+<span id="cb34-3"><a href="one-way-anova-revisit.html#cb34-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(myoglobin),</span>
+<span id="cb34-4"><a href="one-way-anova-revisit.html#cb34-4"></a>            <span class="dt">std =</span> <span class="kw">sd</span>(myoglobin),</span>
+<span id="cb34-5"><a href="one-way-anova-revisit.html#cb34-5"></a>            <span class="dt">n =</span> <span class="kw">length</span>(myoglobin),</span>
+<span id="cb34-6"><a href="one-way-anova-revisit.html#cb34-6"></a>            <span class="dt">se =</span> std<span class="op">/</span><span class="kw">sqrt</span>(n))</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1076,30 +1073,30 @@ Weddell Seal
 <div id="aov-output-reminder" class="section level2">
 <h2><span class="header-section-number">6.2</span> <code>aov()</code> output reminder</h2>
 <p>The <code>aov()</code> function requires a model formula, <code>myoglobin ~ species</code>, in the familiar format. We also specify the <code>data</code> argument to indicate where the <code>species</code> and <code>myoglobin</code> variables can be found:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="one-way-anova-revisit.html#cb34-1"></a>mod &lt;-<span class="st"> </span><span class="kw">aov</span>(<span class="dt">data =</span> seal, myoglobin <span class="op">~</span><span class="st"> </span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="one-way-anova-revisit.html#cb35-1"></a>mod &lt;-<span class="st"> </span><span class="kw">aov</span>(<span class="dt">data =</span> seal, myoglobin <span class="op">~</span><span class="st"> </span>species)</span></code></pre></div>
 <p>The output of the <code>summary()</code> function gives us an ANOVA test:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="one-way-anova-revisit.html#cb35-1"></a><span class="kw">summary</span>(mod)</span>
-<span id="cb35-2"><a href="one-way-anova-revisit.html#cb35-2"></a><span class="co">#             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
-<span id="cb35-3"><a href="one-way-anova-revisit.html#cb35-3"></a><span class="co"># species      2    692     346    5.35 0.0064 **</span></span>
-<span id="cb35-4"><a href="one-way-anova-revisit.html#cb35-4"></a><span class="co"># Residuals   87   5627      65                  </span></span>
-<span id="cb35-5"><a href="one-way-anova-revisit.html#cb35-5"></a><span class="co"># ---</span></span>
-<span id="cb35-6"><a href="one-way-anova-revisit.html#cb35-6"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="one-way-anova-revisit.html#cb36-1"></a><span class="kw">summary</span>(mod)</span>
+<span id="cb36-2"><a href="one-way-anova-revisit.html#cb36-2"></a><span class="co">#             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
+<span id="cb36-3"><a href="one-way-anova-revisit.html#cb36-3"></a><span class="co"># species      2    692     346    5.35 0.0064 **</span></span>
+<span id="cb36-4"><a href="one-way-anova-revisit.html#cb36-4"></a><span class="co"># Residuals   87   5627      65                  </span></span>
+<span id="cb36-5"><a href="one-way-anova-revisit.html#cb36-5"></a><span class="co"># ---</span></span>
+<span id="cb36-6"><a href="one-way-anova-revisit.html#cb36-6"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>There was a significant difference in myoglobin concentration between seal species (ANOVA: <span class="math inline">\(F\)</span> = 5.352; <span class="math inline">\(d.f.\)</span> = 2, 87; <span class="math inline">\(p\)</span> = 0.006). We need a post-hoc multiple comparison test to discover which pairs of means differ significantly.</p>
 </div>
 <div id="post-hoc-testing-for-aov" class="section level2">
 <h2><span class="header-section-number">6.3</span> Post-hoc testing for <code>aov()</code></h2>
 <p>A commonly applied multiple comparison test applied after an significant ANOVA result is the Tukey Honest Significant Difference test:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="one-way-anova-revisit.html#cb36-1"></a><span class="kw">TukeyHSD</span>(mod)</span>
-<span id="cb36-2"><a href="one-way-anova-revisit.html#cb36-2"></a><span class="co">#   Tukey multiple comparisons of means</span></span>
-<span id="cb36-3"><a href="one-way-anova-revisit.html#cb36-3"></a><span class="co">#     95% family-wise confidence level</span></span>
-<span id="cb36-4"><a href="one-way-anova-revisit.html#cb36-4"></a><span class="co"># </span></span>
-<span id="cb36-5"><a href="one-way-anova-revisit.html#cb36-5"></a><span class="co"># Fit: aov(formula = myoglobin ~ species, data = seal)</span></span>
-<span id="cb36-6"><a href="one-way-anova-revisit.html#cb36-6"></a><span class="co"># </span></span>
-<span id="cb36-7"><a href="one-way-anova-revisit.html#cb36-7"></a><span class="co"># $species</span></span>
-<span id="cb36-8"><a href="one-way-anova-revisit.html#cb36-8"></a><span class="co">#                                diff   lwr    upr p adj</span></span>
-<span id="cb36-9"><a href="one-way-anova-revisit.html#cb36-9"></a><span class="co"># Harbour Seal-Bladdernose Seal  6.69  1.74 11.646 0.005</span></span>
-<span id="cb36-10"><a href="one-way-anova-revisit.html#cb36-10"></a><span class="co"># Weddell Seal-Bladdernose Seal  2.34 -2.61  7.296 0.499</span></span>
-<span id="cb36-11"><a href="one-way-anova-revisit.html#cb36-11"></a><span class="co"># Weddell Seal-Harbour Seal     -4.35 -9.30  0.602 0.097</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="one-way-anova-revisit.html#cb37-1"></a><span class="kw">TukeyHSD</span>(mod)</span>
+<span id="cb37-2"><a href="one-way-anova-revisit.html#cb37-2"></a><span class="co">#   Tukey multiple comparisons of means</span></span>
+<span id="cb37-3"><a href="one-way-anova-revisit.html#cb37-3"></a><span class="co">#     95% family-wise confidence level</span></span>
+<span id="cb37-4"><a href="one-way-anova-revisit.html#cb37-4"></a><span class="co"># </span></span>
+<span id="cb37-5"><a href="one-way-anova-revisit.html#cb37-5"></a><span class="co"># Fit: aov(formula = myoglobin ~ species, data = seal)</span></span>
+<span id="cb37-6"><a href="one-way-anova-revisit.html#cb37-6"></a><span class="co"># </span></span>
+<span id="cb37-7"><a href="one-way-anova-revisit.html#cb37-7"></a><span class="co"># $species</span></span>
+<span id="cb37-8"><a href="one-way-anova-revisit.html#cb37-8"></a><span class="co">#                                diff   lwr    upr p adj</span></span>
+<span id="cb37-9"><a href="one-way-anova-revisit.html#cb37-9"></a><span class="co"># Harbour Seal-Bladdernose Seal  6.69  1.74 11.646 0.005</span></span>
+<span id="cb37-10"><a href="one-way-anova-revisit.html#cb37-10"></a><span class="co"># Weddell Seal-Bladdernose Seal  2.34 -2.61  7.296 0.499</span></span>
+<span id="cb37-11"><a href="one-way-anova-revisit.html#cb37-11"></a><span class="co"># Weddell Seal-Harbour Seal     -4.35 -9.30  0.602 0.097</span></span></code></pre></div>
 <p>The <em>p</em>-value, adjusted for multiple comparisons is given in the <code>p adj</code> column. In this case, only one of the three pairwise comparisons is significant. Harbour Seals, with the highest myoglobin concentrations (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 49.01 <span class="math inline">\(\pm\)</span> 1.507) ) were significantly higher than Bladdernose Seals with the lowest (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 42.316 <span class="math inline">\(\pm\)</span> 1.464).</p>
 <p>The comparisons being made are known as contrasts and this terminology will appear later.</p>
 </div>
@@ -1132,16 +1129,16 @@ Figure 6.2: A linear model when the explanatory variable is categorical with fou
 <div id="applying-and-interpreting-lm" class="section level2">
 <h2><span class="header-section-number">6.5</span> Applying and interpreting <code>lm()</code></h2>
 <p>The <code>lm()</code> function is applied to the seal example as follows:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="one-way-anova-revisit.html#cb37-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> seal, myoglobin <span class="op">~</span><span class="st"> </span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="one-way-anova-revisit.html#cb38-1"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> seal, myoglobin <span class="op">~</span><span class="st"> </span>species)</span></code></pre></div>
 <p>Printing <code>mod</code> to the console gives us the estimated model parameters (coefficients):</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="one-way-anova-revisit.html#cb38-1"></a>mod</span>
-<span id="cb38-2"><a href="one-way-anova-revisit.html#cb38-2"></a><span class="co"># </span></span>
-<span id="cb38-3"><a href="one-way-anova-revisit.html#cb38-3"></a><span class="co"># Call:</span></span>
-<span id="cb38-4"><a href="one-way-anova-revisit.html#cb38-4"></a><span class="co"># lm(formula = myoglobin ~ species, data = seal)</span></span>
-<span id="cb38-5"><a href="one-way-anova-revisit.html#cb38-5"></a><span class="co"># </span></span>
-<span id="cb38-6"><a href="one-way-anova-revisit.html#cb38-6"></a><span class="co"># Coefficients:</span></span>
-<span id="cb38-7"><a href="one-way-anova-revisit.html#cb38-7"></a><span class="co">#         (Intercept)  speciesHarbour Seal  speciesWeddell Seal  </span></span>
-<span id="cb38-8"><a href="one-way-anova-revisit.html#cb38-8"></a><span class="co">#               42.32                 6.69                 2.34</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="one-way-anova-revisit.html#cb39-1"></a>mod</span>
+<span id="cb39-2"><a href="one-way-anova-revisit.html#cb39-2"></a><span class="co"># </span></span>
+<span id="cb39-3"><a href="one-way-anova-revisit.html#cb39-3"></a><span class="co"># Call:</span></span>
+<span id="cb39-4"><a href="one-way-anova-revisit.html#cb39-4"></a><span class="co"># lm(formula = myoglobin ~ species, data = seal)</span></span>
+<span id="cb39-5"><a href="one-way-anova-revisit.html#cb39-5"></a><span class="co"># </span></span>
+<span id="cb39-6"><a href="one-way-anova-revisit.html#cb39-6"></a><span class="co"># Coefficients:</span></span>
+<span id="cb39-7"><a href="one-way-anova-revisit.html#cb39-7"></a><span class="co">#         (Intercept)  speciesHarbour Seal  speciesWeddell Seal  </span></span>
+<span id="cb39-8"><a href="one-way-anova-revisit.html#cb39-8"></a><span class="co">#               42.32                 6.69                 2.34</span></span></code></pre></div>
 The equation for the model is:
 <center>
 <span class="math inline">\(myoglobin\)</span> = 42.316 + 6.694<span class="math inline">\(speciesHarbour Seal\)</span> + 2.344<span class="math inline">\(speciesWeddell Seal\)</span>
@@ -1149,26 +1146,26 @@ The equation for the model is:
 <p>The first group of <code>seal</code> is <code>Bladdernose Seal</code> so <span class="math inline">\(\beta_{0}\)</span> is the mean of the Bladdernose seals. <span class="math inline">\(\beta_{1}\)</span> is the coefficient labelled <code>speciesHarbour Seal</code> and means when the variable <code>species</code> takes the value <code>Harbour Seal</code>, <span class="math inline">\(\beta_{1}\)</span> must be added to <span class="math inline">\(\beta_{0}\)</span>. The last parameter, <span class="math inline">\(\beta_{2}\)</span>, is the coefficient labelled <code>speciesWeddell Seal</code> and means when the variable <code>species</code> takes the value <code>Weddell Seal</code>, <span class="math inline">\(\beta_{2}\)</span> must be added to <span class="math inline">\(\beta_{0}\)</span>.</p>
 <p>The mean myoglobin in Bladdernose seals is 42.316 kg g<sup>-1</sup>, that in Harbour Seals is 42.316 + 6.694 = 49.01 kg g<sup>-1</sup> and in Weddell Seals is 42.316 + 2.344 = 44.66kg g<sup>-1</sup>.</p>
 <p>More information including statistical tests of the model and its parameters is obtained by using <code>summary()</code>:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="one-way-anova-revisit.html#cb39-1"></a><span class="kw">summary</span>(mod)</span>
-<span id="cb39-2"><a href="one-way-anova-revisit.html#cb39-2"></a><span class="co"># </span></span>
-<span id="cb39-3"><a href="one-way-anova-revisit.html#cb39-3"></a><span class="co"># Call:</span></span>
-<span id="cb39-4"><a href="one-way-anova-revisit.html#cb39-4"></a><span class="co"># lm(formula = myoglobin ~ species, data = seal)</span></span>
-<span id="cb39-5"><a href="one-way-anova-revisit.html#cb39-5"></a><span class="co"># </span></span>
-<span id="cb39-6"><a href="one-way-anova-revisit.html#cb39-6"></a><span class="co"># Residuals:</span></span>
-<span id="cb39-7"><a href="one-way-anova-revisit.html#cb39-7"></a><span class="co">#     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb39-8"><a href="one-way-anova-revisit.html#cb39-8"></a><span class="co"># -16.306  -5.578  -0.036   5.240  18.250 </span></span>
-<span id="cb39-9"><a href="one-way-anova-revisit.html#cb39-9"></a><span class="co"># </span></span>
-<span id="cb39-10"><a href="one-way-anova-revisit.html#cb39-10"></a><span class="co"># Coefficients:</span></span>
-<span id="cb39-11"><a href="one-way-anova-revisit.html#cb39-11"></a><span class="co">#                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb39-12"><a href="one-way-anova-revisit.html#cb39-12"></a><span class="co"># (Intercept)            42.32       1.47   28.82   &lt;2e-16 ***</span></span>
-<span id="cb39-13"><a href="one-way-anova-revisit.html#cb39-13"></a><span class="co"># speciesHarbour Seal     6.69       2.08    3.22   0.0018 ** </span></span>
-<span id="cb39-14"><a href="one-way-anova-revisit.html#cb39-14"></a><span class="co"># speciesWeddell Seal     2.34       2.08    1.13   0.2620    </span></span>
-<span id="cb39-15"><a href="one-way-anova-revisit.html#cb39-15"></a><span class="co"># ---</span></span>
-<span id="cb39-16"><a href="one-way-anova-revisit.html#cb39-16"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb39-17"><a href="one-way-anova-revisit.html#cb39-17"></a><span class="co"># </span></span>
-<span id="cb39-18"><a href="one-way-anova-revisit.html#cb39-18"></a><span class="co"># Residual standard error: 8.04 on 87 degrees of freedom</span></span>
-<span id="cb39-19"><a href="one-way-anova-revisit.html#cb39-19"></a><span class="co"># Multiple R-squared:  0.11,	Adjusted R-squared:  0.0891 </span></span>
-<span id="cb39-20"><a href="one-way-anova-revisit.html#cb39-20"></a><span class="co"># F-statistic: 5.35 on 2 and 87 DF,  p-value: 0.00643</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="one-way-anova-revisit.html#cb40-1"></a><span class="kw">summary</span>(mod)</span>
+<span id="cb40-2"><a href="one-way-anova-revisit.html#cb40-2"></a><span class="co"># </span></span>
+<span id="cb40-3"><a href="one-way-anova-revisit.html#cb40-3"></a><span class="co"># Call:</span></span>
+<span id="cb40-4"><a href="one-way-anova-revisit.html#cb40-4"></a><span class="co"># lm(formula = myoglobin ~ species, data = seal)</span></span>
+<span id="cb40-5"><a href="one-way-anova-revisit.html#cb40-5"></a><span class="co"># </span></span>
+<span id="cb40-6"><a href="one-way-anova-revisit.html#cb40-6"></a><span class="co"># Residuals:</span></span>
+<span id="cb40-7"><a href="one-way-anova-revisit.html#cb40-7"></a><span class="co">#     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb40-8"><a href="one-way-anova-revisit.html#cb40-8"></a><span class="co"># -16.306  -5.578  -0.036   5.240  18.250 </span></span>
+<span id="cb40-9"><a href="one-way-anova-revisit.html#cb40-9"></a><span class="co"># </span></span>
+<span id="cb40-10"><a href="one-way-anova-revisit.html#cb40-10"></a><span class="co"># Coefficients:</span></span>
+<span id="cb40-11"><a href="one-way-anova-revisit.html#cb40-11"></a><span class="co">#                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb40-12"><a href="one-way-anova-revisit.html#cb40-12"></a><span class="co"># (Intercept)            42.32       1.47   28.82   &lt;2e-16 ***</span></span>
+<span id="cb40-13"><a href="one-way-anova-revisit.html#cb40-13"></a><span class="co"># speciesHarbour Seal     6.69       2.08    3.22   0.0018 ** </span></span>
+<span id="cb40-14"><a href="one-way-anova-revisit.html#cb40-14"></a><span class="co"># speciesWeddell Seal     2.34       2.08    1.13   0.2620    </span></span>
+<span id="cb40-15"><a href="one-way-anova-revisit.html#cb40-15"></a><span class="co"># ---</span></span>
+<span id="cb40-16"><a href="one-way-anova-revisit.html#cb40-16"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb40-17"><a href="one-way-anova-revisit.html#cb40-17"></a><span class="co"># </span></span>
+<span id="cb40-18"><a href="one-way-anova-revisit.html#cb40-18"></a><span class="co"># Residual standard error: 8.04 on 87 degrees of freedom</span></span>
+<span id="cb40-19"><a href="one-way-anova-revisit.html#cb40-19"></a><span class="co"># Multiple R-squared:  0.11,	Adjusted R-squared:  0.0891 </span></span>
+<span id="cb40-20"><a href="one-way-anova-revisit.html#cb40-20"></a><span class="co"># F-statistic: 5.35 on 2 and 87 DF,  p-value: 0.00643</span></span></code></pre></div>
 <p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span>, <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the Bladdernose seals is 42.316 <span class="math inline">\(\pm\)</span> 1.468 kg g<sup>1</sup> and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between the Bladdernose and Harbour seals is 6.694 <span class="math inline">\(\pm\)</span> 2.077 and also differs significantly from zero (<span class="math inline">\(p\)</span> = 0.002). The estimated difference between the Bladdernose and Weddell seals, 2.344 <span class="math inline">\(\pm\)</span> 2.077 kg g<sup>1</sup>, does not differ significantly from zero (<span class="math inline">\(p\)</span> = 0.262). The fact that both parameters are positive tells us both have higher means than Bladdernose.</p>
 <p>The proportion of the variance in the omega which is explained by the model is 0.11 and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> = 0.006).</p>
 <p>This is the first time we have a model where the <em>p</em>-value for the model and the <em>p</em>-values for the <span class="math inline">\(\beta\)</span> parameters differ. This is because we are fitting two parameters after the intercept.</p>
@@ -1186,23 +1183,23 @@ Figure 6.3: The annotated model with the values from the Seal species example. T
 <p>We already have the predictions for all possible values of the explanatory variable because it is categorical.</p>
 <p>However, the code for using predict is included here, as it was in the last chapter, because it will make it easier to understand more complex examples later. We need to create a dataframe of values for which we want predictions and pass it as an argument to the predict() function.</p>
 <p>To create a dataframe with one column of Species values:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="one-way-anova-revisit.html#cb40-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">c</span>(<span class="st">&quot;Bladdernose Seal&quot;</span>,</span>
-<span id="cb40-2"><a href="one-way-anova-revisit.html#cb40-2"></a>                                      <span class="st">&quot;Harbour Seal&quot;</span>,</span>
-<span id="cb40-3"><a href="one-way-anova-revisit.html#cb40-3"></a>                                      <span class="st">&quot;Weddell Seal&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="one-way-anova-revisit.html#cb41-1"></a>predict_for &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">c</span>(<span class="st">&quot;Bladdernose Seal&quot;</span>,</span>
+<span id="cb41-2"><a href="one-way-anova-revisit.html#cb41-2"></a>                                      <span class="st">&quot;Harbour Seal&quot;</span>,</span>
+<span id="cb41-3"><a href="one-way-anova-revisit.html#cb41-3"></a>                                      <span class="st">&quot;Weddell Seal&quot;</span>))</span></code></pre></div>
 <div class="key">
 <p>Remember! The variable and its values have to exactly match those in the model.</p>
 </div>
 <p>The to get the predicted myoglobin content for the three species:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="one-way-anova-revisit.html#cb41-1"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="one-way-anova-revisit.html#cb42-1"></a>predict_for<span class="op">$</span>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> predict_for)</span></code></pre></div>
 </div>
 <div id="checking-assumptions" class="section level2">
 <h2><span class="header-section-number">6.7</span> Checking assumptions</h2>
 <p>The two assumptions of the model can be checked using diagnostic plots. The Q-Q plot is obtained with:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="one-way-anova-revisit.html#cb42-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="one-way-anova-revisit.html#cb43-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="one-way-anova-revisit_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 The residual seem to be normally distributed.</p>
 <p>Let’s look at the Residuals vs Fitted plot:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="one-way-anova-revisit.html#cb43-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="one-way-anova-revisit.html#cb44-1"></a><span class="kw">plot</span>(mod, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="one-way-anova-revisit_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
 <p>The residuals are equally spread around a horizontal line; the assumptions seem to be met.</p>
 </div>
@@ -1210,45 +1207,45 @@ The residual seem to be normally distributed.</p>
 <h2><span class="header-section-number">6.8</span> Post-hoc testing for <code>lm()</code></h2>
 <p>Instead of using the <code>TukeyHSD()</code> we will use the <code>glht()</code> (<strong>g</strong>eneralized <strong>l</strong>inear <strong>h</strong>ypothesis <strong>t</strong>est) function from the <code>multcomp</code> package <span class="citation">(Hothorn, Bretz, and Westfall <a href="#ref-multcomp" role="doc-biblioref">2008</a>)</span>. This is function that can be applied more widely than <code>TukeyHSD()</code>. It provides multiple comparisons for linear models, generalised linear models and linear mixed effects models. This tremendous flexibility comes at some cost and the arguments for the <code>glht()</code> function are relatively complex. However, you don’t need a full understanding to be able to use it.</p>
 <p><code>glht()</code> requires our <code>species</code> variable to be a factor so our first task is to transform that variable and rebuild our model:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="one-way-anova-revisit.html#cb44-1"></a>seal<span class="op">$</span>species &lt;-<span class="st"> </span><span class="kw">factor</span>(seal<span class="op">$</span>species)</span>
-<span id="cb44-2"><a href="one-way-anova-revisit.html#cb44-2"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> seal, myoglobin <span class="op">~</span><span class="st"> </span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="one-way-anova-revisit.html#cb45-1"></a>seal<span class="op">$</span>species &lt;-<span class="st"> </span><span class="kw">factor</span>(seal<span class="op">$</span>species)</span>
+<span id="cb45-2"><a href="one-way-anova-revisit.html#cb45-2"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">data =</span> seal, myoglobin <span class="op">~</span><span class="st"> </span>species)</span></code></pre></div>
 <p>Then load the package:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="one-way-anova-revisit.html#cb45-1"></a><span class="kw">library</span>(multcomp)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="one-way-anova-revisit.html#cb46-1"></a><span class="kw">library</span>(multcomp)</span></code></pre></div>
 <p>We have to specify our contrasts as a matrix with the <code>linfct</code> (linear functions) argument and there is a multiple comparisons function, <code>mcp()</code>, to help.</p>
 <p>This is the whole command:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="one-way-anova-revisit.html#cb46-1"></a>mod_mc &lt;-<span class="st"> </span><span class="kw">glht</span>(mod, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">species =</span> <span class="st">&quot;Tukey&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="one-way-anova-revisit.html#cb47-1"></a>mod_mc &lt;-<span class="st"> </span><span class="kw">glht</span>(mod, <span class="dt">linfct =</span> <span class="kw">mcp</span>(<span class="dt">species =</span> <span class="st">&quot;Tukey&quot;</span>))</span></code></pre></div>
 <p>You can read this as “do all of the pairwise comparisons between each species in the model <code>mod</code> using the Tukey test”.</p>
 <p>We view the results with <code>summary()</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="one-way-anova-revisit.html#cb47-1"></a><span class="kw">summary</span>(mod_mc)</span>
-<span id="cb47-2"><a href="one-way-anova-revisit.html#cb47-2"></a><span class="co"># </span></span>
-<span id="cb47-3"><a href="one-way-anova-revisit.html#cb47-3"></a><span class="co"># 	 Simultaneous Tests for General Linear Hypotheses</span></span>
-<span id="cb47-4"><a href="one-way-anova-revisit.html#cb47-4"></a><span class="co"># </span></span>
-<span id="cb47-5"><a href="one-way-anova-revisit.html#cb47-5"></a><span class="co"># Multiple Comparisons of Means: Tukey Contrasts</span></span>
-<span id="cb47-6"><a href="one-way-anova-revisit.html#cb47-6"></a><span class="co"># </span></span>
-<span id="cb47-7"><a href="one-way-anova-revisit.html#cb47-7"></a><span class="co"># </span></span>
-<span id="cb47-8"><a href="one-way-anova-revisit.html#cb47-8"></a><span class="co"># Fit: lm(formula = myoglobin ~ species, data = seal)</span></span>
-<span id="cb47-9"><a href="one-way-anova-revisit.html#cb47-9"></a><span class="co"># </span></span>
-<span id="cb47-10"><a href="one-way-anova-revisit.html#cb47-10"></a><span class="co"># Linear Hypotheses:</span></span>
-<span id="cb47-11"><a href="one-way-anova-revisit.html#cb47-11"></a><span class="co">#                                      Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span id="cb47-12"><a href="one-way-anova-revisit.html#cb47-12"></a><span class="co"># Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22    0.005 **</span></span>
-<span id="cb47-13"><a href="one-way-anova-revisit.html#cb47-13"></a><span class="co"># Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13    0.499   </span></span>
-<span id="cb47-14"><a href="one-way-anova-revisit.html#cb47-14"></a><span class="co"># Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09    0.097 . </span></span>
-<span id="cb47-15"><a href="one-way-anova-revisit.html#cb47-15"></a><span class="co"># ---</span></span>
-<span id="cb47-16"><a href="one-way-anova-revisit.html#cb47-16"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb47-17"><a href="one-way-anova-revisit.html#cb47-17"></a><span class="co"># (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="one-way-anova-revisit.html#cb48-1"></a><span class="kw">summary</span>(mod_mc)</span>
+<span id="cb48-2"><a href="one-way-anova-revisit.html#cb48-2"></a><span class="co"># </span></span>
+<span id="cb48-3"><a href="one-way-anova-revisit.html#cb48-3"></a><span class="co"># 	 Simultaneous Tests for General Linear Hypotheses</span></span>
+<span id="cb48-4"><a href="one-way-anova-revisit.html#cb48-4"></a><span class="co"># </span></span>
+<span id="cb48-5"><a href="one-way-anova-revisit.html#cb48-5"></a><span class="co"># Multiple Comparisons of Means: Tukey Contrasts</span></span>
+<span id="cb48-6"><a href="one-way-anova-revisit.html#cb48-6"></a><span class="co"># </span></span>
+<span id="cb48-7"><a href="one-way-anova-revisit.html#cb48-7"></a><span class="co"># </span></span>
+<span id="cb48-8"><a href="one-way-anova-revisit.html#cb48-8"></a><span class="co"># Fit: lm(formula = myoglobin ~ species, data = seal)</span></span>
+<span id="cb48-9"><a href="one-way-anova-revisit.html#cb48-9"></a><span class="co"># </span></span>
+<span id="cb48-10"><a href="one-way-anova-revisit.html#cb48-10"></a><span class="co"># Linear Hypotheses:</span></span>
+<span id="cb48-11"><a href="one-way-anova-revisit.html#cb48-11"></a><span class="co">#                                      Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span id="cb48-12"><a href="one-way-anova-revisit.html#cb48-12"></a><span class="co"># Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22    0.005 **</span></span>
+<span id="cb48-13"><a href="one-way-anova-revisit.html#cb48-13"></a><span class="co"># Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13    0.499   </span></span>
+<span id="cb48-14"><a href="one-way-anova-revisit.html#cb48-14"></a><span class="co"># Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09    0.097 . </span></span>
+<span id="cb48-15"><a href="one-way-anova-revisit.html#cb48-15"></a><span class="co"># ---</span></span>
+<span id="cb48-16"><a href="one-way-anova-revisit.html#cb48-16"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb48-17"><a href="one-way-anova-revisit.html#cb48-17"></a><span class="co"># (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 <p>The results are the same as for using <code>TukeyHSD()</code> as we have done the same tests using a different function.</p>
 <p>You can see what a contrasts matrix looks like by looking at the <code>linfct</code> variable of the <code>glht</code> object. You don’t need it now but in the future you may need to specify your own constrasts matrices so let’s have a look to make a step towards understanding:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="one-way-anova-revisit.html#cb48-1"></a>mod_mc<span class="op">$</span>linfct</span>
-<span id="cb48-2"><a href="one-way-anova-revisit.html#cb48-2"></a><span class="co">#                                 (Intercept) speciesHarbour Seal</span></span>
-<span id="cb48-3"><a href="one-way-anova-revisit.html#cb48-3"></a><span class="co"># Harbour Seal - Bladdernose Seal           0                   1</span></span>
-<span id="cb48-4"><a href="one-way-anova-revisit.html#cb48-4"></a><span class="co"># Weddell Seal - Bladdernose Seal           0                   0</span></span>
-<span id="cb48-5"><a href="one-way-anova-revisit.html#cb48-5"></a><span class="co"># Weddell Seal - Harbour Seal               0                  -1</span></span>
-<span id="cb48-6"><a href="one-way-anova-revisit.html#cb48-6"></a><span class="co">#                                 speciesWeddell Seal</span></span>
-<span id="cb48-7"><a href="one-way-anova-revisit.html#cb48-7"></a><span class="co"># Harbour Seal - Bladdernose Seal                   0</span></span>
-<span id="cb48-8"><a href="one-way-anova-revisit.html#cb48-8"></a><span class="co"># Weddell Seal - Bladdernose Seal                   1</span></span>
-<span id="cb48-9"><a href="one-way-anova-revisit.html#cb48-9"></a><span class="co"># Weddell Seal - Harbour Seal                       1</span></span>
-<span id="cb48-10"><a href="one-way-anova-revisit.html#cb48-10"></a><span class="co"># attr(,&quot;type&quot;)</span></span>
-<span id="cb48-11"><a href="one-way-anova-revisit.html#cb48-11"></a><span class="co"># [1] &quot;Tukey&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="one-way-anova-revisit.html#cb49-1"></a>mod_mc<span class="op">$</span>linfct</span>
+<span id="cb49-2"><a href="one-way-anova-revisit.html#cb49-2"></a><span class="co">#                                 (Intercept) speciesHarbour Seal</span></span>
+<span id="cb49-3"><a href="one-way-anova-revisit.html#cb49-3"></a><span class="co"># Harbour Seal - Bladdernose Seal           0                   1</span></span>
+<span id="cb49-4"><a href="one-way-anova-revisit.html#cb49-4"></a><span class="co"># Weddell Seal - Bladdernose Seal           0                   0</span></span>
+<span id="cb49-5"><a href="one-way-anova-revisit.html#cb49-5"></a><span class="co"># Weddell Seal - Harbour Seal               0                  -1</span></span>
+<span id="cb49-6"><a href="one-way-anova-revisit.html#cb49-6"></a><span class="co">#                                 speciesWeddell Seal</span></span>
+<span id="cb49-7"><a href="one-way-anova-revisit.html#cb49-7"></a><span class="co"># Harbour Seal - Bladdernose Seal                   0</span></span>
+<span id="cb49-8"><a href="one-way-anova-revisit.html#cb49-8"></a><span class="co"># Weddell Seal - Bladdernose Seal                   1</span></span>
+<span id="cb49-9"><a href="one-way-anova-revisit.html#cb49-9"></a><span class="co"># Weddell Seal - Harbour Seal                       1</span></span>
+<span id="cb49-10"><a href="one-way-anova-revisit.html#cb49-10"></a><span class="co"># attr(,&quot;type&quot;)</span></span>
+<span id="cb49-11"><a href="one-way-anova-revisit.html#cb49-11"></a><span class="co"># [1] &quot;Tukey&quot;</span></span></code></pre></div>
 <p>It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
 The numbers are how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.</p>
 <ul>
@@ -1263,42 +1260,42 @@ The numbers are how the model parameters are needed to make the contrast and the
 </div>
 <div id="creating-a-figure" class="section level2">
 <h2><span class="header-section-number">6.9</span> Creating a figure</h2>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="one-way-anova-revisit.html#cb49-1"></a><span class="co">#summarise the data </span></span>
-<span id="cb49-2"><a href="one-way-anova-revisit.html#cb49-2"></a></span>
-<span id="cb49-3"><a href="one-way-anova-revisit.html#cb49-3"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb49-4"><a href="one-way-anova-revisit.html#cb49-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">data =</span> seal, </span>
-<span id="cb49-5"><a href="one-way-anova-revisit.html#cb49-5"></a>              <span class="kw">aes</span>(<span class="dt">x =</span> species, <span class="dt">y =</span> myoglobin), </span>
-<span id="cb49-6"><a href="one-way-anova-revisit.html#cb49-6"></a>              <span class="dt">width =</span> <span class="fl">0.25</span>, <span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></span>
-<span id="cb49-7"><a href="one-way-anova-revisit.html#cb49-7"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> seal_summary,</span>
-<span id="cb49-8"><a href="one-way-anova-revisit.html#cb49-8"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> species,</span>
-<span id="cb49-9"><a href="one-way-anova-revisit.html#cb49-9"></a>                    <span class="dt">ymin =</span> mean,</span>
-<span id="cb49-10"><a href="one-way-anova-revisit.html#cb49-10"></a>                    <span class="dt">ymax =</span> mean),</span>
-<span id="cb49-11"><a href="one-way-anova-revisit.html#cb49-11"></a>                <span class="dt">width =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
-<span id="cb49-12"><a href="one-way-anova-revisit.html#cb49-12"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> seal_summary,</span>
-<span id="cb49-13"><a href="one-way-anova-revisit.html#cb49-13"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> species,</span>
-<span id="cb49-14"><a href="one-way-anova-revisit.html#cb49-14"></a>                    <span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se,</span>
-<span id="cb49-15"><a href="one-way-anova-revisit.html#cb49-15"></a>                    <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se),</span>
-<span id="cb49-16"><a href="one-way-anova-revisit.html#cb49-16"></a>                <span class="dt">width =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
-<span id="cb49-17"><a href="one-way-anova-revisit.html#cb49-17"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">71</span>, <span class="dt">xend =</span> <span class="dv">3</span>, <span class="dt">yend =</span> <span class="dv">71</span>),</span>
-<span id="cb49-18"><a href="one-way-anova-revisit.html#cb49-18"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb49-19"><a href="one-way-anova-revisit.html#cb49-19"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">71</span>, <span class="dt">xend =</span> <span class="dv">1</span>, <span class="dt">yend =</span> <span class="dv">69</span>),</span>
-<span id="cb49-20"><a href="one-way-anova-revisit.html#cb49-20"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb49-21"><a href="one-way-anova-revisit.html#cb49-21"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">71</span>, <span class="dt">xend =</span> <span class="dv">3</span>, <span class="dt">yend =</span> <span class="dv">69</span>),</span>
-<span id="cb49-22"><a href="one-way-anova-revisit.html#cb49-22"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb49-23"><a href="one-way-anova-revisit.html#cb49-23"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">73</span>,  <span class="dt">label =</span> <span class="st">&quot;**&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
-<span id="cb49-24"><a href="one-way-anova-revisit.html#cb49-24"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Species&quot;</span>) <span class="op">+</span></span>
-<span id="cb49-25"><a href="one-way-anova-revisit.html#cb49-25"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="kw">expression</span>(<span class="st">&quot;Myoglobin concentration g &quot;</span><span class="op">*</span>Kg<span class="op">^</span>{<span class="op">-</span><span class="dv">1</span>}),</span>
-<span id="cb49-26"><a href="one-way-anova-revisit.html#cb49-26"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb49-27"><a href="one-way-anova-revisit.html#cb49-27"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">75</span>)) <span class="op">+</span></span>
-<span id="cb49-28"><a href="one-way-anova-revisit.html#cb49-28"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="one-way-anova-revisit.html#cb50-1"></a><span class="co">#summarise the data </span></span>
+<span id="cb50-2"><a href="one-way-anova-revisit.html#cb50-2"></a></span>
+<span id="cb50-3"><a href="one-way-anova-revisit.html#cb50-3"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb50-4"><a href="one-way-anova-revisit.html#cb50-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">data =</span> seal, </span>
+<span id="cb50-5"><a href="one-way-anova-revisit.html#cb50-5"></a>              <span class="kw">aes</span>(<span class="dt">x =</span> species, <span class="dt">y =</span> myoglobin), </span>
+<span id="cb50-6"><a href="one-way-anova-revisit.html#cb50-6"></a>              <span class="dt">width =</span> <span class="fl">0.25</span>, <span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></span>
+<span id="cb50-7"><a href="one-way-anova-revisit.html#cb50-7"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> seal_summary,</span>
+<span id="cb50-8"><a href="one-way-anova-revisit.html#cb50-8"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> species,</span>
+<span id="cb50-9"><a href="one-way-anova-revisit.html#cb50-9"></a>                    <span class="dt">ymin =</span> mean,</span>
+<span id="cb50-10"><a href="one-way-anova-revisit.html#cb50-10"></a>                    <span class="dt">ymax =</span> mean),</span>
+<span id="cb50-11"><a href="one-way-anova-revisit.html#cb50-11"></a>                <span class="dt">width =</span> <span class="fl">.3</span>) <span class="op">+</span></span>
+<span id="cb50-12"><a href="one-way-anova-revisit.html#cb50-12"></a><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="dt">data =</span> seal_summary,</span>
+<span id="cb50-13"><a href="one-way-anova-revisit.html#cb50-13"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> species,</span>
+<span id="cb50-14"><a href="one-way-anova-revisit.html#cb50-14"></a>                    <span class="dt">ymin =</span> mean <span class="op">-</span><span class="st"> </span>se,</span>
+<span id="cb50-15"><a href="one-way-anova-revisit.html#cb50-15"></a>                    <span class="dt">ymax =</span> mean <span class="op">+</span><span class="st"> </span>se),</span>
+<span id="cb50-16"><a href="one-way-anova-revisit.html#cb50-16"></a>                <span class="dt">width =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb50-17"><a href="one-way-anova-revisit.html#cb50-17"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">71</span>, <span class="dt">xend =</span> <span class="dv">3</span>, <span class="dt">yend =</span> <span class="dv">71</span>),</span>
+<span id="cb50-18"><a href="one-way-anova-revisit.html#cb50-18"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb50-19"><a href="one-way-anova-revisit.html#cb50-19"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">71</span>, <span class="dt">xend =</span> <span class="dv">1</span>, <span class="dt">yend =</span> <span class="dv">69</span>),</span>
+<span id="cb50-20"><a href="one-way-anova-revisit.html#cb50-20"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb50-21"><a href="one-way-anova-revisit.html#cb50-21"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">71</span>, <span class="dt">xend =</span> <span class="dv">3</span>, <span class="dt">yend =</span> <span class="dv">69</span>),</span>
+<span id="cb50-22"><a href="one-way-anova-revisit.html#cb50-22"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb50-23"><a href="one-way-anova-revisit.html#cb50-23"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">2</span>, <span class="dt">y =</span> <span class="dv">73</span>,  <span class="dt">label =</span> <span class="st">&quot;**&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span></span>
+<span id="cb50-24"><a href="one-way-anova-revisit.html#cb50-24"></a><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Species&quot;</span>) <span class="op">+</span></span>
+<span id="cb50-25"><a href="one-way-anova-revisit.html#cb50-25"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="kw">expression</span>(<span class="st">&quot;Myoglobin concentration g &quot;</span><span class="op">*</span>Kg<span class="op">^</span>{<span class="op">-</span><span class="dv">1</span>}),</span>
+<span id="cb50-26"><a href="one-way-anova-revisit.html#cb50-26"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb50-27"><a href="one-way-anova-revisit.html#cb50-27"></a>                     <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">75</span>)) <span class="op">+</span></span>
+<span id="cb50-28"><a href="one-way-anova-revisit.html#cb50-28"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
 <p><img src="one-way-anova-revisit_files/figure-html/fig-one-anova-1.png" width="80%" style="display: block; margin: auto auto auto 0;" /></p>
 </div>
 <div id="reporting-the-results" class="section level2">
 <h2><span class="header-section-number">6.10</span> Reporting the results</h2>
 <p><em>to add: principle, sig, magnitude and diection of effects, test result, figure</em></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="one-way-anova-revisit.html#cb50-1"></a><span class="co"># res &lt;- summary(mod)</span></span>
-<span id="cb50-2"><a href="one-way-anova-revisit.html#cb50-2"></a><span class="co"># tval &lt;- res$coefficients[&quot;specieswild&quot;, &quot;t value&quot;]</span></span>
-<span id="cb50-3"><a href="one-way-anova-revisit.html#cb50-3"></a><span class="co"># df &lt;- res$df[2]</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="one-way-anova-revisit.html#cb51-1"></a><span class="co"># res &lt;- summary(mod)</span></span>
+<span id="cb51-2"><a href="one-way-anova-revisit.html#cb51-2"></a><span class="co"># tval &lt;- res$coefficients[&quot;specieswild&quot;, &quot;t value&quot;]</span></span>
+<span id="cb51-3"><a href="one-way-anova-revisit.html#cb51-3"></a><span class="co"># df &lt;- res$df[2]</span></span></code></pre></div>
 <p>There is a significant difference in myoglobin concentration between Seal species (ANOVA: <span class="math inline">\(F\)</span> = 5.352; <span class="math inline">\(d.f.\)</span> = 2, 87; <span class="math inline">\(p\)</span> = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 49.01 <span class="math inline">\(\pm\)</span> 1.507) ) and the Bladdernose Seal with the lowest (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 42.316 <span class="math inline">\(\pm\)</span> 1.464). See figure <a href="one-way-anova-revisit.html#fig:fig-one-anova-report">6.4</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:fig-one-anova-report"></span>

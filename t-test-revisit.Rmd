@@ -41,7 +41,7 @@ Violin plots are a useful way to show the distribution of data in each group but
 :::
 
 
-The modified plant have a lower mean omega 3 content than the wild type plants. The modification appears not to be successful. In fact, it may have significantly lowered the omega 3 content!
+The modified plants have a lower mean omega 3 content than the wild type plants. The modification appears not to be successful! In fact, it may have significantly lowered the omega 3 content!
 
 Let’s create a summary of the data that will be useful for plotting later:
 ```{r}
@@ -71,7 +71,7 @@ t.test(data = csativa, omega ~ plant, var.equal = TRUE)
 ```{r echo=FALSE}
 res <- t.test(data = csativa, omega ~ plant, var.equal = TRUE)
 modifm <- res$estimate["mean in group modif"]
-modifw <- res$estimate["mean in group wild"]
+wildm <- res$estimate["mean in group wild"]
 if (res$p.value < 0.001) {pval = "< 0.001"}
 if (res$p.value > 0.001) {pval = paste("=", round(res$p.value), 3)}
 tval <- res$statistic
@@ -83,7 +83,9 @@ The two groups means are given in the section labelled `sample estimates` and th
 
 The line under `95 percent confidence interval`gives the confidence limits on the difference between the two means.
 
-The sign on the $t$ value and the confidence limits, and the order in which the sample estimates are given is determined by R's alphabetical ordering of the groups. As "modif" comes before "wild" in the alphabet, "modif" is the first group and the test is the modified plant mean minus the wild type mean. This has no impact on our conclusions. If the wild type plants been labelled "control" so that "modif" would be the second group, our output would look like this:
+The sign on the $t$ value and the confidence limits, and the order in which the sample estimates are given is determined by R's alphabetical ordering of the groups. As "modif" comes before "wild" in the alphabet, "modif" is the first group. The statistical test is: the modified plant mean $-$ the wild type mean. 
+
+This ordering is arbitrary and has has no impact on our conclusions. If the wild type plants been labelled "control" so that "modif" would be the second group, our output would look like this:
 
 ```{r}
 # 	Two Sample t-test
@@ -98,6 +100,8 @@ The sign on the $t$ value and the confidence limits, and the order in which the 
 #             56.4118             49.4652
 # 
 ```
+
+Our conclusion would remain the same: `r modifm` is significantly lower than `r wildm`.
 
 :::key
 `t.test()` output: the estimates are the two group means and the *p*-value is for a test on the difference between them.
@@ -119,7 +123,7 @@ $X1_{i}$ is an indicator variable that takes the value of 0 or 1 and indicates w
 
 You can think of $X1_{i}$ as toggling on and off the $\beta_{1}$ effect:
 
-* If it has a value of 0 for a data point it means that $\beta_{1}$ will not impact the response which will be $\beta_{0}$.
+* If it has a value of 0 for a data point it means that $\beta_{1}$ will not impact the response. The response will be will be $\beta_{0}$.
 * If it has a value 1 then $\beta_{1}$ will change the response to $\beta_{0}$ + $\beta_{1}$
 
 $\beta_{1}$ is thus the *difference* between the group means.
@@ -287,13 +291,12 @@ ggplot() +
 ```
 
 ## Reporting the results
-*to add: principle, sig, magnitude and diection of effects, test result, figure*
 
 The genetic modification was unsuccessful with wild type plants ($\bar{x} \pm s.e.$: `r csativa_summary[2,"mean"]` $\pm$ `r csativa_summary[2,"se"]` units) have significantly higher omega 3 than modified plants(`r csativa_summary[1,"mean"]` $\pm$ `r csativa_summary[1,"se"]` units) ($t$ = `r tval`; $d.f.$ = `r df`; $p$ `r b1p`). See figure \@ref(fig:fig-ttest-report).
 
-(ref:ch1-ttest-report) Omega 3 content of wild type and a genetically modified *Cannabis sativa* 
+(ref:ch1-ttest-report) Mean Omega 3 content of wild type and genetically modified *Cannabis sativa*. Error bars are $\pm 1 S.E.$. *** signifcant difference at the $p < 0.001$ level.  
 
-```{r fig-ttest-report, ref.label = 'fig-ttest', echo = FALSE, fig.height=4, fig.width=4, fig.cap="(ref:fig-reg-report)", fig.align="left", out.width = "60%"} 
+```{r fig-ttest-report, ref.label = 'fig-ttest', echo = FALSE, fig.height=4, fig.width=4, fig.cap="(ref:ch1-ttest-report)", fig.align="left", out.width = "60%"} 
 ```
 
 
