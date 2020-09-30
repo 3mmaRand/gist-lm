@@ -1,6 +1,6 @@
 # One-way ANOVA revisited {#one-way-anova-revisit}
 
-In this chapter we again consider an example with one categorical explanatory variable. However, this time it has more than two groups (or levels). We first use the familiar `aov()` function to carry out a one-way ANOVA and then use our understanding to help us understand the output of `lm()`. We will also make predictions from the model and report on our results.
+In this chapter we again consider an example with one categorical explanatory variable. However, this time it has more than two groups (or levels). We first use the familiar `aov()` function to carry out a one-way ANOVA and then use that understanding to help us understand the output of `lm()`. We will also make predictions from the model and report on our results.
 
 
 ## Introduction to the example
@@ -12,7 +12,7 @@ In this chapter we again consider an example with one categorical explanatory va
 <p class="caption">(\#fig:weddell-fig)(ref:weddell-fig)</p>
 </div>
 
-The myoglobin concentration of skeletal muscle (in grams per kilogram of muscle) for three species of seal (see Figure \@ref(fig:weddell-fig)) is given  [seal.txt](data-raw/seal.text). 
+The myoglobin concentration of skeletal muscle (in grams per kilogram of muscle) for three species of seal (see Figure \@ref(fig:weddell-fig)) is given in  [seal.txt](data-raw/seal.txt). 
 
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; "><table class="table" style="margin-left: auto; margin-right: auto;">
  <thead>
@@ -529,7 +529,7 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+\beta_{3}X3_{i}
 \end{equation}
 
 
-A graphical representation of the terms in a linear model when the explanatory variable is categorical with two groups is given in Figure \@ref(fig:one-way-annotated). 
+A graphical representation of the terms in a linear model when the explanatory variable is categorical with four groups is given in Figure \@ref(fig:one-way-annotated). 
 
 (ref:one-way-annotated) A linear model when the explanatory variable is categorical with four groups annotated with the terms used in linear modelling. The measured <span style=" font-weight: bold;    color: #d264c0 !important;" >response values are in pink</span>, the <span style=" font-weight: bold;    color: #c0d264 !important;" >predictions are in green</span>, and the differences between these, known as the <span style=" font-weight: bold;    color: #64c0d2 !important;" >residuals, are in blue</span>. The estimated model parameters are indicated: $\beta_{0}$ is the mean of group A; $\beta_{1}$ is what has to be added to $\beta_{0}$ to get the mean of group B; $\beta_{2}$ is what has to be added to $\beta_{0}$ to get the mean of group C; and $\beta_{3}$ is what has to be added to $\beta_{0}$ to get the mean of group D. In this figure, $\beta_{1}$ and $\beta_{2}$ are positive and $\beta_{3}$ is negative.  Compare to Figure \@ref(fig:lm-annotated).
 
@@ -597,7 +597,7 @@ summary(mod)
 # Multiple R-squared:  0.11,	Adjusted R-squared:  0.0891 
 # F-statistic: 5.35 on 2 and 87 DF,  p-value: 0.00643
 ```
-The `Coefficients` table gives the estimated $\beta_{0}$, $\beta_{1}$ and $\beta_{2}$ again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the Bladdernose seals is 42.316 $\pm$ 1.468 kg g^1^ and this differs significantly from zero ($p$ < 0.001). The estimated difference between the Bladdernose and Harbour seals is 6.694 $\pm$ 2.077 and also differs significantly from zero ($p$ = 0.002). The estimated difference between the Bladdernose and Weddell seals, 2.344 $\pm$ 2.077 kg g^1^, does not differ significantly from zero ($p$ = 0.262). The fact that both parameters are positive tells us both have higher means than Bladdernose. 
+The `Coefficients` table gives the estimated $\beta_{0}$, $\beta_{1}$ and $\beta_{2}$ again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the Bladdernose seals is 42.316 $\pm$ 1.468 kg g^1^ and this differs significantly from zero ($p$ < 0.001). The estimated difference between the Bladdernose and Harbour seals is 6.694 $\pm$ 2.077 and also differs significantly from zero ($p$ = 0.002). The estimated difference between the Bladdernose and Weddell seals, 2.344 $\pm$ 2.077 kg g^1^, does not differ significantly from zero ($p$ = 0.262). The fact that both parameters are positive tells us both of the other two species have higher means than Bladdernose. 
 
 The proportion of the variance in the omega which is explained by the model is 0.11 and this is a significant proportion of that variance ($p$ = 0.006). 
 
@@ -711,9 +711,9 @@ summary(mod_mc)
 # 
 # Linear Hypotheses:
 #                                      Estimate Std. Error t value Pr(>|t|)   
-# Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22   0.0051 **
-# Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13   0.4990   
-# Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09   0.0969 . 
+# Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22    0.005 **
+# Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13    0.499   
+# Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09    0.097 . 
 # ---
 # Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 # (Adjusted p values reported -- single-step method)
@@ -721,7 +721,7 @@ summary(mod_mc)
 
 The results are the same as for using `TukeyHSD()` as we have done the same tests using a different function.
 
-You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don't need it now but in the future you may need to specify your own constrasts matrices so let's have a look to make a step towards understanding:
+You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don't need it now but in the future you may need to specify your own contrasts matrices so let's have a quick look to aid your journey towards understanding:
 
 
 ```r
@@ -745,6 +745,7 @@ The numbers are how the model parameters are needed to make the contrast and the
 * Weddell mean is $\beta_{0} + \beta_{2}$ 
 
 Therefore: 
+
 * Harbour Seal - Bladdernose Seal is: $\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}$ and there is a one in the `speciesHarbour Seal` column and zeros else where
 * Weddell Seal - Bladdernose Seal is: $\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}$ and there is a one in the `speciesWeddell Seal` column and zeros else where
 * Weddell Seal - Harbour Seal is: $\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}$ and there is a 1 in the the `speciesWeddell Seal` column and a -1 in the  `speciesHarbour Seal` column.
@@ -786,16 +787,11 @@ ggplot() +
 <img src="one-way-anova-revisit_files/figure-html/fig-one-anova-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 
 ## Reporting the results
-*to add: principle, sig, magnitude and diection of effects, test result, figure*
-
-```r
-# res <- summary(mod)
-# tval <- res$coefficients["specieswild", "t value"]
-# df <- res$df[2]
-```
 
 
-There is a significant difference in myoglobin concentration between Seal species (ANOVA: $F$ = 5.352; $d.f.$ = 2, 87; $p$ = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations ($\bar{x} \pm s.e.$: 49.01 $\pm$ 1.507) ) and the Bladdernose Seal with the lowest ($\bar{x} \pm s.e.$: 42.316 $\pm$ 1.464). See figure \@ref(fig:fig-one-anova-report).
+
+
+There is a significant difference in myoglobin concentration between Seal species (ANOVA: $F$ = 5.352; $d.f.$ = 2, 87; $p$ = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations ($\bar{x} \pm s.e.$: 49.01 $\pm$ 1.507) ) and the Bladdernose Seal(= 0.005) with the lowest ($\bar{x} \pm s.e.$: 42.316 $\pm$ 1.464). See figure \@ref(fig:fig-one-anova-report).
 
 (ref:fig-one-anova-report) Muscle myoglobin content of three seal species. 
 

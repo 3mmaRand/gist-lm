@@ -745,7 +745,7 @@ ggplot() +
 
 The genetic modification was unsuccessful with wild type plants ($\bar{x} \pm s.e.$: 56.412 $\pm$ 1.11 units) have significantly higher omega 3 than modified plants(49.465 $\pm$ 0.823 units) ($t$ = 5.029; $d.f.$ = 98; $p$ < 0.001). See figure \@ref(fig:fig-ttest-report).
 
-(ref:ch1-ttest-report) Mean Omega 3 content of wild type and genetically modified *Cannabis sativa*. Error bars are $\pm 1 S.E.$. *** signifcant difference at the $p < 0.001$ level.  
+(ref:ch1-ttest-report) Mean Omega 3 content of wild type and genetically modified *Cannabis sativa*. Error bars are $\pm 1 S.E.$. *** significant difference at the $p < 0.001$ level.  
 
 <div class="figure" style="text-align: left">
 <img src="t-test-revisit_files/figure-html/fig-ttest-report-1.png" alt="(ref:ch1-ttest-report)" width="60%" />

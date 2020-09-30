@@ -227,7 +227,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="one-way-anova-revisit" class="section level1">
 <h1><span class="header-section-number">Chapter 6</span> One-way ANOVA revisited</h1>
-<p>In this chapter we again consider an example with one categorical explanatory variable. However, this time it has more than two groups (or levels). We first use the familiar <code>aov()</code> function to carry out a one-way ANOVA and then use our understanding to help us understand the output of <code>lm()</code>. We will also make predictions from the model and report on our results.</p>
+<p>In this chapter we again consider an example with one categorical explanatory variable. However, this time it has more than two groups (or levels). We first use the familiar <code>aov()</code> function to carry out a one-way ANOVA and then use that understanding to help us understand the output of <code>lm()</code>. We will also make predictions from the model and report on our results.</p>
 <div id="introduction-to-the-example" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction to the example</h2>
 
@@ -237,7 +237,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 Figure 6.1: Baby Weddell Seals are very cute. By Photo © Samuel Blanc, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=3877642" class="uri">https://commons.wikimedia.org/w/index.php?curid=3877642</a>
 </p>
 </div>
-<p>The myoglobin concentration of skeletal muscle (in grams per kilogram of muscle) for three species of seal (see Figure <a href="one-way-anova-revisit.html#fig:weddell-fig">6.1</a>) is given <a href="data-raw/seal.text">seal.txt</a>.</p>
+<p>The myoglobin concentration of skeletal muscle (in grams per kilogram of muscle) for three species of seal (see Figure <a href="one-way-anova-revisit.html#fig:weddell-fig">6.1</a>) is given in <a href="data-raw/seal.txt">seal.txt</a>.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -1114,7 +1114,7 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}
 E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+\beta_{3}X3_{i}
 \tag{6.2}
 \end{equation}\]</span></p>
-<p>A graphical representation of the terms in a linear model when the explanatory variable is categorical with two groups is given in Figure <a href="one-way-anova-revisit.html#fig:one-way-annotated">6.2</a>.</p>
+<p>A graphical representation of the terms in a linear model when the explanatory variable is categorical with four groups is given in Figure <a href="one-way-anova-revisit.html#fig:one-way-annotated">6.2</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:one-way-annotated"></span>
 <img src="images/gen_one_way.svg" alt="A linear model when the explanatory variable is categorical with four groups annotated with the terms used in linear modelling. The measured response values are in pink, the predictions are in green, and the differences between these, known as the residuals, are in blue. The estimated model parameters are indicated: \(\beta_{0}\) is the mean of group A; \(\beta_{1}\) is what has to be added to \(\beta_{0}\) to get the mean of group B; \(\beta_{2}\) is what has to be added to \(\beta_{0}\) to get the mean of group C; and \(\beta_{3}\) is what has to be added to \(\beta_{0}\) to get the mean of group D. In this figure, \(\beta_{1}\) and \(\beta_{2}\) are positive and \(\beta_{3}\) is negative. Compare to Figure 2.2." width="80%" />
@@ -1166,7 +1166,7 @@ The equation for the model is:
 <span id="cb40-18"><a href="one-way-anova-revisit.html#cb40-18"></a><span class="co"># Residual standard error: 8.04 on 87 degrees of freedom</span></span>
 <span id="cb40-19"><a href="one-way-anova-revisit.html#cb40-19"></a><span class="co"># Multiple R-squared:  0.11,	Adjusted R-squared:  0.0891 </span></span>
 <span id="cb40-20"><a href="one-way-anova-revisit.html#cb40-20"></a><span class="co"># F-statistic: 5.35 on 2 and 87 DF,  p-value: 0.00643</span></span></code></pre></div>
-<p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span>, <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the Bladdernose seals is 42.316 <span class="math inline">\(\pm\)</span> 1.468 kg g<sup>1</sup> and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between the Bladdernose and Harbour seals is 6.694 <span class="math inline">\(\pm\)</span> 2.077 and also differs significantly from zero (<span class="math inline">\(p\)</span> = 0.002). The estimated difference between the Bladdernose and Weddell seals, 2.344 <span class="math inline">\(\pm\)</span> 2.077 kg g<sup>1</sup>, does not differ significantly from zero (<span class="math inline">\(p\)</span> = 0.262). The fact that both parameters are positive tells us both have higher means than Bladdernose.</p>
+<p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span>, <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the Bladdernose seals is 42.316 <span class="math inline">\(\pm\)</span> 1.468 kg g<sup>1</sup> and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between the Bladdernose and Harbour seals is 6.694 <span class="math inline">\(\pm\)</span> 2.077 and also differs significantly from zero (<span class="math inline">\(p\)</span> = 0.002). The estimated difference between the Bladdernose and Weddell seals, 2.344 <span class="math inline">\(\pm\)</span> 2.077 kg g<sup>1</sup>, does not differ significantly from zero (<span class="math inline">\(p\)</span> = 0.262). The fact that both parameters are positive tells us both of the other two species have higher means than Bladdernose.</p>
 <p>The proportion of the variance in the omega which is explained by the model is 0.11 and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> = 0.006).</p>
 <p>This is the first time we have a model where the <em>p</em>-value for the model and the <em>p</em>-values for the <span class="math inline">\(\beta\)</span> parameters differ. This is because we are fitting two parameters after the intercept.</p>
 <p>Replacing the terms shown in Figure <a href="one-way-anova-revisit.html#fig:one-way-annotated">6.2</a> with the values in this example gives us <a href="one-way-anova-revisit.html#fig:seal-annotated">6.3</a>.</p>
@@ -1227,14 +1227,14 @@ The residual seem to be normally distributed.</p>
 <span id="cb48-9"><a href="one-way-anova-revisit.html#cb48-9"></a><span class="co"># </span></span>
 <span id="cb48-10"><a href="one-way-anova-revisit.html#cb48-10"></a><span class="co"># Linear Hypotheses:</span></span>
 <span id="cb48-11"><a href="one-way-anova-revisit.html#cb48-11"></a><span class="co">#                                      Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span id="cb48-12"><a href="one-way-anova-revisit.html#cb48-12"></a><span class="co"># Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22   0.0051 **</span></span>
-<span id="cb48-13"><a href="one-way-anova-revisit.html#cb48-13"></a><span class="co"># Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13   0.4990   </span></span>
-<span id="cb48-14"><a href="one-way-anova-revisit.html#cb48-14"></a><span class="co"># Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09   0.0969 . </span></span>
+<span id="cb48-12"><a href="one-way-anova-revisit.html#cb48-12"></a><span class="co"># Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22    0.005 **</span></span>
+<span id="cb48-13"><a href="one-way-anova-revisit.html#cb48-13"></a><span class="co"># Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13    0.499   </span></span>
+<span id="cb48-14"><a href="one-way-anova-revisit.html#cb48-14"></a><span class="co"># Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09    0.097 . </span></span>
 <span id="cb48-15"><a href="one-way-anova-revisit.html#cb48-15"></a><span class="co"># ---</span></span>
 <span id="cb48-16"><a href="one-way-anova-revisit.html#cb48-16"></a><span class="co"># Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
 <span id="cb48-17"><a href="one-way-anova-revisit.html#cb48-17"></a><span class="co"># (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 <p>The results are the same as for using <code>TukeyHSD()</code> as we have done the same tests using a different function.</p>
-<p>You can see what a contrasts matrix looks like by looking at the <code>linfct</code> variable of the <code>glht</code> object. You don’t need it now but in the future you may need to specify your own constrasts matrices so let’s have a look to make a step towards understanding:</p>
+<p>You can see what a contrasts matrix looks like by looking at the <code>linfct</code> variable of the <code>glht</code> object. You don’t need it now but in the future you may need to specify your own contrasts matrices so let’s have a quick look to aid your journey towards understanding:</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="one-way-anova-revisit.html#cb49-1"></a>mod_mc<span class="op">$</span>linfct</span>
 <span id="cb49-2"><a href="one-way-anova-revisit.html#cb49-2"></a><span class="co">#                                 (Intercept) speciesHarbour Seal</span></span>
 <span id="cb49-3"><a href="one-way-anova-revisit.html#cb49-3"></a><span class="co"># Harbour Seal - Bladdernose Seal           0                   1</span></span>
@@ -1253,10 +1253,12 @@ The numbers are how the model parameters are needed to make the contrast and the
 <li>Harbour mean is <span class="math inline">\(\beta_{0} + \beta_{1}\)</span></li>
 <li>Weddell mean is <span class="math inline">\(\beta_{0} + \beta_{2}\)</span></li>
 </ul>
-<p>Therefore:
-* Harbour Seal - Bladdernose Seal is: <span class="math inline">\(\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}\)</span> and there is a one in the <code>speciesHarbour Seal</code> column and zeros else where
-* Weddell Seal - Bladdernose Seal is: <span class="math inline">\(\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}\)</span> and there is a one in the <code>speciesWeddell Seal</code> column and zeros else where
-* Weddell Seal - Harbour Seal is: <span class="math inline">\(\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}\)</span> and there is a 1 in the the <code>speciesWeddell Seal</code> column and a -1 in the <code>speciesHarbour Seal</code> column.</p>
+<p>Therefore:</p>
+<ul>
+<li>Harbour Seal - Bladdernose Seal is: <span class="math inline">\(\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}\)</span> and there is a one in the <code>speciesHarbour Seal</code> column and zeros else where</li>
+<li>Weddell Seal - Bladdernose Seal is: <span class="math inline">\(\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}\)</span> and there is a one in the <code>speciesWeddell Seal</code> column and zeros else where</li>
+<li>Weddell Seal - Harbour Seal is: <span class="math inline">\(\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}\)</span> and there is a 1 in the the <code>speciesWeddell Seal</code> column and a -1 in the <code>speciesHarbour Seal</code> column.</li>
+</ul>
 </div>
 <div id="creating-a-figure" class="section level2">
 <h2><span class="header-section-number">6.9</span> Creating a figure</h2>
@@ -1292,11 +1294,7 @@ The numbers are how the model parameters are needed to make the contrast and the
 </div>
 <div id="reporting-the-results" class="section level2">
 <h2><span class="header-section-number">6.10</span> Reporting the results</h2>
-<p><em>to add: principle, sig, magnitude and diection of effects, test result, figure</em></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="one-way-anova-revisit.html#cb51-1"></a><span class="co"># res &lt;- summary(mod)</span></span>
-<span id="cb51-2"><a href="one-way-anova-revisit.html#cb51-2"></a><span class="co"># tval &lt;- res$coefficients[&quot;specieswild&quot;, &quot;t value&quot;]</span></span>
-<span id="cb51-3"><a href="one-way-anova-revisit.html#cb51-3"></a><span class="co"># df &lt;- res$df[2]</span></span></code></pre></div>
-<p>There is a significant difference in myoglobin concentration between Seal species (ANOVA: <span class="math inline">\(F\)</span> = 5.352; <span class="math inline">\(d.f.\)</span> = 2, 87; <span class="math inline">\(p\)</span> = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 49.01 <span class="math inline">\(\pm\)</span> 1.507) ) and the Bladdernose Seal with the lowest (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 42.316 <span class="math inline">\(\pm\)</span> 1.464). See figure <a href="one-way-anova-revisit.html#fig:fig-one-anova-report">6.4</a>.</p>
+<p>There is a significant difference in myoglobin concentration between Seal species (ANOVA: <span class="math inline">\(F\)</span> = 5.352; <span class="math inline">\(d.f.\)</span> = 2, 87; <span class="math inline">\(p\)</span> = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 49.01 <span class="math inline">\(\pm\)</span> 1.507) ) and the Bladdernose Seal(= 0.005) with the lowest (<span class="math inline">\(\bar{x} \pm s.e.\)</span>: 42.316 <span class="math inline">\(\pm\)</span> 1.464). See figure <a href="one-way-anova-revisit.html#fig:fig-one-anova-report">6.4</a>.</p>
 
 <div class="figure" style="text-align: left"><span id="fig:fig-one-anova-report"></span>
 <img src="one-way-anova-revisit_files/figure-html/fig-one-anova-report-1.png" alt="Muscle myoglobin content of three seal species." width="60%" />
