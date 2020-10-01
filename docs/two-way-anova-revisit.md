@@ -1,6 +1,6 @@
 # Two-way ANOVA revisited {#two-way-anova-revisit}
 
-In this chapter we turn our attention to designs with two categorical explanatory variables. We first use the familiar `aov()` function to carry out a two-way ANOVA and then use our understanding to help us interpret the output of `lm()`. We will also make predictions from the model and report on our results.
+In this chapter we turn our attention to designs with two categorical explanatory variables. We will use the same approach that we used in the previous two chapters: first using the familiar `aov()` function to carry out a two-way ANOVA and then the `lm()` function. We will also make predictions from the model and report on our results.
 
 
 ## Introduction to the example
@@ -553,6 +553,7 @@ ggplot(data = periwinkle, aes(x = season, y = para, fill = species)) +
 
 <img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 Parasite load seems to be higher for both species in the summer and that effect looks bigger in *L.brevicula* - it has the lowest spring mean but the highest summer mean.
+
 Let’s create a summary of the data that will be useful for plotting later:
 
 ```r
@@ -699,11 +700,15 @@ A graphical representation of the terms in a linear model when there are two exp
 </div>
 
 :::key
-The intercept, $\beta_{0}$is the response when both explanatory variable is at their first group and all the other $\beta s$ are given relative to this. The interaction parameters give the effect of the combination in addition to the sum of their independent effects
+The intercept, $\beta_{0}$is the response when both explanatory variable is at their first group and all the other $\beta s$ are given relative to this. 
+:::
+
+:::key
+The interaction parameters give the effect of the combination in addition to the sum of their independent effects
 :::
 
 ## Applying and interpreting `lm()`
-The lm() function is applied to the periwinkle example as follows:
+The `lm()` function is applied to the periwinkle example as follows:
 
 ```r
 mod <- lm(data = periwinkle, para ~ season * species)
@@ -734,7 +739,8 @@ The first group of `season` is `Spring` and the first group of `species` is `Lit
 
 $\beta_{1}$ is the coefficient labelled `seasonSummer` and means when the variable `season` takes the value `Summer`, $\beta_{1}$ must be added to $\beta_{0}$ - the mean of *L.brevicula* in the summer is $\beta_{0}+\beta_{1}$ = 56.48 $+$ 16.44 $=$ 72.92.  
 The coefficient labelled `speciesLittorina littorea` is $\beta_{2}$. When species becomes `Littorina littorea`, $\beta_{1}$ must be added to $\beta_{0}$ thus the mean of *L.littorea* in spring is $\beta_{0}+\beta_{2}$ = 56.48 $+$ 7.28 $=$ 63.76.
-If both `season` becomes `Summer` and species becomes `Littorina littorea` you would expect the effect to be $\beta_{0}+\beta_{1}+\beta_{2}$. The coefficient labelled `seasonSummer:speciesLittorina littorea`, $\beta_{3}$ is the effect that is *additional* to that sum. An interaction is when combined effect of two variables is more than just adding the independent effects. The mean of *L.littorea* in summer is $\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}$ = 56.48 $+$ `rb1` $+$ 7.28 $+$ `rb3` $=$ 69.44.
+
+If both `season` becomes `Summer` and species becomes `Littorina littorea` you would expect the effect to be $\beta_{0}+\beta_{1}+\beta_{2}$. The coefficient labelled `seasonSummer:speciesLittorina littorea`, $\beta_{3}$ is the effect that is *additional* to that sum. An interaction occurs when the combined effect of two variables differs from just adding the independent effects. The mean of *L.littorea* in summer is $\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}$ = 56.48 $+$ 16.44 $+$ 7.28 $+$ -10.76 $=$ 69.44.
 
 
 More information including statistical tests of the model and its parameters is obtained by using `summary()`:
@@ -763,13 +769,17 @@ summary(mod)
 # Multiple R-squared:  0.252,	Adjusted R-squared:  0.229 
 # F-statistic: 10.8 on 3 and 96 DF,  p-value: 3.55e-06
 ```
-The `Coefficients` table gives the estimated $\beta_{0}$, $\beta_{1}$, $\beta_{2}$ and $\beta_{3}$ again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of *L.brevicula* in the spring is 56.48 $\pm$ 2.187 and this differs significantly from zero ($p$ < 0.001). The estimated difference between the *L.brevicula* in the spring and *L.brevicula* in the summer 16.44 $\pm$ 3.093 and also differs significantly from zero ($p$ < 0.001). The estimated difference between *L.brevicula* in the spring and *L.littorea* in the spring, 7.28 $\pm$ 3.093 differs significantly from zero ($p$ = 0.021). 
+The `Coefficients` table gives the estimated $\beta_{0}$, $\beta_{1}$, $\beta_{2}$ and $\beta_{3}$ again but along with their standard errors and tests of whether the estimates differ from zero. 
+
+The estimated mean of *L.brevicula* in the spring is 56.48 $\pm$ 2.187 and this differs significantly from zero ($p$ < 0.001). The estimated difference between *L.brevicula* in the spring and *L.brevicula* in the summer is 16.44 $\pm$ 3.093 and also differs significantly from zero ($p$ < 0.001). 
+
+The estimated difference between *L.brevicula* in the spring and *L.littorea* in the spring, 7.28 $\pm$ 3.093 differs significantly from zero ($p$ = 0.021). 
 
 The proportion of the variance in parasite load explained by the model is 0.252 and this is a significant proportion of that variance ($p$ < 0.001). 
 
-As we are fitting three parameters in addition to the intercept our *p*-value for the model and the *p*-values for the $\beta$ parameters differ. This was also true for [one-way ANOVA](#one-way-anova-revisit).
+We are fitting three parameters in addition to the intercept which means the *p*-value for the model, and the *p*-values for the $\beta$ parameters, differ. This was also true for [one-way ANOVA](#one-way-anova-revisit).
 
-Replacing the terms shown in Figure \@ref(fig:gen_two_way) with the values in this example gives us \@ref(fig:periwinkle-annotated).
+Replacing the terms shown in Figure \@ref(fig:two-way-annotated) with the values in this example gives us \@ref(fig:periwinkle-annotated).
 
 (ref:periwinkle-annotated) The annotated model with the values from the parasite load of preiwinkle example. The measured <span style=" font-weight: bold;    color: #d264c0 !important;" >response values are in pink</span> and the <span style=" font-weight: bold;    color: #c0d264 !important;" >predictions are in green</span>. The estimated model parameters are indicated: $\beta_{0}$, the mean of *L.brevicula* in the spring, is 56.48;  $\beta_{1}$ is 16.44 thus the mean of *L.brevicula* in the summer 56.48 + 16.44 = 72.92; $\beta_{2}$ is 7.28 thus the mean of *L.littorea* in the spring 56.48 + 7.28 = 72.92; and the *L.littorea* in the summer is $\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}$ = 56.48 $+$ 16.44 $+$ 7.28 $+$ -10.76 $=$ 69.44. Compare to Figure \@ref(fig:two-way-annotated).
 
@@ -787,7 +797,7 @@ We already have the predictions for all possible combinations of values of the e
 
 However, the code for using predict is included here, as it was in the previous two chapters chapter, because it will make it easier to understand more complex examples later. We need to create a dataframe of values for which we want predictions and pass it as an argument to the `predict()` function.
 
-To create a dataframe with one column of Species values:
+To create a dataframe with one column of `species` values and one column of `season` values:
 
 
 ```r
@@ -799,13 +809,75 @@ predict_for <- data.frame(species = rep(c("Littorina brevicula", "Littorina litt
 Remember! The variable and its values have to exactly match those in the model.
 :::
 
-The to get the predicted myoglobin content for the three species:
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; "><table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> species </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> season </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Littorina brevicula </td>
+   <td style="text-align:left;"> Spring </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Littorina brevicula </td>
+   <td style="text-align:left;"> Summer </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Littorina littorea </td>
+   <td style="text-align:left;"> Spring </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Littorina littorea </td>
+   <td style="text-align:left;"> Summer </td>
+  </tr>
+</tbody>
+</table></div>
+
+
+
+Then, to get the predicted parasite load for each of the four groups:
 
 
 ```r
 predict_for$pred <- predict(mod, newdata = predict_for)
 ```
 
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; "><table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> species </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> season </th>
+   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> pred </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Littorina brevicula </td>
+   <td style="text-align:left;"> Spring </td>
+   <td style="text-align:right;"> 56.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Littorina brevicula </td>
+   <td style="text-align:left;"> Summer </td>
+   <td style="text-align:right;"> 72.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Littorina littorea </td>
+   <td style="text-align:left;"> Spring </td>
+   <td style="text-align:right;"> 63.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Littorina littorea </td>
+   <td style="text-align:left;"> Summer </td>
+   <td style="text-align:right;"> 69.4 </td>
+  </tr>
+</tbody>
+</table></div>
 
 
 ## Checking assumptions
@@ -817,7 +889,7 @@ The two assumptions of the model can be checked using diagnostic plots. The Q-Q 
 plot(mod, which = 2)
 ```
 
-<img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
+<img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 The residual seem to be normally distributed.
 
 Let’s look at the Residuals vs Fitted plot:
@@ -827,7 +899,7 @@ Let’s look at the Residuals vs Fitted plot:
 plot(mod, which = 1)
 ```
 
-<img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
+<img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 
 The residuals are equally spread around a horizontal line; the assumptions seem to be met.
 
@@ -1462,7 +1534,8 @@ mod2 <- lm(data = periwinkle, para ~ seasxspp)
 ```
 
 We have done a one-way ANOVA to obtain our post-hoc comparisons. The parameters in this model will be like those in a one-way ANOVA with $\beta_{3}$ giving the amount you add to the intercept to get the fourth group mean. 
-Then load the package:
+
+Load the package containing `glht()`:
 
 ```r
 library(multcomp)
@@ -1520,7 +1593,7 @@ summary(mod_mc)
 
 The results are the same as for using `TukeyHSD()` as we have done the same tests using a different function.
 
-You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don't need it now but in the future you may need to specify your own constrasts matrices so let's have a look to make a step towards understanding:
+You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don’t need it now but in the future you may need to specify your own contrasts matrices so let’s have a quick look to aid your journey towards understanding:
 
 
 ```r
@@ -1557,7 +1630,7 @@ mod_mc$linfct
 # [1] "Tukey"
 ```
 It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
-The numbers are how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.
+The 0s, 1s and -1s indicate how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.
 
 * Spring.Littorina brevicula mean is $\beta_{0}$ 
 * Summer.Littorina brevicula mean is $\beta_{0} + \beta_{1}$ 
@@ -1565,12 +1638,13 @@ The numbers are how the model parameters are needed to make the contrast and the
 * Summer.Littorina littorea $\beta_{0} + \beta_{3}$ 
 
 Therefore: 
-* Summer.Littorina brevicula - Spring.Littorina brevicula is: $\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}$ and there is a one in the `seasxsppSummer.Littorina brevicula` column and zeros else where
-* Spring.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}$ and there is a one in the `seasxsppSpring.Littorina littorea` column and zeros else where
-* Summer.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{3} - \beta_{0} = \beta_{3}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and zeros else where
-* Spring.Littorina littorea - Summer.Littorina brevicula  is: $\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}$ and there is a 1 in the the `seasxsppSpring.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column
-* Summer.Littorina littorea - Summer.Littorina brevicula is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{1}) = \beta_{3} - \beta_{1}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column
-* Summer.Littorina littorea - Spring.Littorina littorea is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{2}) = \beta_{3} + \beta_{2}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and column and a -1 in the `seasxsppSpring.Littorina littorea` colum
+
+* Summer.Littorina brevicula - Spring.Littorina brevicula is: $\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}$ and there is a one in the `seasxsppSummer.Littorina brevicula` column and zeros else where  
+* Spring.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}$ and there is a one in the `seasxsppSpring.Littorina littorea` column and zeros else where  
+* Summer.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{3} - \beta_{0} = \beta_{3}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and zeros else where  
+* Spring.Littorina littorea - Summer.Littorina brevicula  is: $\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}$ and there is a 1 in the the `seasxsppSpring.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column  
+* Summer.Littorina littorea - Summer.Littorina brevicula is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{1}) = \beta_{3} - \beta_{1}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column  
+* Summer.Littorina littorea - Spring.Littorina littorea is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{2}) = \beta_{3} + \beta_{2}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and column and a -1 in the `seasxsppSpring.Littorina littorea` column
 
 
 
@@ -1660,11 +1734,11 @@ ggplot() +
 
 
 ## Reporting the results
-*to add: principle, sig, magnitude and direction of effects, test result, figure*
+*to add*
 
 See figure \@ref(fig:fig-two-anova-report).
 
-(ref:fig-two-anova-report) periwinkles blah blah
+(ref:fig-two-anova-report) The effect of season on the parasite load of two species of periwinkle. Error bars are $\pm 1 S.E.$. *** significant difference at the $p < 0.001$ level, ** at the $p < 0.01$ level and * the $p < 0.05$ level.
 
 <div class="figure" style="text-align: left">
 <img src="two-way-anova-revisit_files/figure-html/fig-two-anova-report-1.png" alt="(ref:fig-two-anova-report)" width="60%" />

@@ -362,7 +362,7 @@ if (res2$test$pvalues[1] > 0.001) {
 
 There is a significant difference in myoglobin concentration between Seal species (ANOVA: $F$ = `r fval`; $d.f.$ = `r df1`, `r df2`; $p$ `r pval`). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations ($\bar{x} \pm s.e.$: `r seal_summary[2,"mean"]` $\pm$ `r seal_summary[2,"se"]`) ) and the Bladdernose Seal(`r mcp`) with the lowest ($\bar{x} \pm s.e.$: `r seal_summary[1,"mean"]` $\pm$ `r seal_summary[1,"se"]`). See figure \@ref(fig:fig-one-anova-report).
 
-(ref:fig-one-anova-report) Muscle myoglobin content of three seal species. 
+(ref:fig-one-anova-report) Muscle myoglobin content of three seal species. Error bars are $\pm 1 S.E.$. ** significant difference at the $p < 0.001$ level.  
 
 ```{r fig-one-anova-report, ref.label = 'fig-one-anova', echo = FALSE, fig.height=4, fig.width=4, fig.cap="(ref:fig-one-anova-report)", out.width="60%"} 
 ```

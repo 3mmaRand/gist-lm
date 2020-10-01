@@ -793,7 +793,7 @@ ggplot() +
 
 There is a significant difference in myoglobin concentration between Seal species (ANOVA: $F$ = 5.352; $d.f.$ = 2, 87; $p$ = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations ($\bar{x} \pm s.e.$: 49.01 $\pm$ 1.507) ) and the Bladdernose Seal(= 0.005) with the lowest ($\bar{x} \pm s.e.$: 42.316 $\pm$ 1.464). See figure \@ref(fig:fig-one-anova-report).
 
-(ref:fig-one-anova-report) Muscle myoglobin content of three seal species. 
+(ref:fig-one-anova-report) Muscle myoglobin content of three seal species. Error bars are $\pm 1 S.E.$. ** significant difference at the $p < 0.001$ level.  
 
 <div class="figure" style="text-align: left">
 <img src="one-way-anova-revisit_files/figure-html/fig-one-anova-report-1.png" alt="(ref:fig-one-anova-report)" width="60%" />
