@@ -178,6 +178,7 @@ The following are two examples in which the residuals do not have homogeneous va
 
 
 ## Reporting
-The important information to include when reporting the results of fitting a linear model are the most notable predictions and the significance, direction and magnitude of effects. You need to ensure your reader will understand what the data are saying even if all the numbers and statistical information was removed. For example, that $A$ is much bigger than $B$ or variable $Y$ is influenced by variables $X1$ (a lot) and $X2$ (less so).
+The important information to include when reporting the results of fitting a linear model are the most notable predictions and the significance, direction and magnitude of effects. You need to ensure your reader will understand what the data are saying even if all the numbers and statistical information was removed. For example, that $A$ is much bigger than $B$ or variable $Y$ is influenced by variables $X1$ (a lot) and $X2$ (less so). 
+In relatively simple models, reporting group means or a slope, and statistical test information is enough. In more complex models with many variables is it common to give all the estimated model coefficients in a table.
 
 In addition, your figure should show both the data and the model. This is honest and allows your interpretation to be evaluated. 
