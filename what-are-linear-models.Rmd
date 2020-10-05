@@ -199,7 +199,6 @@ plot(mod3, which = 1)
 
 
 ## Reporting
-*to add*
-figure: data + model
-summarise but in a way that is 'honest'
-direction and magnitude of effects, significance, stats result.
+The important information to include when reporting the results of fitting a linear model are the most notable predictions and the significance, direction and magnitude of effects. You need to ensure your reader will understand what the data are saying even if all the numbers and statistical information was removed. For example, that $A$ is much bigger than $B$ or variable $Y$ is influenced by variables $X1$ (a lot) and $X2$ (less so).
+
+In addition, your figure should show both the data and the model. This is honest and allows your interpretation to be evaluated. 
