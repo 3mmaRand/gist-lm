@@ -12,6 +12,7 @@ favicon: images/favicon.ico
 cover-image: images/hex-s.png
 github-repo: 3mmaRand/singlm
 url: 'https://3mmarand.github.io/gist-lm/'
+always_allow_html: true
 ---
 
 # Preface {-#preface}
