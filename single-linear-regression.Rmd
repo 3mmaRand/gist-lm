@@ -19,7 +19,7 @@ Groups of ten stag beetles were treated with different concentrations of Juvenil
 ```{r echo =FALSE}
 stag <- read_table2("data-raw/stag.txt")
 stag %>% 
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
   scroll_box(height = "300px")
 ```

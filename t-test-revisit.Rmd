@@ -9,7 +9,7 @@ Some plant biotechnologists developed a genetically modified line of *Cannabis s
 ```{r echo =FALSE}
 csativa <- read_table2("data-raw/csativa.txt")
 csativa %>%
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling() %>%
   scroll_box(height = "300px")
 ```
@@ -54,7 +54,7 @@ csativa_summary <- csativa %>%
 ```
 
 ```{r echo=FALSE}
-knitr::kable(csativa_summary, digits = 2)
+knitr::kable(csativa_summary, digits = 2, booktabs = T)
 ```
 
 Our summary confirms what we see in the plot.

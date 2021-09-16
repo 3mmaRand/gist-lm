@@ -711,9 +711,9 @@ summary(mod_mc)
 # 
 # Linear Hypotheses:
 #                                      Estimate Std. Error t value Pr(>|t|)   
-# Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22    0.005 **
-# Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13    0.499   
-# Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09    0.097 . 
+# Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22   0.0051 **
+# Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13   0.4990   
+# Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09   0.0968 . 
 # ---
 # Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 # (Adjusted p values reported -- single-step method)

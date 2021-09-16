@@ -18,7 +18,7 @@ knitr::include_graphics("images/Littorina.jpg")
 ```{r echo =FALSE}
 periwinkle <- read_delim("data-raw/periwinkle.txt", delim = "\t")
 periwinkle %>% 
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
   scroll_box(height = "300px")
 ```
@@ -57,7 +57,7 @@ peri_summary <- periwinkle %>%
 ```
 
 ```{r echo=FALSE}
-knitr::kable(peri_summary, digits = 2)
+knitr::kable(peri_summary, digits = 2,booktabs = T)
 ```
 
 The summary confirms both species have a higher mean in the summer and that the difference between the species is reversed - *L.brevicula* $-$ *L.littorea* is `r peri_summary$mean[1]-peri_summary$mean[2]` in the spring but `r peri_summary$mean[3]-peri_summary$mean[4]` in summer.
@@ -292,7 +292,7 @@ Remember! The variable and its values have to exactly match those in the model.
 
 ```{r echo =FALSE}
 predict_for %>% 
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
   scroll_box(height = "300px")
 ```
@@ -308,7 +308,7 @@ predict_for$pred <- predict(mod, newdata = predict_for)
 
 ```{r echo =FALSE}
 predict_for %>% 
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
   scroll_box(height = "300px")
 ```
@@ -343,7 +343,7 @@ periwinkle$seasxspp <- interaction(periwinkle$season, periwinkle$species)
 
 ```{r echo =FALSE}
 periwinkle %>% 
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
   scroll_box(height = "300px")
 ```

@@ -16,7 +16,7 @@ The myoglobin concentration of skeletal muscle (in grams per kilogram of muscle)
 ```{r echo =FALSE}
 seal <- read_delim("data-raw/seal.txt", delim = " ")
 seal %>% 
-  knitr::kable() %>%
+  knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
   scroll_box(height = "300px")
 ```
@@ -55,7 +55,7 @@ seal_summary <- seal %>%
 ```
 
 ```{r echo=FALSE}
-knitr::kable(seal_summary, digits = 2)
+knitr::kable(seal_summary, digits = 2, booktabs = T)
 ```
 
 Our summary confirms that there are thirty individuals of each species and that highest mean is for Harbour Seals and the lowest is for Bladdernose Seals. The variance within each species is similar.

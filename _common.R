@@ -1,5 +1,10 @@
 # 
-options(digits = 3)
+options(digits = 3,
+        kableExtra.html.bsTable = T,
+        knitr.table.format = function() {
+          if (knitr::is_latex_output()) 
+            "latex" else "pipe"
+        })
 
 knitr::opts_chunk$set(
   comment = "#",
