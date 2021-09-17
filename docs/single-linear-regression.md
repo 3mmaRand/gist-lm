@@ -103,7 +103,6 @@ Import the data:
 
 ```r
 stag <- read_table2("data-raw/stag.txt")
-
 ```
 
 
@@ -212,9 +211,9 @@ stag$pred <- predict(mod)
 glimpse(stag)
 # Rows: 16
 # Columns: 3
-# $ jh   <dbl> 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140...
-# $ mand <dbl> 0.56, 0.35, 0.28, 1.22, 0.48, 0.86, 0.68, 0.77, 0.55, 1.18, 0....
-# $ pred <dbl> 0.419, 0.484, 0.549, 0.613, 0.678, 0.742, 0.807, 0.871, 0.936,...
+# $ jh   <dbl> 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 1~
+# $ mand <dbl> 0.56, 0.35, 0.28, 1.22, 0.48, 0.86, 0.68, 0.77, 0.55, 1.18, 0.71,~
+# $ pred <dbl> 0.419, 0.484, 0.549, 0.613, 0.678, 0.742, 0.807, 0.871, 0.936, 1.~
 ```
 This gives predictions for the actual Juvenile growth hormone concentration values used. If you want predictions for other values, you need to create a data frame of the Juvenile growth hormone values from which you want to predict. 
 The following creates a dataframe with one column of Juvenile growth hormone values from 0 to 150 in steps of 5:
@@ -224,7 +223,7 @@ predict_for <- data.frame(jh = seq(0, 150, 5))
 glimpse(predict_for)
 # Rows: 31
 # Columns: 1
-# $ jh <dbl> 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80...
+# $ jh <dbl> 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 8~
 ```
 
 Note that the column is named `jh` - the same as in the dataset and the model. Its variable type must also match.
@@ -240,8 +239,8 @@ predict_for$pred <- predict(mod, newdata = predict_for)
 glimpse(predict_for)
 # Rows: 31
 # Columns: 2
-# $ jh   <dbl> 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, ...
-# $ pred <dbl> 0.419, 0.452, 0.484, 0.516, 0.549, 0.581, 0.613, 0.645, 0.678,...
+# $ jh   <dbl> 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80,~
+# $ pred <dbl> 0.419, 0.452, 0.484, 0.516, 0.549, 0.581, 0.613, 0.645, 0.678, 0.~
 ```
 
 

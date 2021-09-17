@@ -1,7 +1,7 @@
 --- 
 title: "gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users"
 author: "Emma Rand"
-date: "August 2020"
+date: "September 2021"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [refs/book.bib, refs/packages.bib]

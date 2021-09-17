@@ -6,11 +6,11 @@ bookdown::pdf_book:
   keep_tex: yes
   always_allow_html: true
 bookdown::epub_book: default
-bookdown::gitbook:
+bookdown::bs4_book:
+  theme:
+    primary: "#637238"
   includes:
     in_header: assets/header.html
-  highlight: tango
-  css: assets/style.css
   config:
     edit:
       link: https://github.com/3mmaRand/gist-lm/edit/master/%s
