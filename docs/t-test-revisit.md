@@ -423,12 +423,12 @@ There are 2 variables.
 `omega`, a continuous variable, is the response.
 :::
 
-We again use the `read_table2()` function to import the data and visualise it with `ggplot()`
+We again use the `read_table()` function to import the data and visualise it with `ggplot()`
 
 
 
 ```r
-csativa  <-  read_table2("data-raw/csativa.txt")
+csativa  <-  read_table("data-raw/csativa.txt")
 ```
 
 
@@ -503,8 +503,8 @@ t.test(data = csativa, omega ~ plant, var.equal = TRUE)
 # 	Two Sample t-test
 # 
 # data:  omega by plant
-# t = -5, df = 98, p-value = 2e-06
-# alternative hypothesis: true difference in means is not equal to 0
+# t = -5, df = 98, p-value = 0.000002
+# alternative hypothesis: true difference in means between group modif and group wild is not equal to 0
 # 95 percent confidence interval:
 #  -9.69 -4.21
 # sample estimates:
@@ -622,15 +622,15 @@ summary(mod)
 # -15.872  -3.703  -0.964   4.460  16.918 
 # 
 # Coefficients:
-#             Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)   49.465      0.977   50.64  < 2e-16 ***
-# plantwild      6.947      1.381    5.03  2.2e-06 ***
+#             Estimate Std. Error t value             Pr(>|t|)    
+# (Intercept)   49.465      0.977   50.64 < 0.0000000000000002 ***
+# plantwild      6.947      1.381    5.03            0.0000022 ***
 # ---
 # Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 # 
 # Residual standard error: 6.91 on 98 degrees of freedom
 # Multiple R-squared:  0.205,	Adjusted R-squared:  0.197 
-# F-statistic: 25.3 on 1 and 98 DF,  p-value: 2.23e-06
+# F-statistic: 25.3 on 1 and 98 DF,  p-value: 0.00000223
 ```
 The `Coefficients` table gives the estimated $\beta_{0}$ and $\beta_{1}$ again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the modified plants is 49.465 $\pm$ 0.977 and this differs significantly from zero ($p$ < 0.001). The estimated difference between the modified and wild type plants is 6.947 $\pm$ 1.381 and also differs significantly from zero ($p$ < 0.001). The fact that this value is positive tells us that the wild type plants have a higher mean.
 

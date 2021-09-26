@@ -1,29 +1,24 @@
-bookdown::pdf_book:
-  includes:
-    in_header: preamble.tex
-  latex_engine: xelatex
-  citation_package: natbib
-  keep_tex: yes
-  always_allow_html: true
-bookdown::epub_book: default
 bookdown::bs4_book:
+  css: [assets/style.css]
   theme:
-    primary: "#637238"
+    primary: "#256c7a"
+  repo: https://github.com/3mmaRand/gist-lm
   includes:
-    in_header: assets/header.html
+    in_header: [ga_script.html]
+
+bookdown::gitbook:
+  includes:
+    in_header: [ga_script.html]
   config:
-    edit:
-      link: https://github.com/3mmaRand/gist-lm/edit/master/%s
-      text: "Make an edit suggestion"
     toc:
       collapse: section
       before: |
-        <li class="toc-logo"><a href="./"><img src="images/hex-s.png"></a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    download: ["pdf", "epub", "rmd"]
-    sharing:
-      github: yes
-      facebook: no
-      twitter: yes
-      all: no
+        <li><strong><a href="./">Get Introductory Statistical Tests as Linear models: A guide for R users</a></strong></li>
+    edit:
+      link: https://github.com/3mmaRand/gist-lm/edit/master/%s
+      text: "Edit"
+    sharing: no
+
+bookdown::pdf_book:
+  latex_engine: "xelatex"
+

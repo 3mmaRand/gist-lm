@@ -7,7 +7,7 @@ In this chapter we look at an example with one categorical explanatory variable 
 Some plant biotechnologists developed a genetically modified line of *Cannabis sativa* to increase its omega 3 fatty acids content. They grew 50 wild type and fifty modified plants to maturity, collect the seeds and measure the amount of omega 3 fatty acids (in arbitrary units). The data are in [csativa.txt](data-raw/csativa.txt). They want to know if the wild type and modified plants differ significantly in their omega 3 fatty acid content. 
 
 ```{r echo =FALSE}
-csativa <- read_table2("data-raw/csativa.txt")
+csativa <- read_table("data-raw/csativa.txt")
 csativa %>%
   knitr::kable(booktabs = T) %>%
   kable_styling() %>%
@@ -20,11 +20,11 @@ There are 2 variables.
 `omega`, a continuous variable, is the response.
 :::
 
-We again use the `read_table2()` function to import the data and visualise it with `ggplot()`
+We again use the `read_table()` function to import the data and visualise it with `ggplot()`
 
 
 ```{r eval=FALSE}
-csativa  <-  read_table2("data-raw/csativa.txt")
+csativa  <-  read_table("data-raw/csativa.txt")
 ```
 
 

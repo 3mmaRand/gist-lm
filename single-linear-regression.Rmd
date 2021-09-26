@@ -17,7 +17,7 @@ The concentration of Juvenile growth hormone in male stag beetles (*Lucanus cerv
 Groups of ten stag beetles were treated with different concentrations of Juvenile growth hormone (pg$\mu$l^-1^) and their average mandible size (mm) determined. The data are in [stag.txt](data-raw/stag.txt). Juvenile hormone is has been set by the experimenter and we would expect mandible size to be normally distributed. 
 
 ```{r echo =FALSE}
-stag <- read_table2("data-raw/stag.txt")
+stag <- read_table("data-raw/stag.txt")
 stag %>% 
   knitr::kable(booktabs = T) %>%
   kable_styling()  %>%
@@ -29,11 +29,11 @@ There are 2 variables: `jh`, the concentration of Juvenile growth hormone and `m
 :::
 
 
-We will import the data with the `read_table2()` function from the **`readr`** package and plot it with `ggplot()` from the **`ggplot2`** package. Both packages are part of the tidyverse.
+We will import the data with the `read_table()` function from the **`readr`** package and plot it with `ggplot()` from the **`ggplot2`** package. Both packages are part of the tidyverse.
 
 Import the data:
 ```{r eval=FALSE}
-stag <- read_table2("data-raw/stag.txt")
+stag <- read_table("data-raw/stag.txt")
 
 ```
 

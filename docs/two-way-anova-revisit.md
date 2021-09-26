@@ -628,11 +628,11 @@ The output of the `summary()` function gives us an ANOVA test:
 
 ```r
 summary(mod)
-#                Df Sum Sq Mean Sq F value Pr(>F)    
-# season          1   3058    3058   25.58  2e-06 ***
-# species         1     90      90    0.75  0.387    
-# season:species  1    724     724    6.05  0.016 *  
-# Residuals      96  11477     120                   
+#                Df Sum Sq Mean Sq F value   Pr(>F)    
+# season          1   3058    3058   25.58 0.000002 ***
+# species         1     90      90    0.75    0.387    
+# season:species  1    724     724    6.05    0.016 *  
+# Residuals      96  11477     120                     
 # ---
 # Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -687,6 +687,15 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+\beta_{3}X1_{i}X2_{i}
 
 The intercept, $\beta_{0}$ is the value of the response when both categorical explanatory variables are at their "lowest" level. $X1_{i}$ is a dummy explanatory variable which indicates the first explanatory variable changing to its second level. It toggles on and off the effects of $\beta_{1}$. $X2_{i}$ is a dummy explanatory variable which indicates the second explanatory variable changing to its second level and toggles on and off the effects of $\beta_{2}$. $\beta_{3}$ is the interaction effect. If $X1_{i}$ and $X2_{i}$ are both 1 $\beta_{3}$ is the extra effect of that combination above the sum of 
 $\beta_{1}+\beta_{2}$ 
+
+
+* Spring *L.brevicula* mean is $\beta_{0}$ 
+* Summer *L.brevicula* mean is $\beta_{0} + \beta_{1}$ 
+* Spring *L.littorea* $\beta_{0} + \beta_{2}$ 
+* Summer *L.littorea* $\beta_{0} + \beta_{3}$ 
+
+
+
 
 The number of parameters in a two-way ANOVA design is: the number of levels in one explanatory $\times$ the number of levels in the other explanatory. If each explanatory have three levels, there would be nine $\beta s$
 
@@ -757,17 +766,22 @@ summary(mod)
 # -20.76  -6.13  -1.10   8.12  28.08 
 # 
 # Coefficients:
-#                                        Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)                               56.48       2.19   25.83  < 2e-16 ***
-# seasonSummer                              16.44       3.09    5.32  6.9e-07 ***
-# speciesLittorina littorea                  7.28       3.09    2.35    0.021 *  
-# seasonSummer:speciesLittorina littorea   -10.76       4.37   -2.46    0.016 *  
+#                                        Estimate Std. Error t value
+# (Intercept)                               56.48       2.19   25.83
+# seasonSummer                              16.44       3.09    5.32
+# speciesLittorina littorea                  7.28       3.09    2.35
+# seasonSummer:speciesLittorina littorea   -10.76       4.37   -2.46
+#                                                    Pr(>|t|)    
+# (Intercept)                            < 0.0000000000000002 ***
+# seasonSummer                                     0.00000069 ***
+# speciesLittorina littorea                             0.021 *  
+# seasonSummer:speciesLittorina littorea                0.016 *  
 # ---
 # Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 # 
 # Residual standard error: 10.9 on 96 degrees of freedom
 # Multiple R-squared:  0.252,	Adjusted R-squared:  0.229 
-# F-statistic: 10.8 on 3 and 96 DF,  p-value: 3.55e-06
+# F-statistic: 10.8 on 3 and 96 DF,  p-value: 0.00000355
 ```
 The `Coefficients` table gives the estimated $\beta_{0}$, $\beta_{1}$, $\beta_{2}$ and $\beta_{3}$ again but along with their standard errors and tests of whether the estimates differ from zero. 
 
@@ -906,745 +920,30 @@ The residuals are equally spread around a horizontal line; the assumptions seem 
 
 ## Post-hoc testing for `lm()`
 
-Instead of using the `TukeyHSD()` we will again use the `glht()` function from the `multcomp` package [@multcomp]. 
 
-A relatively simple way to make all the pairwise comparisons is to create a new factor variable that indicates membership of one of the four groups. We can do that with the `interaction()` function:  
+`TukeyHSD()` requires output from the `aov()` so we will use the `lsmeans()` (**L**east-**S**quares **means**) function from the **`lsmeans`** package [@lsmeans] with `pairs()` from the **`multcompView`** package. These two functions can be applied to `lm()` and `glm()` outputs. 
 
-```r
-periwinkle$seasxspp <- interaction(periwinkle$season, periwinkle$species)
-```
-
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; "><table class="table" style="margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> para </th>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> season </th>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> species </th>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> seasxspp </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 58 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 51 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 54 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 39 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 65 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 67 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 60 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 54 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 47 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 66 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 51 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 43 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 62 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 55 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 58 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 43 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 69 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 71 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 64 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 58 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 51 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 70 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 55 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 47 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 54 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Spring.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 43 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 63 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 58 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 63 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 77 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 57 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 49 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 72 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 47 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 78 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 77 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 71 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 69 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 66 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 54 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 62 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 58 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 68 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 84 </td>
-   <td style="text-align:left;"> Spring </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Spring.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 70 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 68 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 67 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 88 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 64 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 69 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 70 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 56 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 53 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 56 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 81 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 88 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 67 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 73 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 74 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 68 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 89 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 74 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina brevicula </td>
-   <td style="text-align:left;"> Summer.Littorina brevicula </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 66 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 51 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 67 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 78 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 79 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 69 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 97 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 64 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 68 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 65 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 49 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 62 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 57 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 70 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 62 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 81 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 85 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 77 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 59 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 66 </td>
-   <td style="text-align:left;"> Summer </td>
-   <td style="text-align:left;"> Littorina littorea </td>
-   <td style="text-align:left;"> Summer.Littorina littorea </td>
-  </tr>
-</tbody>
-</table></div>
-
-We then rebuild the model using this one variable:
+Load the packages:
 
 ```r
-mod2 <- lm(data = periwinkle, para ~ seasxspp)
+library(lsmeans)
+library(multcompView)
 ```
 
-We have done a one-way ANOVA to obtain our post-hoc comparisons. The parameters in this model will be like those in a one-way ANOVA with $\beta_{3}$ giving the amount you add to the intercept to get the fourth group mean. 
-
-Load the package containing `glht()`:
+And run the post-hoc test:
 
 ```r
-library(multcomp)
+lsmeans(mod, ~ species) %>%
+  pairs()
+#  contrast                                 estimate   SE df t.ratio p.value
+#  Littorina brevicula - Littorina littorea     -1.9 2.19 96  -0.869  0.3870
+# 
+# Results are averaged over the levels of: season
 ```
-
-We have to specify our contrasts as a matrix with the `linfct` (linear functions) argument and there is a multiple comparisons function, `mcp()`, to help.
-
-This is the whole command:
-
-
-```r
-mod_mc <- glht(mod2, linfct = mcp(seasxspp = "Tukey"))
-```
-You can read this as "do all of the pairwise comparisons between each group in `seasxspp` in the model `mod` using the Tukey test".
-
-We view the results with `summary()`:
-
-
-```r
-summary(mod_mc)
-# 
-# 	 Simultaneous Tests for General Linear Hypotheses
-# 
-# Multiple Comparisons of Means: Tukey Contrasts
-# 
-# 
-# Fit: lm(formula = para ~ seasxspp, data = periwinkle)
-# 
-# Linear Hypotheses:
-#                                                              Estimate
-# Summer.Littorina brevicula - Spring.Littorina brevicula == 0    16.44
-# Spring.Littorina littorea - Spring.Littorina brevicula == 0      7.28
-# Summer.Littorina littorea - Spring.Littorina brevicula == 0     12.96
-# Spring.Littorina littorea - Summer.Littorina brevicula == 0     -9.16
-# Summer.Littorina littorea - Summer.Littorina brevicula == 0     -3.48
-# Summer.Littorina littorea - Spring.Littorina littorea == 0       5.68
-#                                                              Std. Error t value
-# Summer.Littorina brevicula - Spring.Littorina brevicula == 0       3.09    5.32
-# Spring.Littorina littorea - Spring.Littorina brevicula == 0        3.09    2.35
-# Summer.Littorina littorea - Spring.Littorina brevicula == 0        3.09    4.19
-# Spring.Littorina littorea - Summer.Littorina brevicula == 0        3.09   -2.96
-# Summer.Littorina littorea - Summer.Littorina brevicula == 0        3.09   -1.13
-# Summer.Littorina littorea - Spring.Littorina littorea == 0         3.09    1.84
-#                                                              Pr(>|t|)    
-# Summer.Littorina brevicula - Spring.Littorina brevicula == 0   <0.001 ***
-# Spring.Littorina littorea - Spring.Littorina brevicula == 0     0.093 .  
-# Summer.Littorina littorea - Spring.Littorina brevicula == 0    <0.001 ***
-# Spring.Littorina littorea - Summer.Littorina brevicula == 0     0.020 *  
-# Summer.Littorina littorea - Summer.Littorina brevicula == 0     0.675    
-# Summer.Littorina littorea - Spring.Littorina littorea == 0      0.263    
-# ---
-# Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# (Adjusted p values reported -- single-step method)
-```
+The correction for the multiple testing uses the Tukey method (just like `TukeyHSD()`).
 
 The results are the same as for using `TukeyHSD()` as we have done the same tests using a different function.
 
-You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don’t need it now but in the future you may need to specify your own contrasts matrices so let’s have a quick look to aid your journey towards understanding:
-
-
-```r
-mod_mc$linfct
-#                                                         (Intercept)
-# Summer.Littorina brevicula - Spring.Littorina brevicula           0
-# Spring.Littorina littorea - Spring.Littorina brevicula            0
-# Summer.Littorina littorea - Spring.Littorina brevicula            0
-# Spring.Littorina littorea - Summer.Littorina brevicula            0
-# Summer.Littorina littorea - Summer.Littorina brevicula            0
-# Summer.Littorina littorea - Spring.Littorina littorea             0
-#                                                         seasxsppSummer.Littorina brevicula
-# Summer.Littorina brevicula - Spring.Littorina brevicula                                  1
-# Spring.Littorina littorea - Spring.Littorina brevicula                                   0
-# Summer.Littorina littorea - Spring.Littorina brevicula                                   0
-# Spring.Littorina littorea - Summer.Littorina brevicula                                  -1
-# Summer.Littorina littorea - Summer.Littorina brevicula                                  -1
-# Summer.Littorina littorea - Spring.Littorina littorea                                    0
-#                                                         seasxsppSpring.Littorina littorea
-# Summer.Littorina brevicula - Spring.Littorina brevicula                                 0
-# Spring.Littorina littorea - Spring.Littorina brevicula                                  1
-# Summer.Littorina littorea - Spring.Littorina brevicula                                  0
-# Spring.Littorina littorea - Summer.Littorina brevicula                                  1
-# Summer.Littorina littorea - Summer.Littorina brevicula                                  0
-# Summer.Littorina littorea - Spring.Littorina littorea                                  -1
-#                                                         seasxsppSummer.Littorina littorea
-# Summer.Littorina brevicula - Spring.Littorina brevicula                                 0
-# Spring.Littorina littorea - Spring.Littorina brevicula                                  0
-# Summer.Littorina littorea - Spring.Littorina brevicula                                  1
-# Spring.Littorina littorea - Summer.Littorina brevicula                                  0
-# Summer.Littorina littorea - Summer.Littorina brevicula                                  1
-# Summer.Littorina littorea - Spring.Littorina littorea                                   1
-# attr(,"type")
-# [1] "Tukey"
-```
-It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
-The 0s, 1s and -1s indicate how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.
-
-* Spring.Littorina brevicula mean is $\beta_{0}$ 
-* Summer.Littorina brevicula mean is $\beta_{0} + \beta_{1}$ 
-* Spring.Littorina littorea $\beta_{0} + \beta_{2}$ 
-* Summer.Littorina littorea $\beta_{0} + \beta_{3}$ 
-
-Therefore: 
-
-* Summer.Littorina brevicula - Spring.Littorina brevicula is: $\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}$ and there is a one in the `seasxsppSummer.Littorina brevicula` column and zeros else where  
-* Spring.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}$ and there is a one in the `seasxsppSpring.Littorina littorea` column and zeros else where  
-* Summer.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{3} - \beta_{0} = \beta_{3}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and zeros else where  
-* Spring.Littorina littorea - Summer.Littorina brevicula  is: $\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}$ and there is a 1 in the the `seasxsppSpring.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column  
-* Summer.Littorina littorea - Summer.Littorina brevicula is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{1}) = \beta_{3} - \beta_{1}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column  
-* Summer.Littorina littorea - Spring.Littorina littorea is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{2}) = \beta_{3} + \beta_{2}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and column and a -1 in the `seasxsppSpring.Littorina littorea` column
 
 
 

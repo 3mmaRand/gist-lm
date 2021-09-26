@@ -15,14 +15,21 @@
 <meta property="og:description" content="2.1 Overview A general linear model describes a continuous response variable as a function of one or more explanatory variables. For a single explanatory variable, the model is: \[\begin{equation}...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 2 What are General Linear Models | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
+<meta name="twitter:site" content="@er13_r">
 <meta name="twitter:description" content="2.1 Overview A general linear model describes a continuous response variable as a function of one or more explanatory variables. For a single explanatory variable, the model is: \[\begin{equation}...">
 <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.1/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0.9000/transition.js"></script><script src="libs/bs3compat-0.3.0.9000/tabs.js"></script><script src="libs/bs3compat-0.3.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><script src="assets/book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-115082821-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -44,7 +51,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="index.html">Welcome!</a></li>
 <li class="book-part">INTRODUCTION</li>
 <li><a class="" href="revision.html"><span class="header-section-number">1</span> Revision of your Introductory class</a></li>
 <li><a class="active" href="what-are-linear-models.html"><span class="header-section-number">2</span> What are General Linear Models</a></li>
@@ -59,15 +66,15 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/3mmaRand/gist-lm">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="what-are-linear-models" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="what-are-linear-models" class="section level1" number="2">
 <h1>
 <span class="header-section-number">2</span> What are General Linear Models<a class="anchor" aria-label="anchor" href="#what-are-linear-models"><i class="fas fa-link"></i></a>
 </h1>
-<div id="overview" class="section level2">
+<div id="overview" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview"><i class="fas fa-link"></i></a>
 </h2>
@@ -92,10 +99,10 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}
 </ul>
 <p>The equation <a href="what-are-linear-models.html#eq:lm1">(2.1)</a> allows the response, <span class="math inline">\(y\)</span>, to be predicted for a given value of the explanatory variable.</p>
 <p>Let’s unpack what we mean by <span class="math inline">\(E(y_{i})\)</span>, the expected value of <span class="math inline">\(y\)</span>. If you measure the response for a particular value of <span class="math inline">\(x\)</span> very many times there would be some distribution of those responses. In the general linear model that distribution is assumed to be normal and its mean is the expected value for <span class="math inline">\(y\)</span>, <span class="math inline">\(E(y_{i})\)</span>.</p>
-<p>Another way of saying that is that in a general linear model, we “model the mean of the response”. That the measured response is drawn from normal distribution with a mean of <span class="math inline">\(E(y_{i})\)</span> is a defining feature of the general linear model.</p>
+<p>Another way of saying that is that in a general linear model, we “model the mean of the response.” That the measured response is drawn from normal distribution with a mean of <span class="math inline">\(E(y_{i})\)</span> is a defining feature of the general linear model.</p>
 <p>An additional assumption is that those normal distributions have the same variance for all the <span class="math inline">\(x\)</span> values.</p>
 </div>
-<div id="model-fitting" class="section level2">
+<div id="model-fitting" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Model fitting<a class="anchor" aria-label="anchor" href="#model-fitting"><i class="fas fa-link"></i></a>
 </h2>
@@ -135,7 +142,7 @@ Figure 2.2: A general linear model annotated with the terms used in modelling. T
 </p>
 </div>
 </div>
-<div id="more-than-one-explanatory-variable" class="section level2">
+<div id="more-than-one-explanatory-variable" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> More than one explanatory variable<a class="anchor" aria-label="anchor" href="#more-than-one-explanatory-variable"><i class="fas fa-link"></i></a>
 </h2>
@@ -150,11 +157,11 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+...+\beta_{p}Xp_{i}
 However, a key aim of statistical modelling is to understand the response and this is easier for simpler models. We want to find a balance between the complexity of the model and its explanatory power. The Adjusted <span class="math inline">\(R^2\)</span> is a way to achieve this. It reduces the <span class="math inline">\(R^2\)</span> for each coefficient added.</p>
 <p>A related reason for not including variables that explain only tiny amounts of variance is overfitting. Overfitting occurs when your model fits your data very well but does not generalise. We want models that would predict the response equally well for a new set of data.</p>
 </div>
-<div id="general-linear-models-in-r" class="section level2">
+<div id="general-linear-models-in-r" class="section level2" number="2.4">
 <h2>
 <span class="header-section-number">2.4</span> General linear models in R<a class="anchor" aria-label="anchor" href="#general-linear-models-in-r"><i class="fas fa-link"></i></a>
 </h2>
-<div id="building-and-viewing" class="section level3">
+<div id="building-and-viewing" class="section level3" number="2.4.1">
 <h3>
 <span class="header-section-number">2.4.1</span> Building and viewing<a class="anchor" aria-label="anchor" href="#building-and-viewing"><i class="fas fa-link"></i></a>
 </h3>
@@ -178,7 +185,7 @@ summary(mod)
 </div>
 <p>Elements of the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> object include the estimated coefficients, the predicted values and the residuals. These can be accessed with <code>mod$coeffients</code>, <code>mod$fitted.values</code> and <code>mod$residuals</code> respectively.</p>
 </div>
-<div id="getting-predictions" class="section level3">
+<div id="getting-predictions" class="section level3" number="2.4.2">
 <h3>
 <span class="header-section-number">2.4.2</span> Getting predictions<a class="anchor" aria-label="anchor" href="#getting-predictions"><i class="fas fa-link"></i></a>
 </h3>
@@ -188,13 +195,13 @@ predict_for &lt;- data.frame(<em>explanatory</em> = <em>values</em>)<br>
 predict_for$pred &lt;- predict(mod, newdata = predict_for)
 </code></p>
 </div>
-<div id="checking-assumptions" class="section level3">
+<div id="checking-assumptions" class="section level3" number="2.4.3">
 <h3>
 <span class="header-section-number">2.4.3</span> Checking assumptions<a class="anchor" aria-label="anchor" href="#checking-assumptions"><i class="fas fa-link"></i></a>
 </h3>
 <p>The assumptions of the model are checked using the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function which produces diagnostic plots to explore the distribution of the residuals. They are not proof of the assumptions being met but allow us to quickly determine if the assumptions are plausible, and if not, how the assumptions are violated and what data points contribute to the violation.</p>
 <p>The two plots which are most useful are the “Q-Q” plot (plot 2) and the “Residuals vs Fitted” plot (plot 1). These are given as values to the <code>which</code> argument of <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>.</p>
-<div id="the-q-q-plot" class="section level4">
+<div id="the-q-q-plot" class="section level4" number="2.4.3.1">
 <h4>
 <span class="header-section-number">2.4.3.1</span> The Q-Q plot<a class="anchor" aria-label="anchor" href="#the-q-q-plot"><i class="fas fa-link"></i></a>
 </h4>
@@ -208,7 +215,7 @@ predict_for$pred &lt;- predict(mod, newdata = predict_for)
 </div>
 <p>If you see patterns like these you should find an alternative to a general linear model such as a non-parametric test or a generalised linear model. Sometimes, applying a transformation to the response variable will result in better meeting the assumptions.</p>
 </div>
-<div id="the-residuals-vs-fitted-plot" class="section level4">
+<div id="the-residuals-vs-fitted-plot" class="section level4" number="2.4.3.2">
 <h4>
 <span class="header-section-number">2.4.3.2</span> The Residuals vs Fitted plot<a class="anchor" aria-label="anchor" href="#the-residuals-vs-fitted-plot"><i class="fas fa-link"></i></a>
 </h4>
@@ -222,7 +229,7 @@ predict_for$pred &lt;- predict(mod, newdata = predict_for)
 </div>
 </div>
 </div>
-<div id="reporting" class="section level2">
+<div id="reporting" class="section level2" number="2.5">
 <h2>
 <span class="header-section-number">2.5</span> Reporting<a class="anchor" aria-label="anchor" href="#reporting"><i class="fas fa-link"></i></a>
 </h2>
@@ -254,7 +261,8 @@ In relatively simple models, reporting group means or a slope, and statistical t
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/3mmaRand/gist-lm/blob/master/what-are-linear-models.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/3mmaRand/gist-lm/edit/master/what-are-linear-models.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

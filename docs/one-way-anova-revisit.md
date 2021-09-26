@@ -570,6 +570,12 @@ The equation for the model is:
 
 The first group of `seal` is `Bladdernose Seal` so $\beta_{0}$ is the mean of the Bladdernose seals. $\beta_{1}$ is the coefficient labelled `speciesHarbour Seal` and means when the  variable `species` takes the value `Harbour Seal`, $\beta_{1}$ must be added to $\beta_{0}$. The last parameter, $\beta_{2}$, is the coefficient labelled `speciesWeddell Seal` and means when the  variable `species` takes the value `Weddell Seal`, $\beta_{2}$ must be added to $\beta_{0}$.
 
+:::key
+* Bladdernose mean is $\beta_{0}$ 
+* Harbour mean is $\beta_{0} + \beta_{1}$ 
+* Weddell mean is $\beta_{0} + \beta_{2}$ 
+:::
+
 The mean myoglobin in Bladdernose seals is 42.316 kg g^-1^, that in Harbour Seals is 42.316 + 6.694 = 49.01 kg g^-1^ and in Weddell Seals is 42.316 + 2.344 = 44.66kg g^-1^.
 
 More information including statistical tests of the model and its parameters is obtained by using `summary()`:
@@ -586,10 +592,10 @@ summary(mod)
 # -16.306  -5.578  -0.036   5.240  18.250 
 # 
 # Coefficients:
-#                     Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)            42.32       1.47   28.82   <2e-16 ***
-# speciesHarbour Seal     6.69       2.08    3.22   0.0018 ** 
-# speciesWeddell Seal     2.34       2.08    1.13   0.2620    
+#                     Estimate Std. Error t value            Pr(>|t|)    
+# (Intercept)            42.32       1.47   28.82 <0.0000000000000002 ***
+# speciesHarbour Seal     6.69       2.08    3.22              0.0018 ** 
+# speciesWeddell Seal     2.34       2.08    1.13              0.2620    
 # ---
 # Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 # 
@@ -607,7 +613,7 @@ This is the first time we have a model where the *p*-value for the model and the
 
 Replacing the terms shown in Figure \@ref(fig:one-way-annotated) with the values in this example gives us \@ref(fig:seal-annotated).
 
-(ref:seal-annotated) The annotated model with the values from the Seal species example. The measured <span style=" font-weight: bold;    color: #d264c0 !important;" >response values are in pink</span>, the <span style=" font-weight: bold;    color: #c0d264 !important;" >predictions are in green</span>, and the <span style=" font-weight: bold;    color: #64c0d2 !important;" >residuals, are in blue</span>. One example of a measured value, a predicted value and the residual is shown for an individual harbour seal. The estimated model parameters are indicated: $\beta_{0}$, the mean of the Bladdernose Seals, is 42.316 kg g^1^;  $\beta_{1}$ is 6.694 thus the mean of Harbour Seals 42.316 + 6.694 = 49.01 kg g^-1; and $\beta_{2}$ is 2.344 thus the mean of Weddell Seals 42.316 + 2.344 = 49.01 kg g^-1^. Compare to Figure \@ref(fig:one-way-annotated).
+(ref:seal-annotated) The annotated model with the values from the Seal species example. The measured <span style=" font-weight: bold;    color: #d264c0 !important;" >response values are in pink</span>, the <span style=" font-weight: bold;    color: #c0d264 !important;" >predictions are in green</span>, and the <span style=" font-weight: bold;    color: #64c0d2 !important;" >residuals, are in blue</span>. One example of a measured value, a predicted value and the residual is shown for an individual harbour seal. The estimated model parameters are indicated: $\beta_{0}$, the mean of the Bladdernose Seals, is 42.316 kg g^1^;  $\beta_{1}$ is 6.694 thus the mean of Harbour Seals 42.316 + 6.694 = 49.01 kg g^-1; and $\beta_{2}$ is 2.344 thus the mean of Weddell Seals 42.316 + 2.344 = 49.01 kg g^-1. Compare to Figure \@ref(fig:one-way-annotated).
 
 <div class="figure" style="text-align: left">
 <img src="images/seal_lm_eg.svg" alt="(ref:seal-annotated)" width="80%" />
@@ -671,91 +677,35 @@ The residuals are equally spread around a horizontal line; the assumptions seem 
 
 ## Post-hoc testing for `lm()`
 
-Instead of using the `TukeyHSD()` we will use the `glht()` (**g**eneralized **l**inear **h**ypothesis **t**est) function from the `multcomp` package [@multcomp]. This is function that can be applied more widely than `TukeyHSD()`. It provides multiple comparisons for linear models, generalised linear models and linear mixed effects models. This tremendous flexibility comes at some cost and the arguments for the `glht()` function are relatively complex. However, you don't need a full understanding to be able to use it.
+`TukeyHSD()` requires output from the `aov()` so we will use the `lsmeans()` (**L**east-**S**quares **means**) function from the **`lsmeans`** package [@lsmeans] with `pairs()` from the **`multcompView`** package. These two functions can be applied to `lm()` and `glm()` outputs. 
 
-`glht()` requires our `species` variable to be a factor so our first task is to transform that variable and rebuild our model:
-
-```r
-seal$species <- factor(seal$species)
-mod <- lm(data = seal, myoglobin ~ species)
-```
-
-Then load the package:
+Load the packages:
 
 ```r
-library(multcomp)
+library(lsmeans)
+library(multcompView)
 ```
 
-We have to specify our contrasts as a matrix with the `linfct` (linear functions) argument and there is a multiple comparisons function, `mcp()`, to help.
-
-This is the whole command:
-
+And run the post-hoc test:
 
 ```r
-mod_mc <- glht(mod, linfct = mcp(species = "Tukey"))
+lsmeans(mod, ~ species) %>%
+  pairs()
+#  contrast                        estimate   SE df t.ratio p.value
+#  Bladdernose Seal - Harbour Seal    -6.69 2.08 87  -3.220  0.0050
+#  Bladdernose Seal - Weddell Seal    -2.34 2.08 87  -1.130  0.4990
+#  Harbour Seal - Weddell Seal         4.35 2.08 87   2.090  0.0970
+# 
+# P value adjustment: tukey method for comparing a family of 3 estimates
 ```
-You can read this as "do all of the pairwise comparisons between each species in the model `mod` using the Tukey test".
-
-We view the results with `summary()`:
-
-
-```r
-summary(mod_mc)
-# 
-# 	 Simultaneous Tests for General Linear Hypotheses
-# 
-# Multiple Comparisons of Means: Tukey Contrasts
-# 
-# 
-# Fit: lm(formula = myoglobin ~ species, data = seal)
-# 
-# Linear Hypotheses:
-#                                      Estimate Std. Error t value Pr(>|t|)   
-# Harbour Seal - Bladdernose Seal == 0     6.69       2.08    3.22    0.005 **
-# Weddell Seal - Bladdernose Seal == 0     2.34       2.08    1.13    0.499   
-# Weddell Seal - Harbour Seal == 0        -4.35       2.08   -2.09    0.097 . 
-# ---
-# Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-# (Adjusted p values reported -- single-step method)
-```
+The correction for the multiple testing uses the Tukey method (just like `TukeyHSD()`).
 
 The results are the same as for using `TukeyHSD()` as we have done the same tests using a different function.
-
-You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don't need it now but in the future you may need to specify your own contrasts matrices so let's have a quick look to aid your journey towards understanding:
-
-
-```r
-mod_mc$linfct
-#                                 (Intercept) speciesHarbour Seal
-# Harbour Seal - Bladdernose Seal           0                   1
-# Weddell Seal - Bladdernose Seal           0                   0
-# Weddell Seal - Harbour Seal               0                  -1
-#                                 speciesWeddell Seal
-# Harbour Seal - Bladdernose Seal                   0
-# Weddell Seal - Bladdernose Seal                   1
-# Weddell Seal - Harbour Seal                       1
-# attr(,"type")
-# [1] "Tukey"
-```
-It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
-The numbers are how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.
-
-* Bladdernose mean is $\beta_{0}$ 
-* Harbour mean is $\beta_{0} + \beta_{1}$ 
-* Weddell mean is $\beta_{0} + \beta_{2}$ 
-
-Therefore: 
-
-* Harbour Seal - Bladdernose Seal is: $\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}$ and there is a one in the `speciesHarbour Seal` column and zeros else where
-* Weddell Seal - Bladdernose Seal is: $\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}$ and there is a one in the `speciesWeddell Seal` column and zeros else where
-* Weddell Seal - Harbour Seal is: $\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}$ and there is a 1 in the the `speciesWeddell Seal` column and a -1 in the  `speciesHarbour Seal` column.
 
 ## Creating a figure
 
 
 ```r
-#summarise the data 
-
 ggplot() +
   geom_jitter(data = seal, 
               aes(x = species, y = myoglobin), 
@@ -791,7 +741,7 @@ ggplot() +
 
 
 
-There is a significant difference in myoglobin concentration between Seal species (ANOVA: $F$ = 5.352; $d.f.$ = 2, 87; $p$ = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations ($\bar{x} \pm s.e.$: 49.01 $\pm$ 1.507) ) and the Bladdernose Seal(= 0.005) with the lowest ($\bar{x} \pm s.e.$: 42.316 $\pm$ 1.464). See figure \@ref(fig:fig-one-anova-report).
+There is a significant difference in myoglobin concentration between Seal species (ANOVA: $F$ = 5.352; $d.f.$ = 2, 87; $p$ = 0.006). Post-hoc testing revealed that difference to be between the Harbour Seal with the highest myoglobin concentrations ($\bar{x} \pm s.e.$: 49.01 $\pm$ 1.507) ) and the Bladdernose Seal ($p$ = 0.005) with the lowest ($\bar{x} \pm s.e.$: 42.316 $\pm$ 1.464). See figure \@ref(fig:fig-one-anova-report).
 
 (ref:fig-one-anova-report) Muscle myoglobin content of three seal species. Error bars are $\pm 1 S.E.$. ** significant difference at the $p < 0.001$ level.  
 

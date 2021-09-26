@@ -26,6 +26,7 @@ library(kableExtra,
         verbose = FALSE, 
         quietly = TRUE, 
         warn.conflicts = FALSE)
+
 library(patchwork, 
         verbose = FALSE, 
         quietly = TRUE, 

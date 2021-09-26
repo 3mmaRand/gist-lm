@@ -25,10 +25,9 @@ fig:periwinkle-annotated
 fig:fig-two-anova-report
 who-is-this-book-for
 approach-of-this-book
-options-on-the-toolbar
+overview-of-the-chapter-contents
 conventions-used-in-the-book
 following-along-with-the-examples
-overview-of-the-chapter-contents
 revision
 what-are-linear-models
 overview

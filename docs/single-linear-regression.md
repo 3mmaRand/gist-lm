@@ -97,12 +97,12 @@ There are 2 variables: `jh`, the concentration of Juvenile growth hormone and `m
 :::
 
 
-We will import the data with the `read_table2()` function from the **`readr`** package and plot it with `ggplot()` from the **`ggplot2`** package. Both packages are part of the tidyverse.
+We will import the data with the `read_table()` function from the **`readr`** package and plot it with `ggplot()` from the **`ggplot2`** package. Both packages are part of the tidyverse.
 
 Import the data:
 
 ```r
-stag <- read_table2("data-raw/stag.txt")
+stag <- read_table("data-raw/stag.txt")
 ```
 
 

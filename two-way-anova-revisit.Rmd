@@ -155,6 +155,15 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+\beta_{3}X1_{i}X2_{i}
 The intercept, $\beta_{0}$ is the value of the response when both categorical explanatory variables are at their "lowest" level. $X1_{i}$ is a dummy explanatory variable which indicates the first explanatory variable changing to its second level. It toggles on and off the effects of $\beta_{1}$. $X2_{i}$ is a dummy explanatory variable which indicates the second explanatory variable changing to its second level and toggles on and off the effects of $\beta_{2}$. $\beta_{3}$ is the interaction effect. If $X1_{i}$ and $X2_{i}$ are both 1 $\beta_{3}$ is the extra effect of that combination above the sum of 
 $\beta_{1}+\beta_{2}$ 
 
+
+* Spring *L.brevicula* mean is $\beta_{0}$ 
+* Summer *L.brevicula* mean is $\beta_{0} + \beta_{1}$ 
+* Spring *L.littorea* $\beta_{0} + \beta_{2}$ 
+* Summer *L.littorea* $\beta_{0} + \beta_{3}$ 
+
+
+
+
 The number of parameters in a two-way ANOVA design is: the number of levels in one explanatory $\times$ the number of levels in the other explanatory. If each explanatory have three levels, there would be nine $\beta s$
 
 A graphical representation of the terms in a linear model when there are two explanatory variables each with two groups (or levels) is given in Figure \@ref(fig:two-way-annotated). 
@@ -334,70 +343,24 @@ The residuals are equally spread around a horizontal line; the assumptions seem 
 
 ## Post-hoc testing for `lm()`
 
-Instead of using the `TukeyHSD()` we will again use the `glht()` function from the `multcomp` package [@multcomp]. 
 
-A relatively simple way to make all the pairwise comparisons is to create a new factor variable that indicates membership of one of the four groups. We can do that with the `interaction()` function:  
+`TukeyHSD()` requires output from the `aov()` so we will use the `lsmeans()` (**L**east-**S**quares **means**) function from the **`lsmeans`** package [@lsmeans] with `pairs()` from the **`multcompView`** package. These two functions can be applied to `lm()` and `glm()` outputs. 
+
+Load the packages:
 ```{r}
-periwinkle$seasxspp <- interaction(periwinkle$season, periwinkle$species)
+library(lsmeans)
+library(multcompView)
 ```
 
-```{r echo =FALSE}
-periwinkle %>% 
-  knitr::kable(booktabs = T) %>%
-  kable_styling()  %>%
-  scroll_box(height = "300px")
-```
-
-We then rebuild the model using this one variable:
+And run the post-hoc test:
 ```{r}
-mod2 <- lm(data = periwinkle, para ~ seasxspp)
+lsmeans(mod, ~ species) %>%
+  pairs()
 ```
-
-We have done a one-way ANOVA to obtain our post-hoc comparisons. The parameters in this model will be like those in a one-way ANOVA with $\beta_{3}$ giving the amount you add to the intercept to get the fourth group mean. 
-
-Load the package containing `glht()`:
-```{r}
-library(multcomp)
-```
-
-We have to specify our contrasts as a matrix with the `linfct` (linear functions) argument and there is a multiple comparisons function, `mcp()`, to help.
-
-This is the whole command:
-
-```{r}
-mod_mc <- glht(mod2, linfct = mcp(seasxspp = "Tukey"))
-```
-You can read this as "do all of the pairwise comparisons between each group in `seasxspp` in the model `mod` using the Tukey test".
-
-We view the results with `summary()`:
-
-```{r}
-summary(mod_mc)
-```
+The correction for the multiple testing uses the Tukey method (just like `TukeyHSD()`).
 
 The results are the same as for using `TukeyHSD()` as we have done the same tests using a different function.
 
-You can see what a contrasts matrix looks like by looking at the `linfct` variable of the `glht` object. You don’t need it now but in the future you may need to specify your own contrasts matrices so let’s have a quick look to aid your journey towards understanding:
-
-```{r}
-mod_mc$linfct
-```
-It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
-The 0s, 1s and -1s indicate how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.
-
-* Spring.Littorina brevicula mean is $\beta_{0}$ 
-* Summer.Littorina brevicula mean is $\beta_{0} + \beta_{1}$ 
-* Spring.Littorina littorea $\beta_{0} + \beta_{2}$ 
-* Summer.Littorina littorea $\beta_{0} + \beta_{3}$ 
-
-Therefore: 
-
-* Summer.Littorina brevicula - Spring.Littorina brevicula is: $\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}$ and there is a one in the `seasxsppSummer.Littorina brevicula` column and zeros else where  
-* Spring.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}$ and there is a one in the `seasxsppSpring.Littorina littorea` column and zeros else where  
-* Summer.Littorina littorea - Spring.Littorina brevicula is: $\beta_{0} + \beta_{3} - \beta_{0} = \beta_{3}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and zeros else where  
-* Spring.Littorina littorea - Summer.Littorina brevicula  is: $\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}$ and there is a 1 in the the `seasxsppSpring.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column  
-* Summer.Littorina littorea - Summer.Littorina brevicula is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{1}) = \beta_{3} - \beta_{1}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and a -1 in the `seasxsppSummer.Littorina brevicula` column  
-* Summer.Littorina littorea - Spring.Littorina littorea is: $\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{2}) = \beta_{3} + \beta_{2}$ and there is a 1 in the the `seasxsppSummer.Littorina littorea` column and column and a -1 in the `seasxsppSpring.Littorina littorea` column
 
 
 

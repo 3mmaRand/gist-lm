@@ -15,14 +15,21 @@
 <meta property="og:description" content="In this chapter we turn our attention to designs with two categorical explanatory variables. We will use the same approach that we used in the previous two chapters: first using the familiar aov()...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 7 Two-way ANOVA revisited | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
+<meta name="twitter:site" content="@er13_r">
 <meta name="twitter:description" content="In this chapter we turn our attention to designs with two categorical explanatory variables. We will use the same approach that we used in the previous two chapters: first using the familiar aov()...">
 <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.1/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0.9000/transition.js"></script><script src="libs/bs3compat-0.3.0.9000/tabs.js"></script><script src="libs/bs3compat-0.3.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><script src="assets/book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-115082821-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -44,7 +51,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="index.html">Welcome!</a></li>
 <li class="book-part">INTRODUCTION</li>
 <li><a class="" href="revision.html"><span class="header-section-number">1</span> Revision of your Introductory class</a></li>
 <li><a class="" href="what-are-linear-models.html"><span class="header-section-number">2</span> What are General Linear Models</a></li>
@@ -59,16 +66,16 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/3mmaRand/gist-lm">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="two-way-anova-revisit" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="two-way-anova-revisit" class="section level1" number="7">
 <h1>
 <span class="header-section-number">7</span> Two-way ANOVA revisited<a class="anchor" aria-label="anchor" href="#two-way-anova-revisit"><i class="fas fa-link"></i></a>
 </h1>
 <p>In this chapter we turn our attention to designs with two categorical explanatory variables. We will use the same approach that we used in the previous two chapters: first using the familiar <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> function to carry out a two-way ANOVA and then the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. We will also make predictions from the model and report on our results.</p>
-<div id="introduction-to-the-example-3" class="section level2">
+<div id="introduction-to-the-example-3" class="section level2" number="7.1">
 <h2>
 <span class="header-section-number">7.1</span> Introduction to the example<a class="anchor" aria-label="anchor" href="#introduction-to-the-example-3"><i class="fas fa-link"></i></a>
 </h2>
@@ -1203,16 +1210,16 @@ Littorina littorea
 <code>para</code>, a continuous variable, is the response.</p>
 </div>
 <p>We can use the <code>read_delim()</code> function to import the data.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">periwinkle</span> <span class="op">&lt;-</span> <span class="fu">read_delim</span><span class="op">(</span><span class="st">"data-raw/periwinkle.txt"</span>, delim <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></code></pre></div>
 <p>When visualising this data with <code>ggplot()</code> we need to account for both explanatory variables. We can map one to the <em>x</em>-axis and the other to a different aesthetic. Using the <code>fill</code> aesthetic works well for violin plots.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">periwinkle</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">season</span>, y <span class="op">=</span> <span class="va">para</span>, fill <span class="op">=</span> <span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;">
 Parasite load seems to be higher for both species in the summer and that effect looks bigger in <em>L.brevicula</em> - it has the lowest spring mean but the highest summer mean.</p>
 <p>Let’s create a summary of the data that will be useful for plotting later:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">peri_summary</span> <span class="op">&lt;-</span> <span class="va">periwinkle</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">season</span>, <span class="va">species</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">para</span><span class="op">)</span>,
@@ -1325,32 +1332,32 @@ Littorina littorea
 </table></div>
 <p>The summary confirms both species have a higher mean in the summer and that the difference between the species is reversed - <em>L.brevicula</em> <span class="math inline">\(-\)</span> <em>L.littorea</em> is -7.28 in the spring but 3.48 in summer.</p>
 </div>
-<div id="aov-output-reminder-1" class="section level2">
+<div id="aov-output-reminder-1" class="section level2" number="7.2">
 <h2>
 <span class="header-section-number">7.2</span> <code>aov()</code> output reminder<a class="anchor" aria-label="anchor" href="#aov-output-reminder-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>The <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> function requires a model formula which includes both explanatory variables and the interaction between them in the familiar format: <code>para ~ season * season</code> . We also specify the data argument to indicate where the variables can be found:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">periwinkle</span>, <span class="va">para</span> <span class="op">~</span> <span class="va">season</span> <span class="op">*</span> <span class="va">species</span><span class="op">)</span></code></pre></div>
 <p>The output of the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function gives us an ANOVA test:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
-<span class="co">#                Df Sum Sq Mean Sq F value Pr(&gt;F)    </span>
-<span class="co"># season          1   3058    3058   25.58  2e-06 ***</span>
-<span class="co"># species         1     90      90    0.75  0.387    </span>
-<span class="co"># season:species  1    724     724    6.05  0.016 *  </span>
-<span class="co"># Residuals      96  11477     120                   </span>
+<span class="co">#                Df Sum Sq Mean Sq F value   Pr(&gt;F)    </span>
+<span class="co"># season          1   3058    3058   25.58 0.000002 ***</span>
+<span class="co"># species         1     90      90    0.75    0.387    </span>
+<span class="co"># season:species  1    724     724    6.05    0.016 *  </span>
+<span class="co"># Residuals      96  11477     120                     </span>
 <span class="co"># ---</span>
 <span class="co"># Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
 <p>There was a significantly greater number of parasites in the Summer than the Spring (ANOVA: <span class="math inline">\(F\)</span> = 25.58; <span class="math inline">\(d.f.\)</span> = 1, 96; <span class="math inline">\(p\)</span> &lt; 0.001). There was no difference between the species when averaged across the seasons but there was significant interaction (ANOVA: <span class="math inline">\(F\)</span> = 6.053; <span class="math inline">\(d.f.\)</span> = 1, 96; <span class="math inline">\(p\)</span> = 0.016) between season and species with higher numbers infecting <em>L.littorea</em> in the Spring whilst <em>L.brevicula</em> was more heavily parasitized in the Summer.</p>
 <p>We need a post-hoc test to discover which comparisons are significant.</p>
 </div>
-<div id="post-hoc-testing-for-aov-1" class="section level2">
+<div id="post-hoc-testing-for-aov-1" class="section level2" number="7.3">
 <h2>
 <span class="header-section-number">7.3</span> Post-hoc testing for <code>aov</code><a class="anchor" aria-label="anchor" href="#post-hoc-testing-for-aov-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Tukey Honest Significant Difference test is carried out with:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co">#   Tukey multiple comparisons of means</span>
 <span class="co">#     95% family-wise confidence level</span>
@@ -1375,7 +1382,7 @@ Littorina littorea
 <span class="co"># Summer:Littorina littorea-Spring:Littorina littorea    5.68  -2.406 13.77 0.263</span></code></pre></div>
 <p>The parasite load for <em>L.brevicula</em> increases significantly between spring and summer (<span class="math inline">\(p\)</span> &lt; 0.001) while that for <em>L.littorea</em> does not. Other significant comparisons are: the spring load of <em>L.brevicula</em> is lower than the summer load of <em>L.littorea</em> (<span class="math inline">\(p\)</span> &lt; 0.001); and summer load of <em>L.brevicula</em> is higher than the spring load of <em>L.littorea</em> (<span class="math inline">\(p\)</span> = 0.02).</p>
 </div>
-<div id="two-way-anovas-as-linear-models" class="section level2">
+<div id="two-way-anovas-as-linear-models" class="section level2" number="7.4">
 <h2>
 <span class="header-section-number">7.4</span> Two-way ANOVAs as linear models<a class="anchor" aria-label="anchor" href="#two-way-anovas-as-linear-models"><i class="fas fa-link"></i></a>
 </h2>
@@ -1386,13 +1393,23 @@ E(y_{i})=\beta_{0}+\beta_{1}X1_{i}+\beta_{2}X2_{i}+\beta_{3}X1_{i}X2_{i}
 \end{equation}\]</span></p>
 <p>The intercept, <span class="math inline">\(\beta_{0}\)</span> is the value of the response when both categorical explanatory variables are at their “lowest” level. <span class="math inline">\(X1_{i}\)</span> is a dummy explanatory variable which indicates the first explanatory variable changing to its second level. It toggles on and off the effects of <span class="math inline">\(\beta_{1}\)</span>. <span class="math inline">\(X2_{i}\)</span> is a dummy explanatory variable which indicates the second explanatory variable changing to its second level and toggles on and off the effects of <span class="math inline">\(\beta_{2}\)</span>. <span class="math inline">\(\beta_{3}\)</span> is the interaction effect. If <span class="math inline">\(X1_{i}\)</span> and <span class="math inline">\(X2_{i}\)</span> are both 1 <span class="math inline">\(\beta_{3}\)</span> is the extra effect of that combination above the sum of
 <span class="math inline">\(\beta_{1}+\beta_{2}\)</span></p>
+<ul>
+<li>Spring <em>L.brevicula</em> mean is <span class="math inline">\(\beta_{0}\)</span>
+</li>
+<li>Summer <em>L.brevicula</em> mean is <span class="math inline">\(\beta_{0} + \beta_{1}\)</span>
+</li>
+<li>Spring <em>L.littorea</em> <span class="math inline">\(\beta_{0} + \beta_{2}\)</span>
+</li>
+<li>Summer <em>L.littorea</em> <span class="math inline">\(\beta_{0} + \beta_{3}\)</span>
+</li>
+</ul>
 <p>The number of parameters in a two-way ANOVA design is: the number of levels in one explanatory <span class="math inline">\(\times\)</span> the number of levels in the other explanatory. If each explanatory have three levels, there would be nine <span class="math inline">\(\beta s\)</span></p>
 <p>A graphical representation of the terms in a linear model when there are two explanatory variables each with two groups (or levels) is given in Figure <a href="two-way-anova-revisit.html#fig:two-way-annotated">7.2</a>.</p>
 
 <div class="figure" style="text-align: left">
 <span style="display:block;" id="fig:two-way-annotated"></span>
-<img src="images/gen_two_way.svg" alt="A linear model with two explanatory variables each with two levels. ‘Variable 1’ has levels ‘A’ and ‘B’ and ‘Variable 2’ has levels ‘a’ and ‘b’. Thus there are 2 \(\times\) 2 = 4 groups: Aa, Ab, Ba and Bb. The measured response values are in pink and the predictions are in green. The residuals are not indicated. The estimated model parameters are indicated: \(\beta_{0}\) is the mean of group Aa; \(\beta_{1}\) is what has to be added to \(\beta_{0}\) to get the mean of group Ab; \(\beta_{2}\) is what has to be added to \(\beta_{0}\) to get the mean of group Ba; and \(\beta_{3}\) is what has to be added to \(\beta_{0}\) in addition to \(\beta_{1}\) and \(\beta_{2}\) to get the mean of group Bb. In this figure, all parameters are positive. Compare to Figure 2.2." width="80%"><p class="caption">
-Figure 7.2: A linear model with two explanatory variables each with two levels. ‘Variable 1’ has levels ‘A’ and ‘B’ and ‘Variable 2’ has levels ‘a’ and ‘b’. Thus there are 2 <span class="math inline">\(\times\)</span> 2 = 4 groups: Aa, Ab, Ba and Bb. The measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span> and the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span>. The residuals are not indicated. The estimated model parameters are indicated: <span class="math inline">\(\beta_{0}\)</span> is the mean of group Aa; <span class="math inline">\(\beta_{1}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> to get the mean of group Ab; <span class="math inline">\(\beta_{2}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> to get the mean of group Ba; and <span class="math inline">\(\beta_{3}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> in addition to <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> to get the mean of group Bb. In this figure, all parameters are positive. Compare to Figure <a href="what-are-linear-models.html#fig:lm-annotated">2.2</a>.
+<img src="images/gen_two_way.svg" alt="A linear model with two explanatory variables each with two levels. ‘Variable 1’ has levels ‘A’ and ‘B’ and ‘Variable 2’ has levels ‘a’ and ‘b.’ Thus there are 2 \(\times\) 2 = 4 groups: Aa, Ab, Ba and Bb. The measured response values are in pink and the predictions are in green. The residuals are not indicated. The estimated model parameters are indicated: \(\beta_{0}\) is the mean of group Aa; \(\beta_{1}\) is what has to be added to \(\beta_{0}\) to get the mean of group Ab; \(\beta_{2}\) is what has to be added to \(\beta_{0}\) to get the mean of group Ba; and \(\beta_{3}\) is what has to be added to \(\beta_{0}\) in addition to \(\beta_{1}\) and \(\beta_{2}\) to get the mean of group Bb. In this figure, all parameters are positive. Compare to Figure 2.2." width="80%"><p class="caption">
+Figure 7.2: A linear model with two explanatory variables each with two levels. ‘Variable 1’ has levels ‘A’ and ‘B’ and ‘Variable 2’ has levels ‘a’ and ‘b.’ Thus there are 2 <span class="math inline">\(\times\)</span> 2 = 4 groups: Aa, Ab, Ba and Bb. The measured <span style=" font-weight: bold;    color: #d264c0 !important;">response values are in pink</span> and the <span style=" font-weight: bold;    color: #c0d264 !important;">predictions are in green</span>. The residuals are not indicated. The estimated model parameters are indicated: <span class="math inline">\(\beta_{0}\)</span> is the mean of group Aa; <span class="math inline">\(\beta_{1}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> to get the mean of group Ab; <span class="math inline">\(\beta_{2}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> to get the mean of group Ba; and <span class="math inline">\(\beta_{3}\)</span> is what has to be added to <span class="math inline">\(\beta_{0}\)</span> in addition to <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> to get the mean of group Bb. In this figure, all parameters are positive. Compare to Figure <a href="what-are-linear-models.html#fig:lm-annotated">2.2</a>.
 </p>
 </div>
 <div class="key">
@@ -1402,15 +1419,15 @@ Figure 7.2: A linear model with two explanatory variables each with two levels. 
 <p>The interaction parameters give the effect of the combination in addition to the sum of their independent effects</p>
 </div>
 </div>
-<div id="applying-and-interpreting-lm-3" class="section level2">
+<div id="applying-and-interpreting-lm-3" class="section level2" number="7.5">
 <h2>
 <span class="header-section-number">7.5</span> Applying and interpreting <code>lm()</code><a class="anchor" aria-label="anchor" href="#applying-and-interpreting-lm-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>The <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function is applied to the periwinkle example as follows:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">periwinkle</span>, <span class="va">para</span> <span class="op">~</span> <span class="va">season</span> <span class="op">*</span> <span class="va">species</span><span class="op">)</span></code></pre></div>
 <p>Printing <code>mod</code> to the console gives us the estimated model parameters (coefficients):</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span>
 <span class="co"># </span>
 <span class="co"># Call:</span>
@@ -1430,7 +1447,7 @@ The equation for the model is:
 The coefficient labelled <code>speciesLittorina littorea</code> is <span class="math inline">\(\beta_{2}\)</span>. When species becomes <code>Littorina littorea</code>, <span class="math inline">\(\beta_{1}\)</span> must be added to <span class="math inline">\(\beta_{0}\)</span> thus the mean of <em>L.littorea</em> in spring is <span class="math inline">\(\beta_{0}+\beta_{2}\)</span> = 56.48 <span class="math inline">\(+\)</span> 7.28 <span class="math inline">\(=\)</span> 63.76.</p>
 <p>If both <code>season</code> becomes <code>Summer</code> and species becomes <code>Littorina littorea</code> you would expect the effect to be <span class="math inline">\(\beta_{0}+\beta_{1}+\beta_{2}\)</span>. The coefficient labelled <code>seasonSummer:speciesLittorina littorea</code>, <span class="math inline">\(\beta_{3}\)</span> is the effect that is <em>additional</em> to that sum. An interaction occurs when the combined effect of two variables differs from just adding the independent effects. The mean of <em>L.littorea</em> in summer is <span class="math inline">\(\beta_{0}+\beta_{1}+\beta_{2}+\beta_{3}\)</span> = 56.48 <span class="math inline">\(+\)</span> 16.44 <span class="math inline">\(+\)</span> 7.28 <span class="math inline">\(+\)</span> -10.76 <span class="math inline">\(=\)</span> 69.44.</p>
 <p>More information including statistical tests of the model and its parameters is obtained by using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>
 <span class="co"># </span>
 <span class="co"># Call:</span>
@@ -1441,17 +1458,22 @@ The coefficient labelled <code>speciesLittorina littorea</code> is <span class="
 <span class="co"># -20.76  -6.13  -1.10   8.12  28.08 </span>
 <span class="co"># </span>
 <span class="co"># Coefficients:</span>
-<span class="co">#                                        Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co"># (Intercept)                               56.48       2.19   25.83  &lt; 2e-16 ***</span>
-<span class="co"># seasonSummer                              16.44       3.09    5.32  6.9e-07 ***</span>
-<span class="co"># speciesLittorina littorea                  7.28       3.09    2.35    0.021 *  </span>
-<span class="co"># seasonSummer:speciesLittorina littorea   -10.76       4.37   -2.46    0.016 *  </span>
+<span class="co">#                                        Estimate Std. Error t value</span>
+<span class="co"># (Intercept)                               56.48       2.19   25.83</span>
+<span class="co"># seasonSummer                              16.44       3.09    5.32</span>
+<span class="co"># speciesLittorina littorea                  7.28       3.09    2.35</span>
+<span class="co"># seasonSummer:speciesLittorina littorea   -10.76       4.37   -2.46</span>
+<span class="co">#                                                    Pr(&gt;|t|)    </span>
+<span class="co"># (Intercept)                            &lt; 0.0000000000000002 ***</span>
+<span class="co"># seasonSummer                                     0.00000069 ***</span>
+<span class="co"># speciesLittorina littorea                             0.021 *  </span>
+<span class="co"># seasonSummer:speciesLittorina littorea                0.016 *  </span>
 <span class="co"># ---</span>
 <span class="co"># Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co"># </span>
 <span class="co"># Residual standard error: 10.9 on 96 degrees of freedom</span>
 <span class="co"># Multiple R-squared:  0.252,   Adjusted R-squared:  0.229 </span>
-<span class="co"># F-statistic: 10.8 on 3 and 96 DF,  p-value: 3.55e-06</span></code></pre></div>
+<span class="co"># F-statistic: 10.8 on 3 and 96 DF,  p-value: 0.00000355</span></code></pre></div>
 <p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span>, <span class="math inline">\(\beta_{1}\)</span>, <span class="math inline">\(\beta_{2}\)</span> and <span class="math inline">\(\beta_{3}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero.</p>
 <p>The estimated mean of <em>L.brevicula</em> in the spring is 56.48 <span class="math inline">\(\pm\)</span> 2.187 and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between <em>L.brevicula</em> in the spring and <em>L.brevicula</em> in the summer is 16.44 <span class="math inline">\(\pm\)</span> 3.093 and also differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001).</p>
 <p>The estimated difference between <em>L.brevicula</em> in the spring and <em>L.littorea</em> in the spring, 7.28 <span class="math inline">\(\pm\)</span> 3.093 differs significantly from zero (<span class="math inline">\(p\)</span> = 0.021).</p>
@@ -1466,14 +1488,14 @@ Figure 7.3: The annotated model with the values from the parasite load of preiwi
 </p>
 </div>
 </div>
-<div id="getting-predictions-from-the-model-3" class="section level2">
+<div id="getting-predictions-from-the-model-3" class="section level2" number="7.6">
 <h2>
 <span class="header-section-number">7.6</span> Getting predictions from the model<a class="anchor" aria-label="anchor" href="#getting-predictions-from-the-model-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>We already have the predictions for all possible combinations of values of the explanatory variables because both are categorical.</p>
 <p>However, the code for using predict is included here, as it was in the previous two chapters chapter, because it will make it easier to understand more complex examples later. We need to create a dataframe of values for which we want predictions and pass it as an argument to the <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> function.</p>
 <p>To create a dataframe with one column of <code>species</code> values and one column of <code>season</code> values:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predict_for</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Littorina brevicula"</span>, <span class="st">"Littorina littorea"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
                           season <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Spring"</span>, <span class="st">"Summer"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="key">
@@ -1526,7 +1548,7 @@ Summer
 </table></div>
 </div>
 <p>Then, to get the predicted parasite load for each of the four groups:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predict_for</span><span class="op">$</span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">predict_for</span><span class="op">)</span></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1590,1564 +1612,47 @@ Summer
 </table></div>
 </div>
 </div>
-<div id="checking-assumptions-4" class="section level2">
+<div id="checking-assumptions-4" class="section level2" number="7.7">
 <h2>
 <span class="header-section-number">7.7</span> Checking assumptions<a class="anchor" aria-label="anchor" href="#checking-assumptions-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>The two assumptions of the model can be checked using diagnostic plots. The Q-Q plot is obtained with:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mod</span>, which <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
 <img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto auto auto 0;">
 The residual seem to be normally distributed.</div>
 <p>Let’s look at the Residuals vs Fitted plot:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">mod</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="two-way-anova-revisit_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto auto auto 0;"></div>
 <p>The residuals are equally spread around a horizontal line; the assumptions seem to be met.</p>
 </div>
-<div id="post-hoc-testing-for-lm-1" class="section level2">
+<div id="post-hoc-testing-for-lm-1" class="section level2" number="7.8">
 <h2>
 <span class="header-section-number">7.8</span> Post-hoc testing for <code>lm()</code><a class="anchor" aria-label="anchor" href="#post-hoc-testing-for-lm-1"><i class="fas fa-link"></i></a>
 </h2>
-<p>Instead of using the <code><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD()</a></code> we will again use the <code><a href="https://rdrr.io/pkg/multcomp/man/glht.html">glht()</a></code> function from the <code>multcomp</code> package <span class="citation">(Hothorn, Bretz, and Westfall <a href="references.html#ref-multcomp" role="doc-biblioref">2008</a>)</span>.</p>
-<p>A relatively simple way to make all the pairwise comparisons is to create a new factor variable that indicates membership of one of the four groups. We can do that with the <code><a href="https://rdrr.io/r/base/interaction.html">interaction()</a></code> function:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">periwinkle</span><span class="op">$</span><span class="va">seasxspp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">periwinkle</span><span class="op">$</span><span class="va">season</span>, <span class="va">periwinkle</span><span class="op">$</span><span class="va">species</span><span class="op">)</span></code></pre></div>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
-<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
-<thead><tr>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-para
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-season
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-species
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-seasxspp
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-58
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-54
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-39
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-65
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-60
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-54
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-62
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-55
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-58
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-69
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-71
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-64
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-58
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-55
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-54
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Spring.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-43
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-63
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-58
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-61
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-63
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-77
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-57
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-49
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-72
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-47
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-78
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-77
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-71
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-69
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-76
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-54
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-62
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-58
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-76
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-68
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-84
-</td>
-<td style="text-align:left;">
-Spring
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Spring.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-61
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-68
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-88
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-64
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-69
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-56
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-80
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-80
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-53
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-56
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-101
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-81
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-88
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-73
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-74
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-68
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-89
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-74
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-76
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina brevicula
-</td>
-<td style="text-align:left;">
-Summer.Littorina brevicula
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-61
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-78
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-79
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-69
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-76
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-86
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-97
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-64
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-68
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-65
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-49
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-62
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-57
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-70
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-62
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-80
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-81
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-85
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-77
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-61
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-59
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-66
-</td>
-<td style="text-align:left;">
-Summer
-</td>
-<td style="text-align:left;">
-Littorina littorea
-</td>
-<td style="text-align:left;">
-Summer.Littorina littorea
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<p>We then rebuild the model using this one variable:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">periwinkle</span>, <span class="va">para</span> <span class="op">~</span> <span class="va">seasxspp</span><span class="op">)</span></code></pre></div>
-<p>We have done a one-way ANOVA to obtain our post-hoc comparisons. The parameters in this model will be like those in a one-way ANOVA with <span class="math inline">\(\beta_{3}\)</span> giving the amount you add to the intercept to get the fourth group mean.</p>
-<p>Load the package containing <code><a href="https://rdrr.io/pkg/multcomp/man/glht.html">glht()</a></code>:</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://multcomp.R-forge.R-project.org">multcomp</a></span><span class="op">)</span></code></pre></div>
-<p>We have to specify our contrasts as a matrix with the <code>linfct</code> (linear functions) argument and there is a multiple comparisons function, <code><a href="https://rdrr.io/pkg/multcomp/man/glht.html">mcp()</a></code>, to help.</p>
-<p>This is the whole command:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html">glht</a></span><span class="op">(</span><span class="va">mod2</span>, linfct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html">mcp</a></span><span class="op">(</span>seasxspp <span class="op">=</span> <span class="st">"Tukey"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>You can read this as “do all of the pairwise comparisons between each group in <code>seasxspp</code> in the model <code>mod</code> using the Tukey test”.</p>
-<p>We view the results with <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_mc</span><span class="op">)</span>
+<p><code><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD()</a></code> requires output from the <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> so we will use the <code><a href="https://rdrr.io/pkg/lsmeans/man/ref.grid.html">lsmeans()</a></code> (<strong>L</strong>east-<strong>S</strong>quares <strong>means</strong>) function from the <strong><code>lsmeans</code></strong> package <span class="citation">(<a href="references.html#ref-lsmeans" role="doc-biblioref">Lenth 2016</a>)</span> with <code><a href="https://rdrr.io/r/graphics/pairs.html">pairs()</a></code> from the <strong><code>multcompView</code></strong> package. These two functions can be applied to <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> outputs.</p>
+<p>Load the packages:</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">lsmeans</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">multcompView</span><span class="op">)</span></code></pre></div>
+<p>And run the post-hoc test:</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lsmeans/man/ref.grid.html">lsmeans</a></span><span class="op">(</span><span class="va">mod</span>, <span class="op">~</span> <span class="va">species</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#  contrast                                 estimate   SE df t.ratio p.value</span>
+<span class="co">#  Littorina brevicula - Littorina littorea     -1.9 2.19 96  -0.869  0.3870</span>
 <span class="co"># </span>
-<span class="co">#    Simultaneous Tests for General Linear Hypotheses</span>
-<span class="co"># </span>
-<span class="co"># Multiple Comparisons of Means: Tukey Contrasts</span>
-<span class="co"># </span>
-<span class="co"># </span>
-<span class="co"># Fit: lm(formula = para ~ seasxspp, data = periwinkle)</span>
-<span class="co"># </span>
-<span class="co"># Linear Hypotheses:</span>
-<span class="co">#                                                              Estimate</span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula == 0    16.44</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula == 0      7.28</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula == 0     12.96</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula == 0     -9.16</span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula == 0     -3.48</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea == 0       5.68</span>
-<span class="co">#                                                              Std. Error t value</span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula == 0       3.09    5.32</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula == 0        3.09    2.35</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula == 0        3.09    4.19</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula == 0        3.09   -2.96</span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula == 0        3.09   -1.13</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea == 0         3.09    1.84</span>
-<span class="co">#                                                              Pr(&gt;|t|)    </span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula == 0   &lt;0.001 ***</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula == 0     0.093 .  </span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula == 0    &lt;0.001 ***</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula == 0     0.020 *  </span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula == 0     0.675    </span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea == 0      0.263    </span>
-<span class="co"># ---</span>
-<span class="co"># Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co"># (Adjusted p values reported -- single-step method)</span></code></pre></div>
+<span class="co"># Results are averaged over the levels of: season</span></code></pre></div>
+<p>The correction for the multiple testing uses the Tukey method (just like <code><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD()</a></code>).</p>
 <p>The results are the same as for using <code><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD()</a></code> as we have done the same tests using a different function.</p>
-<p>You can see what a contrasts matrix looks like by looking at the <code>linfct</code> variable of the <code>glht</code> object. You don’t need it now but in the future you may need to specify your own contrasts matrices so let’s have a quick look to aid your journey towards understanding:</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod_mc</span><span class="op">$</span><span class="va">linfct</span>
-<span class="co">#                                                         (Intercept)</span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula           0</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula            0</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula            0</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula            0</span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula            0</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea             0</span>
-<span class="co">#                                                         seasxsppSummer.Littorina brevicula</span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula                                  1</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula                                   0</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula                                   0</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula                                  -1</span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula                                  -1</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea                                    0</span>
-<span class="co">#                                                         seasxsppSpring.Littorina littorea</span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula                                 0</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula                                  1</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula                                  0</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula                                  1</span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula                                  0</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea                                  -1</span>
-<span class="co">#                                                         seasxsppSummer.Littorina littorea</span>
-<span class="co"># Summer.Littorina brevicula - Spring.Littorina brevicula                                 0</span>
-<span class="co"># Spring.Littorina littorea - Spring.Littorina brevicula                                  0</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina brevicula                                  1</span>
-<span class="co"># Spring.Littorina littorea - Summer.Littorina brevicula                                  0</span>
-<span class="co"># Summer.Littorina littorea - Summer.Littorina brevicula                                  1</span>
-<span class="co"># Summer.Littorina littorea - Spring.Littorina littorea                                   1</span>
-<span class="co"># attr(,"type")</span>
-<span class="co"># [1] "Tukey"</span></code></pre></div>
-<p>It is matrix with a column for each parameter, in order) and a row for each contrast containing only 0s, 1s and -1s. The rows are named.
-The 0s, 1s and -1s indicate how the model parameters are needed to make the contrast and these can be understood by considering how the group means relate to the parameters.</p>
-<ul>
-<li>Spring.Littorina brevicula mean is <span class="math inline">\(\beta_{0}\)</span>
-</li>
-<li>Summer.Littorina brevicula mean is <span class="math inline">\(\beta_{0} + \beta_{1}\)</span>
-</li>
-<li>Spring.Littorina littorea <span class="math inline">\(\beta_{0} + \beta_{2}\)</span>
-</li>
-<li>Summer.Littorina littorea <span class="math inline">\(\beta_{0} + \beta_{3}\)</span>
-</li>
-</ul>
-<p>Therefore:</p>
-<ul>
-<li>Summer.Littorina brevicula - Spring.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{1} - \beta_{0} = \beta_{1}\)</span> and there is a one in the <code>seasxsppSummer.Littorina brevicula</code> column and zeros else where<br>
-</li>
-<li>Spring.Littorina littorea - Spring.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{2} - \beta_{0} = \beta_{2}\)</span> and there is a one in the <code>seasxsppSpring.Littorina littorea</code> column and zeros else where<br>
-</li>
-<li>Summer.Littorina littorea - Spring.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{3} - \beta_{0} = \beta_{3}\)</span> and there is a 1 in the the <code>seasxsppSummer.Littorina littorea</code> column and zeros else where<br>
-</li>
-<li>Spring.Littorina littorea - Summer.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{2} - (\beta_{0} + \beta_{1}) = \beta_{2} - \beta_{1}\)</span> and there is a 1 in the the <code>seasxsppSpring.Littorina littorea</code> column and a -1 in the <code>seasxsppSummer.Littorina brevicula</code> column<br>
-</li>
-<li>Summer.Littorina littorea - Summer.Littorina brevicula is: <span class="math inline">\(\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{1}) = \beta_{3} - \beta_{1}\)</span> and there is a 1 in the the <code>seasxsppSummer.Littorina littorea</code> column and a -1 in the <code>seasxsppSummer.Littorina brevicula</code> column<br>
-</li>
-<li>Summer.Littorina littorea - Spring.Littorina littorea is: <span class="math inline">\(\beta_{0} + \beta_{3} - (\beta_{0} + \beta_{2}) = \beta_{3} + \beta_{2}\)</span> and there is a 1 in the the <code>seasxsppSummer.Littorina littorea</code> column and column and a -1 in the <code>seasxsppSpring.Littorina littorea</code> column</li>
-</ul>
 </div>
-<div id="creating-a-figure-3" class="section level2">
+<div id="creating-a-figure-3" class="section level2" number="7.9">
 <h2>
 <span class="header-section-number">7.9</span> Creating a figure<a class="anchor" aria-label="anchor" href="#creating-a-figure-3"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># palette</span>
 <span class="co"># blue, pink, green triadic</span>
 <span class="va">pal4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#256c7a"</span>, <span class="st">"#7a256c"</span>, <span class="st">"#6c7a25"</span><span class="op">)</span>
@@ -3226,7 +1731,7 @@ The 0s, 1s and -1s indicate how the model parameters are needed to make the cont
         legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.85</span>, <span class="fl">0.98</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <div class="inline-figure"><img src="two-way-anova-revisit_files/figure-html/fig-two-anova-1.png" width="80%" style="display: block; margin: auto auto auto 0;"></div>
 </div>
-<div id="reporting-the-results-3" class="section level2">
+<div id="reporting-the-results-3" class="section level2" number="7.10">
 <h2>
 <span class="header-section-number">7.10</span> Reporting the results<a class="anchor" aria-label="anchor" href="#reporting-the-results-3"><i class="fas fa-link"></i></a>
 </h2>
@@ -3263,7 +1768,8 @@ Figure 7.4: The effect of season on the parasite load of two species of periwink
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/3mmaRand/gist-lm/blob/master/two-way-anova-revisit.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/3mmaRand/gist-lm/edit/master/two-way-anova-revisit.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

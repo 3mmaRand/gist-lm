@@ -15,14 +15,21 @@
 <meta property="og:description" content="This is probably the one general linear model you have applied using lm() previously and it is covered here as revision and make more clear links between regression, t-tests and ANOVA.  4.1...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Single linear regression | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
+<meta name="twitter:site" content="@er13_r">
 <meta name="twitter:description" content="This is probably the one general linear model you have applied using lm() previously and it is covered here as revision and make more clear links between regression, t-tests and ANOVA.  4.1...">
 <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.1/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0.9000/transition.js"></script><script src="libs/bs3compat-0.3.0.9000/tabs.js"></script><script src="libs/bs3compat-0.3.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><script src="assets/book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-115082821-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -44,7 +51,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="index.html">Welcome!</a></li>
 <li class="book-part">INTRODUCTION</li>
 <li><a class="" href="revision.html"><span class="header-section-number">1</span> Revision of your Introductory class</a></li>
 <li><a class="" href="what-are-linear-models.html"><span class="header-section-number">2</span> What are General Linear Models</a></li>
@@ -59,16 +66,16 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/3mmaRand/gist-lm">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="single-regression" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="single-regression" class="section level1" number="4">
 <h1>
 <span class="header-section-number">4</span> Single linear regression<a class="anchor" aria-label="anchor" href="#single-regression"><i class="fas fa-link"></i></a>
 </h1>
 <p>This is probably the one general linear model you have applied using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> previously and it is covered here as revision and make more clear links between regression, <em>t</em>-tests and ANOVA.</p>
-<div id="introduction-to-the-example" class="section level2">
+<div id="introduction-to-the-example" class="section level2" number="4.1">
 <h2>
 <span class="header-section-number">4.1</span> Introduction to the example<a class="anchor" aria-label="anchor" href="#introduction-to-the-example"><i class="fas fa-link"></i></a>
 </h2>
@@ -226,10 +233,10 @@ mand
 <div class="key">
 <p>There are 2 variables: <code>jh</code>, the concentration of Juvenile growth hormone and <code>mand</code>, the average mandible size (mm) of 10 stag beetles</p>
 </div>
-<p>We will import the data with the <code>read_table2()</code> function from the <strong><code>readr</code></strong> package and plot it with <code>ggplot()</code> from the <strong><code>ggplot2</code></strong> package. Both packages are part of the tidyverse.</p>
+<p>We will import the data with the <code>read_table()</code> function from the <strong><code>readr</code></strong> package and plot it with <code>ggplot()</code> from the <strong><code>ggplot2</code></strong> package. Both packages are part of the tidyverse.</p>
 <p>Import the data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stag</span> <span class="op">&lt;-</span> <span class="fu">read_table2</span><span class="op">(</span><span class="st">"data-raw/stag.txt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stag</span> <span class="op">&lt;-</span> <span class="fu">read_table</span><span class="op">(</span><span class="st">"data-raw/stag.txt"</span><span class="op">)</span></code></pre></div>
 <p>Visualising our data before any further analysis is sensible. In this case, it will help us determine if any relationship between the two variables is linear.
 A simple scatter plot is appropriate.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -239,7 +246,7 @@ A simple scatter plot is appropriate.</p>
 <img src="single-linear-regression_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto auto auto 0;">
 The relationship between the two variables looks roughly linear. So far, common sense suggests the assumptions of regression are met.</div>
 </div>
-<div id="applying-and-interpreting-lm" class="section level2">
+<div id="applying-and-interpreting-lm" class="section level2" number="4.2">
 <h2>
 <span class="header-section-number">4.2</span> Applying and interpreting <code>lm()</code><a class="anchor" aria-label="anchor" href="#applying-and-interpreting-lm"><i class="fas fa-link"></i></a>
 </h2>
@@ -286,7 +293,7 @@ The relationship between the two variables looks roughly linear. So far, common 
 <p>The three lines at the bottom of the output give information about the fit of the model to the data. The <code>Multiple R-squared</code> gives the proportion of the variance in the response which is explained by the model. In our case, 0.543 of the variance in mandible length is explained by the model and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> = 0.001).</p>
 <p>The <em>p</em>-value for the model and the <em>p</em>-value for the slope are the same in a single linear regression because, except for the intercept, there is only one parameter (the slope) in the model. Linear models in the form of a two-sample <em>t</em>-test also estimate just one parameter and its <em>p</em>-value will also equal the model <em>p</em>-value. This is <strong>not</strong> the case for other linear models.</p>
 </div>
-<div id="link-to-chapter-2.1" class="section level2">
+<div id="link-to-chapter-2.1" class="section level2" number="4.3">
 <h2>
 <span class="header-section-number">4.3</span> Link to Chapter 2.1<a class="anchor" aria-label="anchor" href="#link-to-chapter-2.1"><i class="fas fa-link"></i></a>
 </h2>
@@ -302,7 +309,7 @@ Figure 4.2: The model annotated with values from the stag beetle example. The me
 </p>
 </div>
 </div>
-<div id="getting-predictions-from-the-model" class="section level2">
+<div id="getting-predictions-from-the-model" class="section level2" number="4.4">
 <h2>
 <span class="header-section-number">4.4</span> Getting predictions from the model<a class="anchor" aria-label="anchor" href="#getting-predictions-from-the-model"><i class="fas fa-link"></i></a>
 </h2>
@@ -336,7 +343,7 @@ The following creates a dataframe with one column of Juvenile growth hormone val
 <span class="co"># $ jh   &lt;dbl&gt; 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80,~</span>
 <span class="co"># $ pred &lt;dbl&gt; 0.419, 0.452, 0.484, 0.516, 0.549, 0.581, 0.613, 0.645, 0.678, 0.~</span></code></pre></div>
 </div>
-<div id="checking-assumptions-1" class="section level2">
+<div id="checking-assumptions-1" class="section level2" number="4.5">
 <h2>
 <span class="header-section-number">4.5</span> Checking assumptions<a class="anchor" aria-label="anchor" href="#checking-assumptions-1"><i class="fas fa-link"></i></a>
 </h2>
@@ -351,7 +358,7 @@ The following creates a dataframe with one column of Juvenile growth hormone val
 <div class="inline-figure"><img src="single-linear-regression_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto auto auto 0;"></div>
 <p>Again the red line wiggles a little but there is no particular pattern and it appears that the variance is homogeneous along mandible size.</p>
 </div>
-<div id="creating-a-figure" class="section level2">
+<div id="creating-a-figure" class="section level2" number="4.6">
 <h2>
 <span class="header-section-number">4.6</span> Creating a figure<a class="anchor" aria-label="anchor" href="#creating-a-figure"><i class="fas fa-link"></i></a>
 </h2>
@@ -372,7 +379,7 @@ The following creates a dataframe with one column of Juvenile growth hormone val
         <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="single-linear-regression_files/figure-html/fig-reg-1.png" width="80%" style="display: block; margin: auto auto auto 0;"></div>
 </div>
-<div id="reporting-the-results" class="section level2">
+<div id="reporting-the-results" class="section level2" number="4.7">
 <h2>
 <span class="header-section-number">4.7</span> Reporting the results<a class="anchor" aria-label="anchor" href="#reporting-the-results"><i class="fas fa-link"></i></a>
 </h2>
@@ -405,7 +412,8 @@ Figure 4.3: Relationship between the concentration of Juvenile growth hormone an
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/3mmaRand/gist-lm/blob/master/single-linear-regression.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/3mmaRand/gist-lm/edit/master/single-linear-regression.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

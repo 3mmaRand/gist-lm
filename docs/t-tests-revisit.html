@@ -15,14 +15,21 @@
 <meta property="og:description" content="In this chapter we look at an example with one categorical explanatory variable which has two groups (or levels). We first use the familiar t.test() then use its output to help us understand the...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 5 t-tests revisited | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
+<meta name="twitter:site" content="@er13_r">
 <meta name="twitter:description" content="In this chapter we look at an example with one categorical explanatory variable which has two groups (or levels). We first use the familiar t.test() then use its output to help us understand the...">
 <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.1/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0.9000/transition.js"></script><script src="libs/bs3compat-0.3.0.9000/tabs.js"></script><script src="libs/bs3compat-0.3.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><script src="assets/book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-115082821-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -44,7 +51,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="index.html">Welcome!</a></li>
 <li class="book-part">INTRODUCTION</li>
 <li><a class="" href="revision.html"><span class="header-section-number">1</span> Revision of your Introductory class</a></li>
 <li><a class="" href="what-are-linear-models.html"><span class="header-section-number">2</span> What are General Linear Models</a></li>
@@ -59,16 +66,16 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/3mmaRand/gist-lm">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="t-tests-revisit" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="t-tests-revisit" class="section level1" number="5">
 <h1>
 <span class="header-section-number">5</span> <em>t</em>-tests revisited<a class="anchor" aria-label="anchor" href="#t-tests-revisit"><i class="fas fa-link"></i></a>
 </h1>
 <p>In this chapter we look at an example with one categorical explanatory variable which has two groups (or levels). We first use the familiar <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> then use its output to help us understand the output of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. We will also make predictions from the model and report on our results.</p>
-<div id="introduction-to-the-example-1" class="section level2">
+<div id="introduction-to-the-example-1" class="section level2" number="5.1">
 <h2>
 <span class="header-section-number">5.1</span> Introduction to the example<a class="anchor" aria-label="anchor" href="#introduction-to-the-example-1"><i class="fas fa-link"></i></a>
 </h2>
@@ -892,9 +899,9 @@ wild
 <code>plant</code> is the explanatory variable; it is categorical with 2 levels, <code>modif</code> and <code>wild</code>.
 <code>omega</code>, a continuous variable, is the response.</p>
 </div>
-<p>We again use the <code>read_table2()</code> function to import the data and visualise it with <code>ggplot()</code></p>
+<p>We again use the <code>read_table()</code> function to import the data and visualise it with <code>ggplot()</code></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">csativa</span>  <span class="op">&lt;-</span>  <span class="fu">read_table2</span><span class="op">(</span><span class="st">"data-raw/csativa.txt"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">csativa</span>  <span class="op">&lt;-</span>  <span class="fu">read_table</span><span class="op">(</span><span class="st">"data-raw/csativa.txt"</span><span class="op">)</span></code></pre></div>
 <p>A quick plot of the data:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">csativa</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">plant</span>, y <span class="op">=</span> <span class="va">omega</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -970,7 +977,7 @@ wild
 <p>Our summary confirms what we see in the plot.</p>
 <p>Statistical comparison of the two means can be done with either the <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> or <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> functions; these are <strong>exactly</strong> equivalent but present the results differently. We will use our understanding of applying and interpreting <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> to develop our understanding of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> output</p>
 </div>
-<div id="t.test-output-reminder" class="section level2">
+<div id="t.test-output-reminder" class="section level2" number="5.2">
 <h2>
 <span class="header-section-number">5.2</span> <code>t.test()</code> output reminder<a class="anchor" aria-label="anchor" href="#t.test-output-reminder"><i class="fas fa-link"></i></a>
 </h2>
@@ -981,8 +988,8 @@ wild
 <span class="co">#   Two Sample t-test</span>
 <span class="co"># </span>
 <span class="co"># data:  omega by plant</span>
-<span class="co"># t = -5, df = 98, p-value = 2e-06</span>
-<span class="co"># alternative hypothesis: true difference in means is not equal to 0</span>
+<span class="co"># t = -5, df = 98, p-value = 0.000002</span>
+<span class="co"># alternative hypothesis: true difference in means between group modif and group wild is not equal to 0</span>
 <span class="co"># 95 percent confidence interval:</span>
 <span class="co">#  -9.69 -4.21</span>
 <span class="co"># sample estimates:</span>
@@ -1009,7 +1016,7 @@ wild
 <p><code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> output: the estimates are the two group means and the <em>p</em>-value is for a test on the difference between them.</p>
 </div>
 </div>
-<div id="t-tests-as-linear-models" class="section level2">
+<div id="t-tests-as-linear-models" class="section level2" number="5.3">
 <h2>
 <span class="header-section-number">5.3</span> <em>t</em>-tests as linear models<a class="anchor" aria-label="anchor" href="#t-tests-as-linear-models"><i class="fas fa-link"></i></a>
 </h2>
@@ -1037,7 +1044,7 @@ Figure 5.1: A linear model when the explanatory variable is categorical with two
 </p>
 </div>
 </div>
-<div id="applying-and-interpreting-lm-1" class="section level2">
+<div id="applying-and-interpreting-lm-1" class="section level2" number="5.4">
 <h2>
 <span class="header-section-number">5.4</span> Applying and interpreting <code>lm()</code><a class="anchor" aria-label="anchor" href="#applying-and-interpreting-lm-1"><i class="fas fa-link"></i></a>
 </h2>
@@ -1073,15 +1080,15 @@ The equation for the model is:
 <span class="co"># -15.872  -3.703  -0.964   4.460  16.918 </span>
 <span class="co"># </span>
 <span class="co"># Coefficients:</span>
-<span class="co">#             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co"># (Intercept)   49.465      0.977   50.64  &lt; 2e-16 ***</span>
-<span class="co"># plantwild      6.947      1.381    5.03  2.2e-06 ***</span>
+<span class="co">#             Estimate Std. Error t value             Pr(&gt;|t|)    </span>
+<span class="co"># (Intercept)   49.465      0.977   50.64 &lt; 0.0000000000000002 ***</span>
+<span class="co"># plantwild      6.947      1.381    5.03            0.0000022 ***</span>
 <span class="co"># ---</span>
 <span class="co"># Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co"># </span>
 <span class="co"># Residual standard error: 6.91 on 98 degrees of freedom</span>
 <span class="co"># Multiple R-squared:  0.205,   Adjusted R-squared:  0.197 </span>
-<span class="co"># F-statistic: 25.3 on 1 and 98 DF,  p-value: 2.23e-06</span></code></pre></div>
+<span class="co"># F-statistic: 25.3 on 1 and 98 DF,  p-value: 0.00000223</span></code></pre></div>
 <p>The <code>Coefficients</code> table gives the estimated <span class="math inline">\(\beta_{0}\)</span> and <span class="math inline">\(\beta_{1}\)</span> again but along with their standard errors and tests of whether the estimates differ from zero. The estimated mean of the modified plants is 49.465 <span class="math inline">\(\pm\)</span> 0.977 and this differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The estimated difference between the modified and wild type plants is 6.947 <span class="math inline">\(\pm\)</span> 1.381 and also differs significantly from zero (<span class="math inline">\(p\)</span> &lt; 0.001). The fact that this value is positive tells us that the wild type plants have a higher mean.</p>
 <p>The proportion of the variance in the omega which is explained by the model is 0.205 and this is a significant proportion of that variance (<span class="math inline">\(p\)</span> &lt; 0.001).</p>
 <p>As was true for single linear regression, the <em>p</em>-value for the model and the <em>p</em>-value for the difference between the means are the same because there is only one parameter in the model after the intercept.</p>
@@ -1094,7 +1101,7 @@ Figure 5.2: The annotated model with the values from the Omega 3 content of <em>
 </p>
 </div>
 </div>
-<div id="getting-predictions-from-the-model-1" class="section level2">
+<div id="getting-predictions-from-the-model-1" class="section level2" number="5.5">
 <h2>
 <span class="header-section-number">5.5</span> Getting predictions from the model<a class="anchor" aria-label="anchor" href="#getting-predictions-from-the-model-1"><i class="fas fa-link"></i></a>
 </h2>
@@ -1115,7 +1122,7 @@ Figure 5.2: The annotated model with the values from the Omega 3 content of <em>
 <span class="co"># $ plant &lt;chr&gt; "modif", "wild"</span>
 <span class="co"># $ pred  &lt;dbl&gt; 49.5, 56.4</span></code></pre></div>
 </div>
-<div id="checking-assumptions-2" class="section level2">
+<div id="checking-assumptions-2" class="section level2" number="5.6">
 <h2>
 <span class="header-section-number">5.6</span> Checking assumptions<a class="anchor" aria-label="anchor" href="#checking-assumptions-2"><i class="fas fa-link"></i></a>
 </h2>
@@ -1130,7 +1137,7 @@ Figure 5.2: The annotated model with the values from the Omega 3 content of <em>
 <div class="inline-figure"><img src="t-test-revisit_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto auto auto 0;"></div>
 <p>We get these two columns of points because the explanatory variable, <code>plant</code>, is categorical so the fitted - or predicted - values are just two means. In my view, the variance looks higher in the group with the higher mean (on the right).</p>
 </div>
-<div id="creating-a-figure-1" class="section level2">
+<div id="creating-a-figure-1" class="section level2" number="5.7">
 <h2>
 <span class="header-section-number">5.7</span> Creating a figure<a class="anchor" aria-label="anchor" href="#creating-a-figure-1"><i class="fas fa-link"></i></a>
 </h2>
@@ -1166,7 +1173,7 @@ Figure 5.2: The annotated model with the values from the Omega 3 content of <em>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="t-test-revisit_files/figure-html/fig-ttest-1.png" width="80%" style="display: block; margin: auto auto auto 0;"></div>
 </div>
-<div id="reporting-the-results-1" class="section level2">
+<div id="reporting-the-results-1" class="section level2" number="5.8">
 <h2>
 <span class="header-section-number">5.8</span> Reporting the results<a class="anchor" aria-label="anchor" href="#reporting-the-results-1"><i class="fas fa-link"></i></a>
 </h2>
@@ -1200,7 +1207,8 @@ Figure 5.3: Mean Omega 3 content of wild type and genetically modified <em>Canna
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/3mmaRand/gist-lm/blob/master/t-test-revisit.rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/3mmaRand/gist-lm/edit/master/t-test-revisit.rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

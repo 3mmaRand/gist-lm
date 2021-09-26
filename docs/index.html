@@ -4,25 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Preface | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users</title>
+<title>Welcome! | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users</title>
 <meta name="author" content="Emma Rand">
-<meta name="description" content="The output format for this example is bookdown::gitbook.">
+<meta name="description" content="This book explains how the t-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the lm() function.">
 <meta name="generator" content="bookdown 0.24.1 with bs4_book()">
-<meta property="og:title" content="Preface | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
+<meta property="og:title" content="Welcome! | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://3mmarand.github.io/gist-lm/">
 <meta property="og:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png">
-<meta property="og:description" content="The output format for this example is bookdown::gitbook.">
+<meta property="og:description" content="This book explains how the t-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the lm() function.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Preface | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
-<meta name="twitter:description" content="The output format for this example is bookdown::gitbook.">
+<meta name="twitter:title" content="Welcome! | gist-lm: Get Introductory Statistical Tests as Linear models: A guide for R users">
+<meta name="twitter:site" content="@er13_r">
+<meta name="twitter:description" content="This book explains how the t-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the lm() function.">
 <meta name="twitter:image" content="https://3mmarand.github.io/gist-lm/images/hex-s.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.1/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0.9000/transition.js"></script><script src="libs/bs3compat-0.3.0.9000/tabs.js"></script><script src="libs/bs3compat-0.3.0.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><script src="assets/book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-115082821-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="assets/style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -44,7 +51,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="active" href="index.html">Preface</a></li>
+<li><a class="active" href="index.html">Welcome!</a></li>
 <li class="book-part">INTRODUCTION</li>
 <li><a class="" href="revision.html"><span class="header-section-number">1</span> Revision of your Introductory class</a></li>
 <li><a class="" href="what-are-linear-models.html"><span class="header-section-number">2</span> What are General Linear Models</a></li>
@@ -59,26 +66,30 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/3mmaRand/gist-lm">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="preface" class="section level1 unnumbered">
-<h1>Preface<a class="anchor" aria-label="anchor" href="#preface"><i class="fas fa-link"></i></a>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="welcome" class="section level1 unnumbered">
+<h1>Welcome!<a class="anchor" aria-label="anchor" href="#welcome"><i class="fas fa-link"></i></a>
 </h1>
-<div id="who-is-this-book-for" class="section level2">
+<div class="figure">
+<img src="images/hex-s.png" width="150" alt=""><p class="caption">hex logo</p>
+</div>
+<div id="who-is-this-book-for" class="section level2" number="0.1">
 <h2>
 <span class="header-section-number">0.1</span> Who is this book for?<a class="anchor" aria-label="anchor" href="#who-is-this-book-for"><i class="fas fa-link"></i></a>
 </h2>
-<p>This book designed to help people with a little experience of data analysis in R get the gist of linear models in R. It is aimed at non-specialists who have learned introductory data analysis as a skill for doing research in another field. The audience I had in mind when writing the book are undergraduates on degree programmes in the life sciences who have done an introductory course covering hypothesis testing with single linear regression, <em>t</em>-tests, and ANOVA. However, students on social science, media, finance and education degree programmes often do similar introductory data analysis courses. This book can also help them, although the examples are from the life sciences. A short revision chapter giving an overview of introductory data analysis course is included to set the scene and clarify terminology used in the rest of the book. The coverage of single linear regression in the first chapter of Part 2 is also likely to be revision for most readers.</p>
-<p>I assume you have an understanding of the rationale of hypothesis testing and some experience selecting, applying and interpreting tests. I also assume you have some familiarity with R and RStudio and have general, but not expert, proficiency in summarising, analysing and visualising data with functions such as <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>, <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>, <code><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD()</a></code> and <code>ggplot()</code>. I do not assume your fluency allows you to do these things without looking things up.</p>
+<p>Have you done an introductory data analysis course in R? Yes? Then this book might be for you! It is aimed at non-specialists who have learned introductory data analysis as a skill for doing research in another field. The readers I had in mind when writing the book are undergraduates on degree programmes in the life sciences who have done an introductory course on data analysis in R. Such introductory courses usually teach null hypothesis testing with single linear regression, <em>t</em>-tests, and ANOVA. You might also find this book useful if you have done a similar introductory data analysis course as part of your social science, media, finance or education degree programme. I use examples from the life sciences but these require little more than general knowledge and the principles apply to any field.</p>
+<p>I assume you have an understanding of the rationale of hypothesis testing and some experience selecting, applying and interpreting tests. I also assume you have some familiarity with R and RStudio and have a general, but not expert, proficiency in summarising, analysing and visualising data with functions such as <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>, <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code>, <code><a href="https://rdrr.io/r/stats/TukeyHSD.html">TukeyHSD()</a></code> and <code>ggplot()</code>. I do not assume your fluency allows you to do these things without looking things up!</p>
+<p>The book starts with an overview of a typical introductory data analysis course. I intend this to set the scene, summarise expected background experience and clarify terminology used in the rest of the book. The coverage of single linear regression in the first chapter of Part 2 is also likely to be revision for most readers.</p>
 <p>The book has two aims. First to explain how the <em>t</em>-test, ANOVA and regression are actually all the same test and introduce the terminology of statistical modelling and, secondly, to teach you how to use and interpret the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function.</p>
 </div>
-<div id="approach-of-this-book" class="section level2">
+<div id="approach-of-this-book" class="section level2" number="0.2">
 <h2>
 <span class="header-section-number">0.2</span> Approach of this book<a class="anchor" aria-label="anchor" href="#approach-of-this-book"><i class="fas fa-link"></i></a>
 </h2>
-<p>Regression, <em>t</em>-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the “general linear model”. Since they are fundamentally the same test, all can be carried out with the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function in R. However, it is common for <em>t</em>-tests and ANOVA to be taught to non-specialists using the <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> functions respectively. There are some sensible reasons for this. For example, many introductory texts take the same approach and typically, the outputs of <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> are easier for beginners to understand and interpret.</p>
+<p>Regression, <em>t</em>-tests and one-way ANOVA are special cases of a much more widely applicable statistical model known as the “general linear model.” Since they are fundamentally the same test, all can be carried out with the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function in R. However, it is common for <em>t</em>-tests and ANOVA to be taught to non-specialists using the <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> functions respectively. There are some sensible reasons for this. For example, many introductory texts take the same approach and typically, the outputs of <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> are easier for beginners to understand and interpret.</p>
 <p>However, the output of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> is more typical of statistical modelling functions in general and these are made harder to understand if you are not used to using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> for the relatively simple cases. This makes the use of only slightly more advanced methods seem like a bigger leap in understanding than it really is, and extending your statistical repertoire more intimidating than it could be. The approach taken in this book is to exploit your pre-existing knowledge of <em>t</em>-tests and ANOVA using <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> to understand the output of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>.</p>
 <div class="key">
 <p><code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> can be used to perform <em>t</em>-tests, ANOVAs and regression.</p>
@@ -86,20 +97,20 @@
 <p>Examples are carried out with the familiar functions and then with <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> so you can make the link between the two. Each example demonstrates the R code needed, how understand the output and how to report the results, including suggested <strong><code>ggplot2</code></strong> figures.
 The code is given for figures but, as this isn’t a book about <strong><code>ggplot2</code></strong>, it is not extensively explained. Readers keen to learn more about <strong><code>ggplot2</code></strong> are advised to go to <a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a>.</p>
 </div>
-<div id="options-on-the-toolbar" class="section level2">
+<div id="overview-of-the-chapter-contents" class="section level2" number="0.3">
 <h2>
-<span class="header-section-number">0.3</span> Options on the toolbar<a class="anchor" aria-label="anchor" href="#options-on-the-toolbar"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.3</span> Overview of the chapter contents<a class="anchor" aria-label="anchor" href="#overview-of-the-chapter-contents"><i class="fas fa-link"></i></a>
 </h2>
-<p>You can change the appearance of the book using the toolbar at the top of the page. The menu on the left can be hidden, the font size increased or decreased and the colour altered to a dark or sepia theme.</p>
-<p>Search the book by clicking on the magnifying glass, entering a search term and using the up and down arrows to navigate through the results.</p>
+<p><strong>Introduction</strong> provides a very brief overview of a typical introductory data analysis class using terminology that will used throughout the remaining chapters. If the concepts in this chapter are very unfamiliar, you may benefit from revising your previous work.</p>
+<p>In <strong>Using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> for familiar tests</strong> we revise single linear regression which is likely where you have previously encountered the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. We then work through an example of a <em>t</em>-test first carried out with <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and then with <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> to gain a good understanding of the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> output. This is followed by examples of one- and two-way ANOVA carried out with <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> and them <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>.</p>
 </div>
-<div id="conventions-used-in-the-book" class="section level2">
+<div id="conventions-used-in-the-book" class="section level2" number="0.4">
 <h2>
 <span class="header-section-number">0.4</span> Conventions used in the book<a class="anchor" aria-label="anchor" href="#conventions-used-in-the-book"><i class="fas fa-link"></i></a>
 </h2>
 <p>Code and any output appears in blocks formatted like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stag</span> <span class="op">&lt;-</span> <span class="fu">read_table2</span><span class="op">(</span><span class="st">"data-raw/stag.txt"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">stag</span> <span class="op">&lt;-</span> <span class="fu">read_table</span><span class="op">(</span><span class="st">"data-raw/stag.txt"</span><span class="op">)</span>
 <span class="fu">glimpse</span><span class="op">(</span><span class="va">stag</span><span class="op">)</span>
 <span class="co"># Rows: 16</span>
 <span class="co"># Columns: 2</span>
@@ -107,9 +118,9 @@ The code is given for figures but, as this isn’t a book about <strong><code>gg
 <span class="co"># $ mand &lt;dbl&gt; 0.56, 0.35, 0.28, 1.22, 0.48, 0.86, 0.68, 0.77, 0.55, 1.18, 0.71,~</span></code></pre></div>
 <p>Lines of output start with a <code>#</code>.</p>
 <p>Within the text:
-* packages are indicated in bold code font like this: <strong><code>ggplot2</code></strong>
-* functions are indicated in code font with brackets after their name like this: <code>ggplot()</code>
-* R objects are indicated in code font like this: <code>stag</code></p>
+- packages are indicated in bold code font like this: <strong><code>ggplot2</code></strong>
+- functions are indicated in code font with brackets after their name like this: <code>ggplot()</code>
+- R objects are indicated in code font like this: <code>stag</code></p>
 <p>Key points are summarised throughout the book using boxes like this:</p>
 <div class="key">
 <p>The key point of a previous few paragraphs is in boxes like these</p>
@@ -119,7 +130,7 @@ The code is given for figures but, as this isn’t a book about <strong><code>gg
 <p>Extra information and tips are in boxes like these</p>
 </div>
 </div>
-<div id="following-along-with-the-examples" class="section level2">
+<div id="following-along-with-the-examples" class="section level2" number="0.5">
 <h2>
 <span class="header-section-number">0.5</span> Following along with the examples<a class="anchor" aria-label="anchor" href="#following-along-with-the-examples"><i class="fas fa-link"></i></a>
 </h2>
@@ -134,27 +145,23 @@ The code is given for figures but, as this isn’t a book about <strong><code>gg
 </code></pre>
 <p>Using this structure will mean the paths to files needed in your code are the same as those given in the book.</p>
 <p>The content of a code block can be copied using the icon in its top right corner.</p>
-<p>I use packages from the <strong><code>tidyverse</code></strong> <span class="citation">(Wickham et al. <a href="references.html#ref-tidyverse2019" role="doc-biblioref">2019</a>)</span> including <strong><code>ggplot2</code></strong> <span class="citation">(Wickham <a href="references.html#ref-ggplot2-book" role="doc-biblioref">2016</a>)</span>, <strong><code>dplyr</code></strong> <span class="citation">(Wickham et al. <a href="references.html#ref-dplyr" role="doc-biblioref">2020</a>)</span>, <strong><code>tidyr</code></strong> <span class="citation">(Wickham <a href="references.html#ref-tidyr" role="doc-biblioref">2020</a>)</span> and <strong><code>readr</code></strong> <span class="citation">(Wickham, Hester, and Francois <a href="references.html#ref-readr" role="doc-biblioref">2018</a>)</span> throughout the book. All the code assumes you have loaded the core <strong><code>tidyverse</code></strong> packages with:</p>
+<p>I use packages from the <strong><code>tidyverse</code></strong> <span class="citation">(<a href="references.html#ref-tidyverse2019" role="doc-biblioref">Wickham et al. 2019</a>)</span> including <strong><code>ggplot2</code></strong> <span class="citation">(<a href="references.html#ref-ggplot2-book" role="doc-biblioref">Wickham 2016</a>)</span>, <strong><code>dplyr</code></strong> <span class="citation">(<a href="references.html#ref-dplyr" role="doc-biblioref">Wickham et al. 2020</a>)</span>, <strong><code>tidyr</code></strong> <span class="citation">(<a href="references.html#ref-tidyr" role="doc-biblioref">Wickham 2020</a>)</span> and <strong><code>readr</code></strong> <span class="citation">(<a href="references.html#ref-readr" role="doc-biblioref">Wickham, Hester, and Francois 2018</a>)</span> throughout the book. All the code assumes you have loaded the core <strong><code>tidyverse</code></strong> packages with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 <p>If you run examples and get an error like this:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Error in read_table2("data-raw/stag.txt") : </span>
-<span class="co">#  could not find function "read_table2"</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># Error in read_table("data-raw/stag.txt") : </span>
+<span class="co">#  could not find function "read_table"</span></code></pre></div>
 <p>It is likely you need to load the <strong><code>tidyverse</code></strong> as shown above.</p>
 <p>All other packages will be loaded explicitly with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> statements where needed.</p>
 </div>
-<div id="overview-of-the-chapter-contents" class="section level2">
-<h2>
-<span class="header-section-number">0.6</span> Overview of the chapter contents<a class="anchor" aria-label="anchor" href="#overview-of-the-chapter-contents"><i class="fas fa-link"></i></a>
+<div id="credits" class="section level2 unnumbered">
+<h2>Credits<a class="anchor" aria-label="anchor" href="#credits"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>Part 1 Introduction</strong> provides a very brief overview of a typical introductory data analysis class using terminology that will used throughout the remaining chapters. If the concepts in this chapter are very unfamiliar, you may benefit from revising your previous work.</p>
-<p>In <strong>Part 2</strong> we revise single linear regression which is likely where you have previously encountered the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. We then
-work through <em>t</em>-test, one-way ANOVA and two-way ANOVA examples carried out first with <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> and <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> and then with <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> to gain a good understanding of the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> output and interrogation for reporting.</p>
-<p>I used the <strong><code>knitr</code></strong> package <span class="citation">(Xie <a href="references.html#ref-xie2015" role="doc-biblioref">2015</a>)</span> and the <strong>bookdown</strong> package <span class="citation">(Xie <a href="references.html#ref-R-bookdown" role="doc-biblioref">2020</a>)</span> to compile my book. My R session information is shown below:</p>
+<p>I used the <a href="https://bookdown.org/yihui/bookdown/"><strong><code>bookdown</code></strong></a> package <span class="citation">(<a href="references.html#ref-R-bookdown" role="doc-biblioref">Xie 2020</a>)</span> to compile this book. My R session information is shown below:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co"># R version 4.0.2 (2020-06-22)</span>
+<span class="co"># R version 4.1.1 (2021-08-10)</span>
 <span class="co"># Platform: x86_64-w64-mingw32/x64 (64-bit)</span>
 <span class="co"># Running under: Windows 10 x64 (build 18363)</span>
 <span class="co"># </span>
@@ -181,17 +188,23 @@ work through <em>t</em>-test, one-way ANOVA and two-way ANOVA examples carried o
 <span class="co">#  [9] backports_1.2.1   reprex_2.0.1      evaluate_0.14     httr_1.4.2       </span>
 <span class="co"># [13] pillar_1.6.2      rlang_0.4.11      readxl_1.3.1      rstudioapi_0.13  </span>
 <span class="co"># [17] jquerylib_0.1.4   rmarkdown_2.11.1  webshot_0.5.2     munsell_0.5.0    </span>
-<span class="co"># [21] broom_0.7.9       compiler_4.0.2    modelr_0.1.8      xfun_0.26        </span>
+<span class="co"># [21] broom_0.7.9       compiler_4.1.1    modelr_0.1.8      xfun_0.26        </span>
 <span class="co"># [25] pkgconfig_2.0.3   systemfonts_1.0.2 htmltools_0.5.2   downlit_0.2.1    </span>
 <span class="co"># [29] tidyselect_1.1.1  bookdown_0.24.1   fansi_0.5.0       viridisLite_0.4.0</span>
 <span class="co"># [33] crayon_1.4.1      tzdb_0.1.2        dbplyr_2.1.1      withr_2.4.2      </span>
-<span class="co"># [37] grid_4.0.2        jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0  </span>
+<span class="co"># [37] grid_4.1.1        jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0  </span>
 <span class="co"># [41] DBI_1.1.1         magrittr_2.0.1    scales_1.1.1      cli_3.0.1        </span>
-<span class="co"># [45] stringi_1.7.4     fs_1.5.0          xml2_1.3.2        bslib_0.3.0.9000 </span>
-<span class="co"># [49] ellipsis_0.3.2    generics_0.1.0    vctrs_0.3.8       tools_4.0.2      </span>
+<span class="co"># [45] stringi_1.7.4     fs_1.5.0          xml2_1.3.2        bslib_0.3.0      </span>
+<span class="co"># [49] ellipsis_0.3.2    generics_0.1.0    vctrs_0.3.8       tools_4.1.1      </span>
 <span class="co"># [53] glue_1.4.2        hms_1.1.0         fastmap_1.1.0     yaml_2.2.1       </span>
 <span class="co"># [57] colorspace_2.0-2  rvest_1.0.1       knitr_1.34        haven_2.4.3      </span>
 <span class="co"># [61] sass_0.4.0</span></code></pre></div>
+</div>
+<div id="license" class="section level2 unnumbered">
+<h2>License<a class="anchor" aria-label="anchor" href="#license"><i class="fas fa-link"></i></a>
+</h2>
+<p><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"><img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"></a><br>This online work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+Visit <a href="https://github.com/dukestatsciintrods/blob/master/LICENSE.md">here</a> for more information about the license.</p>
 
 </div>
 </div>
@@ -204,18 +217,20 @@ work through <em>t</em>-test, one-way ANOVA and two-way ANOVA examples carried o
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#preface">Preface</a></li>
+<li><a class="nav-link" href="#welcome">Welcome!</a></li>
 <li><a class="nav-link" href="#who-is-this-book-for"><span class="header-section-number">0.1</span> Who is this book for?</a></li>
 <li><a class="nav-link" href="#approach-of-this-book"><span class="header-section-number">0.2</span> Approach of this book</a></li>
-<li><a class="nav-link" href="#options-on-the-toolbar"><span class="header-section-number">0.3</span> Options on the toolbar</a></li>
+<li><a class="nav-link" href="#overview-of-the-chapter-contents"><span class="header-section-number">0.3</span> Overview of the chapter contents</a></li>
 <li><a class="nav-link" href="#conventions-used-in-the-book"><span class="header-section-number">0.4</span> Conventions used in the book</a></li>
 <li><a class="nav-link" href="#following-along-with-the-examples"><span class="header-section-number">0.5</span> Following along with the examples</a></li>
-<li><a class="nav-link" href="#overview-of-the-chapter-contents"><span class="header-section-number">0.6</span> Overview of the chapter contents</a></li>
+<li><a class="nav-link" href="#credits">Credits</a></li>
+<li><a class="nav-link" href="#license">License</a></li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/3mmaRand/gist-lm/blob/master/index.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/3mmaRand/gist-lm/edit/master/index.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
