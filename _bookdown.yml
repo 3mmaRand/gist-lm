@@ -1,5 +1,5 @@
-book_filename: "singlm"
-repo: "https://github.com/3mmaRand/singlm"
+book_filename: "gist-lm"
+repo: "https://github.com/3mmaRand/gist-lm"
 delete_merged_file: true
 rmd_files: [
   "index.Rmd",
