@@ -1,5 +1,6 @@
 # 
 options(digits = 3,
+        scipen = 999,
         kableExtra.html.bsTable = T,
         knitr.table.format = function() {
           if (knitr::is_latex_output()) 
