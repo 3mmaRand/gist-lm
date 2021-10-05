@@ -304,13 +304,13 @@ ggplot() +
                     ymin = mean - se,
                     ymax = mean + se),
                 width = .5) +
-  geom_segment(aes(x = 1, y = 71, xend = 3, yend = 71),
+  geom_segment(aes(x = 1, y = 71, xend = 2, yend = 71),
                size = 1) +
   geom_segment(aes(x = 1, y = 71, xend = 1, yend = 69),
                size = 1) +
-  geom_segment(aes(x = 3, y = 71, xend = 3, yend = 69),
+  geom_segment(aes(x = 2, y = 71, xend = 2, yend = 69),
                size = 1) +
-  annotate("text", x = 2, y = 73,  label = "**", size = 6) +
+  annotate("text", x = 1.5, y = 73,  label = "**", size = 6) +
   scale_x_discrete(name = "Species") +
   scale_y_continuous(name = expression("Myoglobin concentration g "*Kg^{-1}),
                      expand = c(0, 0),
